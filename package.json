@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "Creiei esta estrutura pra ter um ponto de partida no desenvolvimento a partir do express",
   "main": "server.js",
+  "type": "module",
   "scripts": {
-    "test": "nodemon ./server.js",
+    "dev": "nodemon ./server.js",
     "start": "node server.js"
   },
   "repository": {
@@ -34,7 +35,9 @@
     "argon2": "^0.30.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "pg": "^8.8.0"
   }
 }
