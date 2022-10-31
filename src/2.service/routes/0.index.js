@@ -1,5 +1,5 @@
 import express from "express";
-import homePage from "./1.homePage.js"
+import homePage from "./1.public.js"
 import auth from "./3.auth.js"
 import list from "./4.list.js"
 import userRegister from "./2.userRegister.js"

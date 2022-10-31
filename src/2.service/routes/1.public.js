@@ -1,12 +1,12 @@
 import express from "express";
 import app from "../../0.config/server/app.js"
-
+import publicSend from "../busnessRoule/public/publicSend.js";
 const homePage = express.Router();
 
 homePage
-    .get("/", (req, res) => {
+    .get("/", async (req, res) => {
         res.status(200)
-            .json({return: "Welcome to Home Page"})
+            .json({return: await publicSend(req.body)})
     })
 
 
