@@ -9,5 +9,24 @@ reate table users (
 
 );
 
+
+FRONT-END REQUISITION/POSTMAN (/auth):
+
+{
+    "type": "register",
+    "singularUser":"roney01", 
+    "cpf": "07399617996", 
+    "email": "fischer.roney@gmail.com", 
+    "pass": "123456",
+    "passConfirmation":"123456"
+}
+
+{
+    "type": "login",
+    "cpf": "8", 
+    "pass": "8"   
+}
+
+
 Concertar erro:
 1.quando não encontra o CPF

@@ -1,6 +1,6 @@
 import dbConnect from "../../0.config/configDb/dbConnect.js";
 import errorHandling from "../../2.service/errorHandling/errorHandling.js";
-
+import chalk from "chalk";
 import pg from "pg";
 
 const dbMethod = {
@@ -19,7 +19,7 @@ const dbMethod = {
       const client = await dbConnect();
 
       await client.query(queryText, fieldValue).then((res) => {});
-
+      console.log(chalk.blue.bold.italic(`Registration successful`));
       return { status: true, message: `Registration successful` };
     } catch (error) {
       throw error;

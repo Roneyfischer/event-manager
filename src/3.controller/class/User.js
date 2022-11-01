@@ -7,6 +7,7 @@ import userRegisterDataValidation from "../valitadtion/user/userRegisterDataVali
 import userLoginDataValidation from "../valitadtion/user/userLoginDataValidation.js";
 import errorHandling from "../../2.service/errorHandling/errorHandling.js";
 import chalk from "chalk";
+import userService from "../../2.service/busnessRoule/login/userService.js";
 //
 
 class User {
@@ -18,17 +19,10 @@ class User {
       const dataValidation = userRegisterDataValidation(reqBody);
 
       if (dataValidation.status) {
-        const { singularUser, cpf, email, pass } = await reqBody;
-        const passEncrypted = await cryptoArgon2.encrypt(pass);
-        // const registrationData = { singularUser, cpf, email, passEncrypted };
-
-        const table = "users";
-        const fieldName = `"singularUser", "cpf", "email", "pass"`;
-        const fieldValue = [singularUser, cpf, email, passEncrypted];
-
-        return (await dbMethod.add(table, fieldName, fieldValue)).message;
+        return await userService.register(reqBody);
+      } else {
+        throw dataValidation;
       }
-      throw dataValidation;
     } catch (error) {
       return errorHandling(error);
     }
@@ -61,6 +55,7 @@ class User {
           )
         ).pass;
         const verifyPassword = await cryptoArgon2.verify(pass, passEncrypted);
+
         console.log(chalk.green.bold.italic(verifyPassword.message));
         return verifyPassword;
       }
@@ -75,17 +70,17 @@ class User {
 
   authorization = async (reqBody) => {
     try {
-    } catch (error) {}
+    } catch (error) {return errorHandling(error);}
   };
 
   delete = async (reqBody) => {
     try {
-    } catch (error) {}
+    } catch (error) {return errorHandling(error);}
   };
 
   edit = async (reqBody) => {
     try {
-    } catch (error) {}
+    } catch (error) {return errorHandling(error);}
   };
 }
 
