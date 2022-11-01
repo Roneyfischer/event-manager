@@ -1,14 +1,15 @@
 function errorHandling(error) {
   console.log(error);
-  let errorMessage;
-  if (error.message) {
-    errorMessage = error.message;
-  }
-  if (error.detail) {
-    errorMessage = error.detail;
-  } else {
-    errorMessage = error;
-  }
+  const errorMessage = error;
+  // let errorMessage;
+  // if (error.message) {
+  //   errorMessage = error.message;
+  // }
+  // if (error.detail) {
+  //   errorMessage = error.detail;
+  // } else {
+  //   errorMessage = error;
+  // }
 
   return errorList["generalErrorReturn"](errorMessage);
 }

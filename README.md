@@ -8,3 +8,6 @@ reate table users (
 "pass" varchar(600) not null unique
 
 );
+
+Concertar erro:
+1.quando não encontra o CPF

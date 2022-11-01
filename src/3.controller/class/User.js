@@ -1,7 +1,7 @@
 //fiz uso do trycath pra facilitar posteriores alterações no código, posto que se futuramente alterar o sistema com
 // algum código errado, a aplicação não irá quebrar, mas sim retornar um erro no CATH
 
-import userDbMethod from "../../1.model/dbMethods/userDbMethod.js";
+import dbMethod from "../../1.model/dbMethods/dbMethod.js";
 import cryptoArgon2 from "../../2.service/busnessRoule/crypto/cryptoOperator.js";
 import userRegisterDataValidation from "../valitadtion/user/userRegisterDataValidation.js";
 import userLoginDataValidation from "../valitadtion/user/userLoginDataValidation.js";
@@ -20,10 +20,13 @@ class User {
       if (dataValidation.status) {
         const { singularUser, cpf, email, pass } = await reqBody;
         const passEncrypted = await cryptoArgon2.encrypt(pass);
+        // const registrationData = { singularUser, cpf, email, passEncrypted };
 
-        const registrationData = { singularUser, cpf, email, passEncrypted };
+        const table = "users";
+        const fieldName = `"singularUser", "cpf", "email", "pass"`;
+        const fieldValue = [singularUser, cpf, email, passEncrypted];
 
-        return (await userDbMethod.register(registrationData)).message;
+        return (await dbMethod.add(table, fieldName, fieldValue)).message;
       }
       throw dataValidation;
     } catch (error) {
@@ -38,11 +41,23 @@ class User {
   login = async (reqBody) => {
     try {
       const dataValidation = userLoginDataValidation(reqBody);
-      
-      if (dataValidation.status) {
-        const { pass } = reqBody;
 
-        const passEncrypted = (await userDbMethod.login(reqBody)).pass;
+      if (dataValidation.status) {
+        const { cpf, pass } = reqBody;
+
+        const table = "users";
+        const nameItenToSearch = "cpf";
+        const valueItenToSearch = cpf;
+        const itenToReturn = "pass";
+
+        const passEncrypted = (
+          await dbMethod.read(
+            table,
+            nameItenToSearch,
+            valueItenToSearch,
+            itenToReturn
+          )
+        ).pass;
 
         return (await cryptoArgon2.verify(pass, passEncrypted)).message;
       }

@@ -11,7 +11,7 @@ const cryptoArgon2 = {
         // memoryCost: 65536,
       });
 
-      return `user has been authenticate` + hash;
+      return hash;
     } catch (error) {
       return errorHandling(error.message);
     }
@@ -19,7 +19,6 @@ const cryptoArgon2 = {
 
   verify: async function (pass, longHash) {
     try {
-      
       if (await argon2.verify(longHash, pass)) {
         return { status: true, message: "String match" };
       } else {
