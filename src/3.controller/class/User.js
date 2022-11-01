@@ -32,32 +32,19 @@ class User {
   //
   //
 
-  login = async (reqBody) => {
+  login = async (reqBody, res) => {
     try {
       //se houver erro na validação, o "userLoginDataValidation" lança/throw erro,
       //e o CATH desta função retorna para o console e frontEnd
       const dataValidation = userLoginDataValidation(reqBody);
 
       if (dataValidation.status) {
-        const { cpf, pass } = reqBody;
+        const loginFunction = userService.login(reqBody);
+        const loggedSuccessfully = loginFunction ? userService.setCookieToken(reqBody, res) : false; //setar cookie
 
-        const table = "users";
-        const nameItenToSearch = "cpf";
-        const valueItenToSearch = cpf;
-        const itenToReturn = "pass";
-
-        const passEncrypted = (
-          await dbMethod.read(
-            table,
-            nameItenToSearch,
-            valueItenToSearch,
-            itenToReturn
-          )
-        ).pass;
-        const verifyPassword = await cryptoArgon2.verify(pass, passEncrypted);
-
-        console.log(chalk.green.bold.italic(verifyPassword.message));
-        return verifyPassword;
+        return await loggedSuccessfully;
+      } else {
+        throw dataValidation;
       }
     } catch (error) {
       return errorHandling(error);
@@ -70,17 +57,23 @@ class User {
 
   authorization = async (reqBody) => {
     try {
-    } catch (error) {return errorHandling(error);}
+    } catch (error) {
+      return errorHandling(error);
+    }
   };
 
   delete = async (reqBody) => {
     try {
-    } catch (error) {return errorHandling(error);}
+    } catch (error) {
+      return errorHandling(error);
+    }
   };
 
   edit = async (reqBody) => {
     try {
-    } catch (error) {return errorHandling(error);}
+    } catch (error) {
+      return errorHandling(error);
+    }
   };
 }
 

@@ -1,5 +1,8 @@
 import dbMethod from "../../../1.model/dbMethods/dbMethod.js";
 import cryptoArgon2 from "../crypto/cryptoOperator.js";
+import jwt from "jsonwebtoken";
+import chalk from "chalk";
+import cookieParser from "cookie-parser";
 
 const userService = {
   register: async (reqBody) => {
@@ -11,49 +14,53 @@ const userService = {
     const fieldValue = [singularUser, cpf, email, passEncrypted];
 
     return (await dbMethod.add(table, fieldName, fieldValue)).message;
-    
   },
 
-  login: async (reqBody) => {
-    
-      //se houver erro na validação, o "userLoginDataValidation" lança/throw erro,
-      //e o CATH desta função retorna para o console e frontEnd
-      const dataValidation = userLoginDataValidation(reqBody);
+  login: async (reqBody, res) => {
+    const { cpf, pass } = reqBody;
 
-      if (dataValidation.status) {
-        const { cpf, pass } = reqBody;
+    const table = "users";
+    const nameItenToSearch = "cpf";
+    const valueItenToSearch = cpf;
+    const itenToReturn = "pass";
 
-        const table = "users";
-        const nameItenToSearch = "cpf";
-        const valueItenToSearch = cpf;
-        const itenToReturn = "pass";
+    const longHash = (
+      await dbMethod.read(
+        table,
+        nameItenToSearch,
+        valueItenToSearch,
+        itenToReturn
+      )
+    ).pass;
+    const verifyPassword = await cryptoArgon2.verify(pass, longHash);
 
-        const passEncrypted = (
-          await dbMethod.read(
-            table,
-            nameItenToSearch,
-            valueItenToSearch,
-            itenToReturn
-          )
-        ).pass;
-        const verifyPassword = await cryptoArgon2.verify(pass, passEncrypted);
-
-        console.log(chalk.green.bold.italic(verifyPassword.message));
-        return verifyPassword;
-      }      
+    //   console.log(chalk.green.bold.italic(verifyPassword.message));
+ 
+    return {status: verifyPassword.status, message: verifyPassword.message};
   },
-
-  authorization: async (reqBody) => {
+  //
+  //
+  //
+  setCookieToken: async (reqBody, res)  => {
+    const cpf = reqBody.cpf
    
-  },
+    const token =  jwt.sign({ id_user: cpf }, process.env.JWT_KEY);
+    const singularCookie = `cookie("access_token", ${token}, {
+      secure: true,
+      sameSite: "none",
+      expire: 500000,
+    });`
 
-  delete: async (reqBody) => {
-    
+    return singularCookie
   },
+  //
+  //
+  //
+  authorization: async (reqBody) => {},
 
-  edit: async (reqBody) => {
-  
-  }
+  delete: async (reqBody) => {},
+
+  edit: async (reqBody) => {},
 };
 
 export default userService;

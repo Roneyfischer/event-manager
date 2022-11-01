@@ -20,9 +20,9 @@ const cryptoArgon2 = {
   verify: async function (pass, longHash) {
     try {
       if (await argon2.verify(longHash, pass)) {
-        return { status: true, message: "String match" };
+        return { status: true, message: "Password match" };
       } else {
-        throw { status: false, message: "String did not match" };
+        throw { status: false, message: "Password did not match" };
       }
     } catch (error) {
       throw error;

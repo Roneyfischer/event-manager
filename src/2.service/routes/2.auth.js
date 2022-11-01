@@ -6,7 +6,8 @@ const auth = express.Router();
 auth
 .post("/", async (req, res) => {
     const user = new User();
-    res.status(200).json({ return: await user[req.body.type](req.body) });
+    const loginStatus = await user[req.body.type](req.body, res)
+    res.status(200).json({ return: await user[req.body.type](req.body, res) });
 });
 
 
