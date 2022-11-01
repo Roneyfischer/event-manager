@@ -22,11 +22,10 @@ const cryptoArgon2 = {
       if (await argon2.verify(longHash, pass)) {
         return { status: true, message: "String match" };
       } else {
-        return { status: false, message: "String did not match" };
+        throw { status: false, message: "String did not match" };
       }
     } catch (error) {
-      console.log("Erro aqui");
-      return { status: false, message: errorHandling(error.message) };
+      throw error;
     }
   },
 };

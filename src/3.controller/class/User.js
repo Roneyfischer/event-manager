@@ -6,7 +6,7 @@ import cryptoArgon2 from "../../2.service/busnessRoule/crypto/cryptoOperator.js"
 import userRegisterDataValidation from "../valitadtion/user/userRegisterDataValidation.js";
 import userLoginDataValidation from "../valitadtion/user/userLoginDataValidation.js";
 import errorHandling from "../../2.service/errorHandling/errorHandling.js";
-
+import chalk from "chalk";
 //
 
 class User {
@@ -40,6 +40,8 @@ class User {
 
   login = async (reqBody) => {
     try {
+      //se houver erro na validação, o "userLoginDataValidation" lança/throw erro,
+      //e o CATH desta função retorna para o console e frontEnd
       const dataValidation = userLoginDataValidation(reqBody);
 
       if (dataValidation.status) {
@@ -58,10 +60,10 @@ class User {
             itenToReturn
           )
         ).pass;
-
-        return (await cryptoArgon2.verify(pass, passEncrypted)).message;
+        const verifyPassword = await cryptoArgon2.verify(pass, passEncrypted);
+        console.log(chalk.green.bold.italic(verifyPassword.message));
+        return verifyPassword;
       }
-      throw dataValidation;
     } catch (error) {
       return errorHandling(error);
     }
