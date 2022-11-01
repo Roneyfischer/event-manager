@@ -7,7 +7,7 @@ const userRegisterRouter = express.Router();
 userRegisterRouter.post("/", async (req, res) => {
     req
   const user = new User();
-
+  
   res.status(200).json({ return: await user[req.body.type](req.body) });
 });
 

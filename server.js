@@ -7,4 +7,4 @@ app.listen(process.env.SERVER_PORT, () => {
     console.log(`Server is running on ${process.env.SERVER_PORT}`)
 })
 
-} catch(error) {errorHandling(error)}
+} catch(error) {errorHandling(error.message)}

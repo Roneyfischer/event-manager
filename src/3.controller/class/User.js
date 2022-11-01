@@ -1,19 +1,37 @@
-import dbMethod from "../../1.model/dbMethods/addOnDb";
+import userDbMethod from "../../1.model/dbMethods/userDbMethod.js";
+import cryptoArgon2 from "../../2.service/busnessRoule/crypto/cryptoOperator.js";
+import userRegisterDataValidation from "../valitadtion/userRegisterDataValidation.js";
 
 class User {
   constructor(data) {}
 
   register = async function (reqBody) {
-    return await dbMethod.addUser(reqBody);
-  }
+    const dataValidation = userRegisterDataValidation(reqBody);
 
-  deleUser(reqBody) {}
+    if (dataValidation.status) {
+      
+      const { type, singularUser, cpf, email, pass } = await reqBody;
+      const passEncrypted = await cryptoArgon2.encrypt(pass);
+      const cpfEncrypted = await cryptoArgon2.encrypt(cpf);
 
-  editUser(reqBody) {}
+      const registrationData = {
+        singularUser,
+        cpfEncrypted,
+        email,
+        passEncrypted,
+      };
 
-  addEvent(reqBody) {}
+      return await userDbMethod.register(registrationData);
+    } else {
+      return dataValidation.message;
+    }
+  };
 
-  deletEvent(reqBody) {}
+  login = async function (reqBody) {};
+
+  delet(reqBody) {}
+
+  edit(reqBody) {}
 }
 
 export default User;
