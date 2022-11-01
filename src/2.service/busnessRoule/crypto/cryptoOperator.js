@@ -10,22 +10,24 @@ const cryptoArgon2 = {
         // timeCost: 450,
         // memoryCost: 65536,
       });
-      
-      return hash;
+
+      return `user has been authenticate` + hash;
     } catch (error) {
       return errorHandling(error.message);
     }
   },
 
-  verify: async function (data, longHash) {
+  verify: async function (pass, longHash) {
     try {
-      if (await argon2.verify(longHash, data)) {
-        return "String match";
+      
+      if (await argon2.verify(longHash, pass)) {
+        return { status: true, message: "String match" };
       } else {
-        return "String did not match";
+        return { status: false, message: "String did not match" };
       }
     } catch (error) {
-      return errorHandling(error.message);
+      console.log("Erro aqui");
+      return { status: false, message: errorHandling(error.message) };
     }
   },
 };

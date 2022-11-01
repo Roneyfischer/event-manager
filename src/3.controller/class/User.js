@@ -1,37 +1,75 @@
+//fiz uso do trycath pra facilitar posteriores alterações no código, posto que se futuramente alterar o sistema com
+// algum código errado, a aplicação não irá quebrar, mas sim retornar um erro no CATH
+
 import userDbMethod from "../../1.model/dbMethods/userDbMethod.js";
 import cryptoArgon2 from "../../2.service/busnessRoule/crypto/cryptoOperator.js";
-import userRegisterDataValidation from "../valitadtion/userRegisterDataValidation.js";
+import userRegisterDataValidation from "../valitadtion/user/userRegisterDataValidation.js";
+import userLoginDataValidation from "../valitadtion/user/userLoginDataValidation.js";
+import errorHandling from "../../2.service/errorHandling/errorHandling.js";
+
+//
 
 class User {
-  constructor(data) {}
+  //
+  //
+  //
+  register = async (reqBody) => {
+    try {
+      const dataValidation = userRegisterDataValidation(reqBody);
 
-  register = async function (reqBody) {
-    const dataValidation = userRegisterDataValidation(reqBody);
+      if (dataValidation.status) {
+        const { singularUser, cpf, email, pass } = await reqBody;
+        const passEncrypted = await cryptoArgon2.encrypt(pass);
 
-    if (dataValidation.status) {
-      
-      const { type, singularUser, cpf, email, pass } = await reqBody;
-      const passEncrypted = await cryptoArgon2.encrypt(pass);
-      const cpfEncrypted = await cryptoArgon2.encrypt(cpf);
+        const registrationData = { singularUser, cpf, email, passEncrypted };
 
-      const registrationData = {
-        singularUser,
-        cpfEncrypted,
-        email,
-        passEncrypted,
-      };
-
-      return await userDbMethod.register(registrationData);
-    } else {
-      return dataValidation.message;
+        return (await userDbMethod.register(registrationData)).message;
+      }
+      throw dataValidation;
+    } catch (error) {
+      return errorHandling(error);
     }
   };
 
-  login = async function (reqBody) {};
+  //
+  //
+  //
 
-  delet(reqBody) {}
+  login = async (reqBody) => {
+    try {
+      const dataValidation = userLoginDataValidation(reqBody);
+      
+      if (dataValidation.status) {
+        const { pass } = reqBody;
 
-  edit(reqBody) {}
+        const passEncrypted = (await userDbMethod.login(reqBody)).pass;
+
+        return (await cryptoArgon2.verify(pass, passEncrypted)).message;
+      }
+      throw dataValidation;
+    } catch (error) {
+      return errorHandling(error);
+    }
+  };
+
+  //
+  //
+  //
+
+  authorization = async (reqBody) => {
+    try {
+    } catch (error) {}
+  };
+
+  delete = async (reqBody) => {
+    try {
+    } catch (error) {}
+  };
+
+  edit = async (reqBody) => {
+    try {
+    } catch (error) {}
+  };
 }
 
 export default User;

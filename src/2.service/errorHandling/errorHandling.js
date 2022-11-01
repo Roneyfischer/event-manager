@@ -1,6 +1,15 @@
 function errorHandling(error) {
-  const errorMessage = error.replace(/ /, "_");
-  const errorMessageReplaced = errorMessage.replace(/(,)/, "_");
+  console.log(error);
+  let errorMessage;
+  if (error.message) {
+    errorMessage = error.message;
+  }
+  if (error.detail) {
+    errorMessage = error.detail;
+  } else {
+    errorMessage = error;
+  }
+
   return errorList["generalErrorReturn"](errorMessage);
 }
 
