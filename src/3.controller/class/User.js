@@ -39,10 +39,7 @@ class User {
       const dataValidation = userLoginDataValidation(reqBody);
 
       if (dataValidation.status) {
-        const loginFunction = userService.login(reqBody);
-        const loggedSuccessfully = loginFunction ? userService.setCookieToken(reqBody, res) : false; //setar cookie
-
-        return await loggedSuccessfully;
+        return await userService.login(reqBody);
       } else {
         throw dataValidation;
       }
@@ -54,6 +51,10 @@ class User {
   //
   //
   //
+  setConfigJwtCookie =  (reqBody, res) => {
+    const { cpf } = reqBody;
+    return userService["setConfigJwtCookie"](cpf);
+  };
 
   authorization = async (reqBody) => {
     try {

@@ -35,23 +35,20 @@ const userService = {
     const verifyPassword = await cryptoArgon2.verify(pass, longHash);
 
     //   console.log(chalk.green.bold.italic(verifyPassword.message));
- 
-    return {status: verifyPassword.status, message: verifyPassword.message};
+
+    return { status: verifyPassword.status, message: verifyPassword.message };
   },
   //
   //
   //
-  setCookieToken: async (reqBody, res)  => {
-    const cpf = reqBody.cpf
-   
-    const token =  jwt.sign({ id_user: cpf }, process.env.JWT_KEY);
-    const singularCookie = `cookie("access_token", ${token}, {
-      secure: true,
-      sameSite: "none",
-      expire: 500000,
-    });`
-
-    return singularCookie
+  setConfigJwtCookie: (cpf) => {
+    //legado lixo
+    // const token = jwt.sign({ id_user: cpf }, process.env.JWT_KEY);
+    // return `"access_token", ${token}, {
+    //   secure: true,
+    //   sameSite: "none",
+    //   expire: 500000,
+    // }`;
   },
   //
   //
