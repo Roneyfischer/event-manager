@@ -7,7 +7,7 @@ import userRegisterDataValidation from "../valitadtion/user/userRegisterDataVali
 import userLoginDataValidation from "../valitadtion/user/userLoginDataValidation.js";
 import errorHandling from "../../2.service/errorHandling/errorHandling.js";
 import chalk from "chalk";
-import userService from "../../2.service/busnessRoule/login/userService.js";
+import userService from "../../2.service/busnessRoule/user/userService.js";
 //
 
 class User {
@@ -39,6 +39,9 @@ class User {
       const dataValidation = userLoginDataValidation(reqBody);
 
       if (dataValidation.status) {
+        console.log(
+          chalk.blue.bold.italic((await userService.login(reqBody)).message)
+        );
         return await userService.login(reqBody);
       } else {
         throw dataValidation;
@@ -51,7 +54,7 @@ class User {
   //
   //
   //
-  setConfigJwtCookie =  (reqBody, res) => {
+  setConfigJwtCookie = (reqBody, res) => {
     const { cpf } = reqBody;
     return userService["setConfigJwtCookie"](cpf);
   };

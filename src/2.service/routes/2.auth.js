@@ -8,8 +8,7 @@ auth.post("/", async (req, res) => {
   const user = new User();
   const loginFunction = await user[req.body.type](req.body, res);
  
-  if (loginFunction.status) {
-    const user = new User();
+  if (loginFunction.status) {    
     const { cpf } = req.body;
     const token = jwt.sign({ id_user: cpf }, process.env.JWT_KEY);
 

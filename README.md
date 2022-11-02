@@ -26,5 +26,20 @@ FRONT-END REQUISITION/POSTMAN (/auth):
 "pass": "8"  
 }
 
+interactions
+{
+
+    "name":"teste",
+    "group":"grupoAquiiii",
+    "category":"teste",
+    "description":"teste",
+    "createDate":"teste",
+    "date":"teste",
+    "author":"teste",
+    "place":"teste",
+    "maxCapacityPerson":"teste"
+
+}
+
 Concertar erro:
 1.criptografar CPF pra não transitar aberto

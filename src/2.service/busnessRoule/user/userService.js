@@ -41,18 +41,7 @@ const userService = {
   //
   //
   //
-  setConfigJwtCookie: (cpf) => {
-    //legado lixo
-    // const token = jwt.sign({ id_user: cpf }, process.env.JWT_KEY);
-    // return `"access_token", ${token}, {
-    //   secure: true,
-    //   sameSite: "none",
-    //   expire: 500000,
-    // }`;
-  },
-  //
-  //
-  //
+
   authorization: async (reqBody) => {},
 
   delete: async (reqBody) => {},
