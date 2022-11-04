@@ -4,37 +4,37 @@ import eventCreateDataValidation from "../valitadtion/event/eventCreateDataValid
 export default class Event {
   constructor(data) {
     const {
-      name,
-      group,
-      category,
+      singularEvent,
+      singularGroup,
+      singularCategory,
       description,
       createDate,
       date,
-      author,
+      singularUser,
       place,
       maxCapacityPerson,
     } = data;
 
     this._id = null;
-    this._name = name;
-    this._group = group;
-    this._category = category;
+    this._singularEvent = singularEvent;
+    this._singularGroup = singularGroup;
+    this._singularCategory = singularCategory;
     this._description = description;
     this._createDate = createDate;
     this._date = date;
-    this._author = author;
+    this._singularUser = singularUser;
     this._place = place;
     this._maxCapacityPerson = maxCapacityPerson;
     this._subscriberNumber = 0;
     this._subscribers = 0;
     this._allData = [
-      this._name,
-      this._group,
-      this._category,
+      this._singularEvent,
+      this._singularGroup,
+      this._singularCategory,
       this._description,
       this._createDate,
       this._date,
-      this._author,
+      this._singularUser,
       this._place,
       this._maxCapacityPerson,
     ];
@@ -77,14 +77,14 @@ export default class Event {
     const { userCpf, pass } = data;
   };
 
-  get name() {
-      return this._name;
-    }
-  get group() {
-    return this._group;
+  get singularEvent() {
+    return this._singularEvent;
   }
-  get category() {
-    return this._category;
+  get singularGroup() {
+    return this._singularGroup;
+  }
+  get singularCategory() {
+    return this._singularCategory;
   }
   get description() {
     return this._description;
@@ -95,8 +95,8 @@ export default class Event {
   get date() {
     return this._date;
   }
-  get author() {
-    return this._author;
+  get singularUser() {
+    return this._singularUser;
   }
   get place() {
     return this._place;
@@ -105,14 +105,14 @@ export default class Event {
     return this._maxCapacityPerson;
   }
 
-  set name(data) {
-    this._name;
+  set singularEvent(data) {
+    this._singularEvent;
   }
-  set group(data) {
-    this._group;
+  set singularGroup(data) {
+    this._singularGroup;
   }
-  set category(data) {
-    this._category;
+  set singularCategory(data) {
+    this._singularCategory;
   }
   set description(data) {
     this._description;
@@ -123,8 +123,8 @@ export default class Event {
   set date(data) {
     this._date;
   }
-  set author(data) {
-    this._author;
+  set singularUser(data) {
+    this._singularUser;
   }
   set place(data) {
     this._place;

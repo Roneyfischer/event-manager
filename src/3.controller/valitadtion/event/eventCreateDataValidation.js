@@ -1,12 +1,12 @@
 const eventCreateDataValidation = (event) => {
   if (
-    (event.name,
-    event.group,
-    event.category,
+    (event.singularEvent,
+    event.singularGroup,
+    event.singularCategory,
     event.description,
     event.createDate,
     event.date,
-    event.author,
+    event.singularUser,
     event.place,
     event.maxCapacityPerson)
   ) {
