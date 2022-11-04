@@ -40,17 +40,17 @@ export default class Event {
       this._maxCapacityPerson,
     ];
   }
-  firstSave = () => {
+  add = () => {
     try {
       console.log("valor aqui: " + this.group);
       const dataValidation = eventCreateDataValidation(this);
       if (dataValidation.status) {
         //aguarda um retorno {status: true/false, message: `msg here`, id: ${id}, subscriberNumber: ${subscriberNumber}, subscribers: ${subscribers}}
-        const returnFirstSave = eventService.firstSave(this);
-        // this._id(returnFirstSave.id);
-        // this._subscriberNumber(returnFirstSave.subscriberNumber);
-        // this._subscribers(returnFirstSave.subscribers);
-        return returnFirstSave;
+        const returnAdd = eventService.add(this);
+        // this._id(returnAdd.id);
+        // this._subscriberNumber(returnAdd.subscriberNumber);
+        // this._subscribers(returnAdd.subscribers);
+        return returnAdd;
       }
       throw erorr;
     } catch (error) {

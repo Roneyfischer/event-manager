@@ -1,7 +1,7 @@
 import dbMethod from "../../../1.model/dbMethods/dbMethod.js";
 
 const eventService = {
-  firstSave: async (data) => {
+  add: async (data) => {
     //editar pra adicionar corretamente ao DB
     const singularEvent = data.singularEvent;
     const singulargroup = data.singularGroup;
