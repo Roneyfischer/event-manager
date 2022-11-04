@@ -1,16 +1,16 @@
-//fiz uso do trycath pra facilitar posteriores alterações no código, posto que se futuramente alterar o sistema com
-// algum código errado, a aplicação não irá quebrar, mas sim retornar um erro no CATH
+//////////////////////////////////////////////////////////////
+////////////////////////   ATENÇÃO:   ////////////////////////
+//  Esta classe é herdada por outras classes de usuários.   //
+//////////////////////////////////////////////////////////////
 
-import dbMethod from "../../1.model/dbMethods/dbMethod.js";
-import cryptoArgon2 from "../../2.service/busnessRoule/crypto/cryptoOperator.js";
-import userRegisterDataValidation from "../valitadtion/user/userRegisterDataValidation.js";
-import userLoginDataValidation from "../valitadtion/user/userLoginDataValidation.js";
-import errorHandling from "../../2.service/errorHandling/errorHandling.js";
+import userRegisterDataValidation from "../../valitadtion/user/userRegisterDataValidation.js";
+import userLoginDataValidation from "../../valitadtion/user/userLoginDataValidation.js";
+import errorHandling from "../../../2.service/errorHandling/errorHandling.js";
 import chalk from "chalk";
-import userService from "../../2.service/busnessRoule/user/userService.js";
+import userService from "../../../2.service/busnessRoule/user/userService.js";
 //
 
-class User {
+class BasicUser {
   //
   //
   //
@@ -81,4 +81,4 @@ class User {
   };
 }
 
-export default User;
+export default BasicUser;

@@ -1,6 +1,6 @@
-import eventService from "../../2.service/busnessRoule/event/eventService.js";
-import errorHandling from "../../2.service/errorHandling/errorHandling.js";
-import eventCreateDataValidation from "../valitadtion/event/eventCreateDataValidation.js";
+import eventService from "../../../2.service/busnessRoule/event/eventService.js";
+import errorHandling from "../../../2.service/errorHandling/errorHandling.js";
+import eventCreateDataValidation from "../../valitadtion/event/eventCreateDataValidation.js";
 export default class Event {
   constructor(data) {
     const {

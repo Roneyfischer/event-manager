@@ -1,14 +1,14 @@
 import express from "express";
-import User from "../../3.controller/class/User.js";
+import AdmUser from "../../3.controller/class/User/3.AdmUser.js";
 import jwt from "jsonwebtoken";
 
 const auth = express.Router();
 
 auth.post("/", async (req, res) => {
-  const user = new User();
+  const user = new AdmUser();
   const loginFunction = await user[req.body.type](req.body, res);
- 
-  if (loginFunction.status) {    
+
+  if (loginFunction.status) {
     const { cpf } = req.body;
     const token = jwt.sign({ id_user: cpf }, process.env.JWT_KEY);
 

@@ -1,5 +1,5 @@
 import express from "express";
-import Event from "../../3.controller/class/Events.js";
+import Event from "../../3.controller/class/Event/Events.js";
 const interactions = express.Router();
 
 interactions.post("/", async (req, res) => {
