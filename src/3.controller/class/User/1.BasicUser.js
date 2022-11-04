@@ -8,12 +8,8 @@ import userLoginDataValidation from "../../valitadtion/user/userLoginDataValidat
 import errorHandling from "../../../2.service/errorHandling/errorHandling.js";
 import chalk from "chalk";
 import userService from "../../../2.service/busnessRoule/user/userService.js";
-//
 
 class BasicUser {
-  //
-  //
-  //
   register = async (reqBody) => {
     try {
       const dataValidation = userRegisterDataValidation(reqBody);
@@ -27,10 +23,6 @@ class BasicUser {
       return errorHandling(error);
     }
   };
-
-  //
-  //
-  //
 
   login = async (reqBody, res) => {
     try {
@@ -51,13 +43,7 @@ class BasicUser {
     }
   };
 
-  //
-  //
-  //
-  setConfigJwtCookie = (reqBody, res) => {
-    const { cpf } = reqBody;
-    return userService["setConfigJwtCookie"](cpf);
-  };
+  logout = async (reqBody, res) => {};
 
   authorization = async (reqBody) => {
     try {
