@@ -8,6 +8,15 @@ create table users (
 "pass" varchar(600) not null unique
 );
 
+create table users (
+"id" serial unique,
+"singularUser" varchar(255) primary key not null,
+"role" varchar (32),
+"cpf" varchar(255) not null unique,
+"email" varchar(512) not null unique,
+"pass" varchar(600) not null unique
+);
+
 create table tgroup (
 "id" serial unique,
 "singularUser" varchar(255) not null,
@@ -53,7 +62,6 @@ FOREIGN KEY ("singularUser", "singularGroup") REFERENCES "tgroup" ("singularUser
 FOREIGN KEY ("singularUser","singularCategory") REFERENCES "category" ("singularUser","singularCategory")
 );
 
-
 create table subscribers(
 "id" serial unique,
 "singularUser" VARCHAR(255) not null,
@@ -66,7 +74,6 @@ FOREIGN KEY ("singularUser") REFERENCES "users" ("singularUser"),
 FOREIGN KEY ("singularEvent") REFERENCES "events" ("singularEvent")
 );
 INSERT INTO "subscribers"("singularUser", "singularEvent", "subscriptionDate") VALUES ('01', '02', '2022/11/03');
-
 
 FRONT-END REQUISITION/POSTMAN (/auth):
 
@@ -100,5 +107,13 @@ interactions
 
 }
 
+SUBSCRIBE/UNSUBSCRIBE
+
+{
+"singularUser": "user"
+"singularEvent": "event"
+}
+
 Concertar erro:
-1.criptografar CPF pra não transitar aberto
+1. criptografar CPF pra não transitar aberto
+2. parar de quebrar quando já tem o cadastro no DB

@@ -53,14 +53,20 @@ const eventService = {
   //    read = (data) => {
   //      { eventName, eventId } = data;
   //   };
+  read: async (reqBody) => {
+    const { table, nameItenToSearch, valueItenToSearch, itenToReturn } =
+      reqBody;
+  },
 
-  //    subscribre = (data) => {
-  //      { userCpf, pass } = data;
-  //   };
+  subscribre: (data) => {
+    const { singularUser, singularEvent } = data;
 
-  //    unsubscribre = (data) => {
-  //      { userCpf, pass } = data;
-  //   };
+    //
+  },
+
+  unsubscribre: (data) => {
+    const { singularUser, singularEvent } = data;
+  },
 
   //    cancel = (data) => {
   //      { userCpf, pass } = data;

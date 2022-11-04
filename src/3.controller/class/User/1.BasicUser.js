@@ -3,8 +3,8 @@
 //  Esta classe é herdada por outras classes de usuários.   //
 //////////////////////////////////////////////////////////////
 
-import userRegisterDataValidation from "../../valitadtion/user/userRegisterDataValidation.js";
-import userLoginDataValidation from "../../valitadtion/user/userLoginDataValidation.js";
+import userRegisterDataValidation from "../../valitadtion/loginRegister/userRegisterDataValidation.js";
+import userLoginDataValidation from "../../valitadtion/loginRegister/userLoginDataValidation.js";
 import errorHandling from "../../../2.service/errorHandling/errorHandling.js";
 import chalk from "chalk";
 import userService from "../../../2.service/busnessRoule/user/userService.js";

@@ -1,6 +1,7 @@
 import eventService from "../../../2.service/busnessRoule/event/eventService.js";
 import errorHandling from "../../../2.service/errorHandling/errorHandling.js";
 import eventCreateDataValidation from "../../valitadtion/event/eventCreateDataValidation.js";
+import eventReadValidation from "../../valitadtion/event/eventReadValidation.js"
 export default class Event {
   constructor(data) {
     const {
@@ -58,22 +59,33 @@ export default class Event {
   };
 
   read = (data) => {
-    const { name, id } = data;
+    try {    
+      
+    const dataValidation = eventReadValidation(data)
+
+    if(dataValidation) {
+
+      return eventService.read(data)
+    }throw dataValidation
+    
+  } catch (error) {
+      
+  }
   };
 
-  subscribre = (data) => {
-    const { userCpf, pass } = data;
-  };
+  // subscribre = (data) => {
+  //   const { userCpf, pass } = data;
+  // };
 
-  unsubscribre = (data) => {
-    const { userCpf, pass } = data;
-  };
+  // unsubscribre = (data) => {
+  //   const { userCpf, pass } = data;
+  // };
 
   cancel = (data) => {
     const { userCpf, pass } = data;
   };
 
-  delet = (data) => {
+  delete = (data) => {
     const { userCpf, pass } = data;
   };
 

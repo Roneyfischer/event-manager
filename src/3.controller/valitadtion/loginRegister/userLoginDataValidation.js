@@ -5,6 +5,7 @@ const userLoginDataValidation = (reqBody) => {
   const { cpf, pass } = reqBody;
 
   if (cpf && pass) {
+    
     return { status: true, message: `field has been completed` };
   }
   throw { status: false, message: `All fields are mandatory` };
