@@ -6,7 +6,8 @@ import pg from "pg";
 const dbMethod = {
   add: async (table, fieldName, fieldValue) => {
     try {
-      const fieldsNumber = fieldName.split(",", 1000).length;
+      
+      const fieldsNumber = fieldName.split(/,/).length;
 
       let fieldsNumberVariables = [];
 
@@ -15,10 +16,10 @@ const dbMethod = {
       }
 
       const queryText = `INSERT INTO "${table}"(${fieldName}) VALUES(${fieldsNumberVariables}) RETURNING *`;
-
+      const queryValues = fieldValue;
       const client = await dbConnect();
 
-      await client.query(queryText, fieldValue).then((res) => {});
+      await client.query(queryText, queryValues).then((res) => {});
       console.log(chalk.blue.bold.italic(`Registration successful`));
       return { status: true, message: `Registration successful` };
     } catch (error) {
@@ -26,29 +27,51 @@ const dbMethod = {
     }
   },
 
-  // read: async (table, nameItenToSearch, valueItenToSearch, itenToReturn) => {
+  // edit: async (table, fieldName, fieldValue) => {
   //   try {
-  //     const queryText = `SELECT ${itenToReturn} from ${table} WHERE ${nameItenToSearch} = $1`;
-  //     const values = [valueItenToSearch];
+  //     const fieldsNumber = fieldName.split(/,/).length;
+
+  //     let fieldsNumberVariables = [];
+
+  //     for (let i = 0; i < fieldsNumber; i++) {
+  //       fieldsNumberVariables.push("$" + (i + 1)); //o $ não contabiliza $0, portanto, deve começar com $1
+  //     }
+
+  //     const queryText = `INSERT INTO "${table}"(${fieldName}) VALUES(${fieldsNumberVariables}) RETURNING *`;
+  //     const queryValues = fieldValue
   //     const client = await dbConnect();
 
-  //     return await client.query(queryText, values).then((res) => {
-  //       const dataFinded = res.rows[0];
-  //       console.log(dataFinded);
-  //       return dataFinded;
-  //     });
+  //     await client.query(queryText, queryValues).then((res) => {});
+  //     console.log(chalk.blue.bold.italic(`Registration successful`));
+  //     return { status: true, message: `Registration successful` };
   //   } catch (error) {
-  //     return errorHandling(error.detail);
+  //     throw error;
   //   }
   // },
+
+  delete: async (table, nameItenToSearch, valueItenToSearch) => {
+    try {
+      const fieldsNumber = fieldName.split(/,/).length;
+
+      const queryText = `DELETE FROM ${table} WHERE ${nameItenToSearch} = $1`;
+      const queryValues = [valueItenToSearch];
+      const client = await dbConnect();
+
+      await client.query(queryText, queryValues).then((res) => {});
+      console.log(chalk.blue.bold.italic(`Registration successful`));
+      return { status: true, message: `Registration successful` };
+    } catch (error) {
+      throw error;
+    }
+  },
 
   read: async (table, nameItenToSearch, valueItenToSearch, itenToReturn) => {
     try {
       const queryText = `SELECT ${itenToReturn} from ${table} WHERE ${nameItenToSearch} = $1`;
-      const values = [valueItenToSearch];
+      const queryValues = [valueItenToSearch];
       const client = await dbConnect();
 
-      return await client.query(queryText, values).then((res) => {
+      return await client.query(queryText, queryValues).then((res) => {
         const dataFinded = res.rows[0];
 
         if (dataFinded) {

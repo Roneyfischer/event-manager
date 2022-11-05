@@ -17,22 +17,21 @@ create table users (
 "pass" varchar(600) not null unique
 );
 
-create table tgroup (
+create table groups (
 "id" serial unique,
 "singularUser" varchar(255) not null,
 "singularGroup" varchar(255) not null,
-"createDate" Date not null,
 
 PRIMARY KEY ("singularUser", "singularGroup"),
 
 FOREIGN KEY ("singularUser") REFERENCES "users" ("singularUser")
 );
 
-INSERT INTO "tgroup"("singularUser", "singularGroup", "createDate") VALUES('01', 'group01', '1999/05/05');
+INSERT INTO "groups"("singularUser", "singularGroup", "createDate") VALUES('01', 'Serviço Social', '2022/12/12');
 
 ---
 
-create table category(
+create table categories(
 "id" serial unique,
 "singularUser" varchar(255) not null,
 "singularCategory" VARCHAR(255) not null,
@@ -42,7 +41,7 @@ primary key("singularUser","singularCategory"),
 FOREIGN KEY ("singularUser") REFERENCES "users" ("singularUser")
 );
 
-INSERT INTO "category"("singularUser", "singularCategory") VALUES('01', 'category01');
+INSERT INTO "categories"("singularUser", "singularCategory") VALUES('01', 'Serviços Sociais');
 
 create table events (
 "id" serial unique,
@@ -54,12 +53,12 @@ create table events (
 "createDate" Date not null,
 "date" Date not null,
 "place" varchar(255) not null,
-"maxCapacityPerson" varchar(32) not null,
-"subscriberNumber" varchar(32) not null,
+"maxCapacityPerson" integer not null,
+"subscriberNumber" varchar(32),
 
 FOREIGN KEY ("singularUser") REFERENCES "users" ("singularUser"),
-FOREIGN KEY ("singularUser", "singularGroup") REFERENCES "tgroup" ("singularUser", "singularGroup"),
-FOREIGN KEY ("singularUser","singularCategory") REFERENCES "category" ("singularUser","singularCategory")
+FOREIGN KEY ("singularUser", "singularGroup") REFERENCES "groups" ("singularUser", "singularGroup"),
+FOREIGN KEY ("singularUser","singularCategory") REFERENCES "categories" ("singularUser","singularCategory")
 );
 
 create table subscribers(
@@ -115,5 +114,7 @@ SUBSCRIBE/UNSUBSCRIBE
 }
 
 Concertar erro:
+
 1. criptografar CPF pra não transitar aberto
 2. parar de quebrar quando já tem o cadastro no DB
+   3.burlar cookie mandando requisição de login com dados de cadastro/registro/group

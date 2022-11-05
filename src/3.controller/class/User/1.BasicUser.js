@@ -5,6 +5,7 @@
 
 import userRegisterDataValidation from "../../valitadtion/loginRegister/userRegisterDataValidation.js";
 import userLoginDataValidation from "../../valitadtion/loginRegister/userLoginDataValidation.js";
+import generalDataValidation from "../../valitadtion/FAILgeneralDataValidation.js";
 import errorHandling from "../../../2.service/errorHandling/errorHandling.js";
 import chalk from "chalk";
 import userService from "../../../2.service/busnessRoule/user/userService.js";
@@ -17,7 +18,9 @@ class BasicUser {
       if (dataValidation.status) {
         return await userService.register(reqBody);
       } else {
+        
         throw dataValidation;
+        
       }
     } catch (error) {
       return errorHandling(error);
@@ -35,13 +38,16 @@ class BasicUser {
           chalk.blue.bold.italic((await userService.login(reqBody)).message)
         );
         return await userService.login(reqBody);
-      } else {
+      } 
         throw dataValidation;
-      }
+      
     } catch (error) {
       return errorHandling(error);
     }
   };
+
+
+
 
   logout = async (reqBody, res) => {};
 

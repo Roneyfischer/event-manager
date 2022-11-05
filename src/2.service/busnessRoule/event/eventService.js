@@ -1,6 +1,10 @@
+//Methods: create/save(ADD), EDIT and DELETE
+//subscription, groups and category are party of userService.js
+
 import dbMethod from "../../../1.model/dbMethods/dbMethod.js";
 
 const eventService = {
+
   add: async (data) => {
     //editar pra adicionar corretamente ao DB
     const singularEvent = data.singularEvent;
@@ -14,12 +18,9 @@ const eventService = {
     const maxCapacityPerson = data.maxCapacityPerson;
     const subscriberNumber = 0;
 
-    //const {id, _subscriberNumber, _subscribers} isso funciona?
-    // const passEncrypted = await cryptoArgon2.encrypt(pass);
 
     const table = "events";
-    //no DB deve ser tudo not null
-    //name deve ser uinique
+
     const fieldName = `"singularEvent", 
     "singularGroup",
     "singularCategory",
@@ -58,14 +59,14 @@ const eventService = {
       reqBody;
   },
 
-  subscribre: (data) => {
-    const { singularUser, singularEvent } = data;
-
-    //
+  edit: async (reqBody) => {
+    const { table, nameItenToSearch, valueItenToSearch, itenToReturn } =
+      reqBody;
   },
 
-  unsubscribre: (data) => {
-    const { singularUser, singularEvent } = data;
+  delete: async (reqBody) => {
+    const { table, nameItenToSearch, valueItenToSearch, itenToReturn } =
+      reqBody;
   },
 
   //    cancel = (data) => {
