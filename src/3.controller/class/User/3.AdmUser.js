@@ -40,7 +40,7 @@ class AdmUser extends GuestUser {
   editGroup = async (reqBody) => {
     console.log("> [AdmUser.editGroup]");
     try {
-      const dataValidation = groupAndCategoryValdiation(reqBody);
+      const dataValidation = await groupAndCategoryValdiation(reqBody);
 
       console.log(
         "> [AdmUser.editGroup] Data validation: " + dataValidation.status
@@ -58,12 +58,12 @@ class AdmUser extends GuestUser {
   deleteGroup = async (reqBody) => {
     console.log("> [AdmUser.deleteGroup]");
     try {
-      const dataValidation = groupAndCategoryValdiation(reqBody);
+      const dataValidation = await groupAndCategoryValdiation(reqBody);
       console.log(
         "> [AdmUser.deleteGroup] Data validation: " + dataValidation.status
       );
       if (dataValidation.status) {
-        return await userService.deleteGroup();
+        return await userService.deleteGroup(reqBody);
       }
       throw dataValidation;
     } catch (error) {
@@ -90,7 +90,7 @@ class AdmUser extends GuestUser {
   editCategory = async (reqBody) => {
     console.log("> [AdmUser.editCategory]");
     try {
-      const dataValidation = groupAndCategoryValdiation(reqBody);
+      const dataValidation = await groupAndCategoryValdiation(reqBody);
       console.log(
         "> [AdmUser.editCategory] Data validation: " + dataValidation.status
       );
@@ -107,12 +107,12 @@ class AdmUser extends GuestUser {
     console.log("> [AdmUser.deleteCategory]");
     try {
     
-      const dataValidation = groupAndCategoryValdiation(reqBody);
+      const dataValidation = await groupAndCategoryValdiation(reqBody);
       console.log(
         "> [AdmUser.deleteCategory] Data validation: " + dataValidation.status
       );
       if (dataValidation.status) {
-        return await userService.deleteCategory();
+        return await userService.deleteCategory(reqBody);
       }
       throw dataValidation;
     } catch (error) {

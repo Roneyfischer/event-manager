@@ -5,21 +5,20 @@ import chalk from "chalk";
 import cookieParser from "cookie-parser";
 
 const userService = {
-  
   register: async (reqBody) => {
-    console.log("> [userService.register]")
+    console.log("> [userService.register]");
     const { singularUser, cpf, email, pass } = await reqBody;
     const passEncrypted = await cryptoArgon2.encrypt(pass);
 
     const table = "users";
     const fieldName = `"singularUser", "cpf", "email", "pass"`;
     const fieldValue = [singularUser, cpf, email, passEncrypted];
-    const teste = await dbMethod.add(table, fieldName, fieldValue)
-    return {status: teste.status, message: teste.message};
+    const teste = await dbMethod.add(table, fieldName, fieldValue);
+    return { status: teste.status, message: teste.message };
   },
 
   login: async (reqBody, res) => {
-    console.log("> [userService.login]")
+    console.log("> [userService.login]");
 
     const { cpf, pass } = reqBody;
 
@@ -54,7 +53,7 @@ const userService = {
   //
 
   createGroup: async (reqBody) => {
-    console.log("> [userService.createGroup]")
+    console.log("> [userService.createGroup]");
     const { singularUser, singularData } = await reqBody;
 
     const table = "groups";
@@ -64,7 +63,7 @@ const userService = {
     return (await dbMethod.add(table, fieldName, fieldValue)).message;
   },
   editGroup: async (reqBody) => {
-    console.log("> [userService.editGroup]")
+    console.log("> [userService.editGroup]");
     const { singularUser, singularData } = await reqBody;
 
     const table = "groups";
@@ -75,14 +74,16 @@ const userService = {
   },
 
   deleteGroup: async (reqBody) => {
-    console.log("> [userService.deleteGroup]")
-    const { singularEvent } = reqBody;
+    console.log("> [userService.deleteGroup]");
+    const { singularData } = reqBody;
     const table = "groups";
-    const nameItenToDeleteLine = `"singularEvent"`;
-    const valueItenToDeleteLine = [singularEvent];
-    return (
-      await dbMethod.delete(table, nameItenToDeleteLine, valueItenToDeleteLine)
-    ).message;
+    const nameItenToDeleteLine = `"singularGroup"`;
+    const valueItenToDeleteLine = [singularData];
+    return await dbMethod.delete(
+      table,
+      nameItenToDeleteLine,
+      valueItenToDeleteLine
+    );
   },
 
   //
@@ -90,7 +91,7 @@ const userService = {
   //
 
   createCategory: async (reqBody) => {
-    console.log("> [userService.createCategory]")
+    console.log("> [userService.createCategory]");
     const { singularUser, singularData } = await reqBody;
 
     const table = "categories";
@@ -101,7 +102,7 @@ const userService = {
   },
 
   editCategory: async (reqBody) => {
-    console.log("> [userService.editCategory]")
+    console.log("> [userService.editCategory]");
     const { singularUser, singularData } = await reqBody;
 
     const table = "categories";
@@ -112,7 +113,7 @@ const userService = {
   },
 
   deleteCategory: async (reqBody) => {
-    console.log("> [userService.deleteCategory]")
+    console.log("> [userService.deleteCategory]");
     const { singularCategory } = reqBody;
     const table = "categories";
     const nameItenToDeleteLine = `"singularCategory"`;

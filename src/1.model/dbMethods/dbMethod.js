@@ -48,17 +48,16 @@ const dbMethod = {
   //   }
   // },
 
-  delete: async (table, nameItenToSearch, valueItenToSearch) => {
+  delete: async (table, nameItenToDeleteLine, valueItenToDeleteLine) => {
     try {
-      const fieldsNumber = fieldName.split(/,/).length;
+      console.log(table, nameItenToDeleteLine, valueItenToDeleteLine);
 
-      const queryText = `DELETE FROM ${table} WHERE ${nameItenToSearch} = $1`;
-      const queryValues = [valueItenToSearch];
+      const queryText = `DELETE FROM ${table} WHERE ${nameItenToDeleteLine} IN ($1)`;
+      const queryValues = valueItenToDeleteLine;
       const client = await dbConnect();
-
-      await client.query(queryText, queryValues).then((res) => {});
-
-      return { status: true, message: `Deletation successful` };
+      return await client.query(queryText, queryValues).then((res) => {
+        const dataFinded = res.rows[0];
+      });
     } catch (error) {
       throw error;
     }
@@ -66,7 +65,7 @@ const dbMethod = {
 
   read: async (table, nameItenToSearch, valueItenToSearch, itenToReturn) => {
     try {
-      const queryText = `SELECT ${itenToReturn} from ${table} WHERE ${nameItenToSearch} = $1`;
+      const queryText = `SELECT ${itenToReturn} from "${table}" WHERE "${nameItenToSearch}" = '$1'`;
       const queryValues = [valueItenToSearch];
       const client = await dbConnect();
 
