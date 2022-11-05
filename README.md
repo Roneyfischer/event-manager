@@ -24,7 +24,7 @@ create table groups (
 
 PRIMARY KEY ("singularUser", "singularGroup"),
 
-FOREIGN KEY ("singularUser") REFERENCES "users" ("singularUser")
+FOREIGN KEY ("singularUser") REFERENCES "users" ("singularUser") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 create table categories(
@@ -34,7 +34,7 @@ create table categories(
 
 primary key("singularUser","singularCategory"),
 
-FOREIGN KEY ("singularUser") REFERENCES "users" ("singularUser")
+FOREIGN KEY ("singularUser") REFERENCES "users" ("singularUser") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 create table events (
@@ -51,8 +51,8 @@ create table events (
 "subscriberNumber" varchar(32),
 
 FOREIGN KEY ("singularUser") REFERENCES "users" ("singularUser"),
-FOREIGN KEY ("singularUser", "singularGroup") REFERENCES "groups" ("singularUser", "singularGroup"),
-FOREIGN KEY ("singularUser","singularCategory") REFERENCES "categories" ("singularUser","singularCategory")
+FOREIGN KEY ("singularUser", "singularGroup") REFERENCES "groups" ("singularUser", "singularGroup") ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY ("singularUser","singularCategory") REFERENCES "categories" ("singularUser","singularCategory") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 create table subscribers(
@@ -63,10 +63,11 @@ create table subscribers(
 
 primary key("singularEvent","singularUser"),
 
-FOREIGN KEY ("singularUser") REFERENCES "users" ("singularUser"),
-FOREIGN KEY ("singularEvent") REFERENCES "events" ("singularEvent")
+FOREIGN KEY ("singularUser") REFERENCES "users" ("singularUser") ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY ("singularEvent") REFERENCES "events" ("singularEvent") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+*********************************
 
 INSERT INTO "groups"("singularUser", "singularGroup", "createDate") VALUES('01', 'Serviço Social', '2022/12/12');
 INSERT INTO "categories"("singularUser", "singularCategory") VALUES('01', 'Serviços Sociais');

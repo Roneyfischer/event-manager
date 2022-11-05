@@ -49,41 +49,58 @@ const dbMethod = {
   // },
 
   delete: async (table, nameItenToDeleteLine, valueItenToDeleteLine) => {
-    try {
-      console.log(table, nameItenToDeleteLine, valueItenToDeleteLine);
+    const checkLineExists = await dbMethod.read(
+      table,
+      nameItenToDeleteLine,
+      valueItenToDeleteLine,
+      nameItenToDeleteLine
+    );
 
-      const queryText = `DELETE FROM ${table} WHERE ${nameItenToDeleteLine} IN ($1)`;
-      const queryValues = valueItenToDeleteLine;
-      const client = await dbConnect();
-      return await client.query(queryText, queryValues).then((res) => {
-        const dataFinded = res.rows[0];
-      });
-    } catch (error) {
-      throw error;
+    console.log(
+      `> [dbMethod.delete] check if the object exists on Db table: ${checkLineExists.status} `
+    );
+
+    if (!checkLineExists.status) {
+      throw { status: false, message: `Value to delete not exists` };
     }
+
+    const queryText = `DELETE FROM ${table} WHERE ${nameItenToDeleteLine} IN ($1)`;
+    const queryValues = valueItenToDeleteLine;
+
+    const client = await dbConnect();
+
+    await client.query(queryText, queryValues).then((res, error) => {
+      console.log(
+        `> [dbMethod.delete] ${nameItenToDeleteLine} has been deleted`
+      );
+    });
+
+    return {
+      status: true,
+      message: `${nameItenToDeleteLine} has been deleted`,
+    };
   },
 
   read: async (table, nameItenToSearch, valueItenToSearch, itenToReturn) => {
-    try {
-      const queryText = `SELECT ${itenToReturn} from "${table}" WHERE "${nameItenToSearch}" = '$1'`;
-      const queryValues = [valueItenToSearch];
-      const client = await dbConnect();
+    const queryText = `SELECT ${itenToReturn} from ${table} WHERE ${nameItenToSearch} IN ($1)`;
+    const queryValues = valueItenToSearch;
+    const client = await dbConnect();
 
-      return await client.query(queryText, queryValues).then((res) => {
-        const dataFinded = res.rows[0];
+    return await client.query(queryText, queryValues).then((res) => {
+      const dataFinded = res.rows[0];
 
-        if (dataFinded) {
-          return dataFinded;
-        } else {
-          throw {
-            status: false,
-            message: `Unexpected error in database search. Data not found. Please check that the fields are filled in correctly. (developerMessage)`,
-          };
-        }
-      });
-    } catch (error) {
-      throw error;
-    }
+      if (!dataFinded) {
+        throw {
+          status: false,
+          message: `Unexpected error in database search. Data not found. Please check that the fields are filled in correctly. (developerMessage)`,
+        };
+      }
+      return {
+        status: true,
+        message: `Unexpected error in database search. Data not found. Please check that the fields are filled in correctly. (developerMessage)`,
+        dataFinded: dataFinded,
+      };
+    });
   },
 
   //   read: async (table, nameItenToSearch, valueItenToSearch, itenToReturn) => {
