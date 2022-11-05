@@ -6,7 +6,6 @@ import pg from "pg";
 const dbMethod = {
   add: async (table, fieldName, fieldValue) => {
     try {
-      
       const fieldsNumber = fieldName.split(/,/).length;
 
       let fieldsNumberVariables = [];
@@ -20,7 +19,7 @@ const dbMethod = {
       const client = await dbConnect();
 
       await client.query(queryText, queryValues).then((res) => {});
-      console.log(chalk.blue.bold.italic(`Registration successful`));
+      console.log("> [dbMethod.add] Registration successful");
       return { status: true, message: `Registration successful` };
     } catch (error) {
       throw error;
@@ -58,8 +57,8 @@ const dbMethod = {
       const client = await dbConnect();
 
       await client.query(queryText, queryValues).then((res) => {});
-      console.log(chalk.blue.bold.italic(`Registration successful`));
-      return { status: true, message: `Registration successful` };
+
+      return { status: true, message: `Deletation successful` };
     } catch (error) {
       throw error;
     }

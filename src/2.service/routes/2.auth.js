@@ -5,16 +5,18 @@ import jwt from "jsonwebtoken";
 const auth = express.Router();
 
 auth.post("/", async (req, res) => {
-  console.log("Passando por: rota /auth");
+  console.log("> [route.auth]");
   const user = new AdmUser();
   const typeRequisition = req.body.type;
   //seta o cookie se colcoar login e dados do register
   if (typeRequisition == "login" || typeRequisition == "register") {
-    const loginFunction = await user[req.body.type](req.body, res);
-    console.log("Status do login: " + loginFunction.status);
+    console.log("> [route.auth] Requisition ok.");
 
-    if (loginFunction.status) {
-      console.log("Entrou no IF loginFunction.status");
+    const operation = await user[req.body.type](req.body, res);
+    console.log("> [route.auth] Result login:" + operation.status);
+
+    if (operation.status) {
+      console.log("> [route.auth] answered for to front-end.");
       const { cpf } = req.body;
       const token = jwt.sign({ id_user: cpf }, process.env.JWT_KEY);
 
@@ -25,11 +27,15 @@ auth.post("/", async (req, res) => {
           expire: 500000,
         })
         .status(200)
-        .json({ return: loginFunction.status });
+        .json({ return: operation.status, message: operation.message });
     }
-    res.status(401).json({ return: loginFunction });
+
+    return res.status(401).json({ return: operation.message });
   }
-  res.status(401).json({ status: false, message: "requisição incorreta" });
+  console.log("> [route.auth] Fail requisition.");
+  return res
+    .status(401)
+    .json({ status: false, message: "Incorrect requisition" });
 });
 
 export default auth;

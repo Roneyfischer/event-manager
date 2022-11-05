@@ -10,7 +10,9 @@ import userService from "../../../2.service/busnessRoule/user/userService.js";
 import Event from "../Event/Event.js";
 
 class GuestUser extends BasicUser {
+ 
   subscribe = async (reqBody) => {
+    console.log("> [GuestUser.subscribe]")
     const event = new Event();
     try {
       const table = "events";
@@ -41,6 +43,7 @@ class GuestUser extends BasicUser {
   };
 
   unsubscribe = async (reqBody) => {
+    console.log("> [GuestUser.unsubscribe]")
     const event = new Event();
     subscribe = async (reqBody) => {
       try {

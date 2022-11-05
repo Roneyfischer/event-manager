@@ -27,10 +27,6 @@ PRIMARY KEY ("singularUser", "singularGroup"),
 FOREIGN KEY ("singularUser") REFERENCES "users" ("singularUser")
 );
 
-INSERT INTO "groups"("singularUser", "singularGroup", "createDate") VALUES('01', 'Serviço Social', '2022/12/12');
-
----
-
 create table categories(
 "id" serial unique,
 "singularUser" varchar(255) not null,
@@ -40,8 +36,6 @@ primary key("singularUser","singularCategory"),
 
 FOREIGN KEY ("singularUser") REFERENCES "users" ("singularUser")
 );
-
-INSERT INTO "categories"("singularUser", "singularCategory") VALUES('01', 'Serviços Sociais');
 
 create table events (
 "id" serial unique,
@@ -72,6 +66,10 @@ primary key("singularEvent","singularUser"),
 FOREIGN KEY ("singularUser") REFERENCES "users" ("singularUser"),
 FOREIGN KEY ("singularEvent") REFERENCES "events" ("singularEvent")
 );
+
+
+INSERT INTO "groups"("singularUser", "singularGroup", "createDate") VALUES('01', 'Serviço Social', '2022/12/12');
+INSERT INTO "categories"("singularUser", "singularCategory") VALUES('01', 'Serviços Sociais');
 INSERT INTO "subscribers"("singularUser", "singularEvent", "subscriptionDate") VALUES ('01', '02', '2022/11/03');
 
 FRONT-END REQUISITION/POSTMAN (/auth):

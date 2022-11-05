@@ -7,6 +7,7 @@ dotenv.config();
 
 
 const app = express();
+console.log("> [app] The app has been declared")
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))

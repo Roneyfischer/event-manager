@@ -5,6 +5,7 @@ import list from "./3.list.js";
 import admUser from "./4.admUser.js";
 
 const router = (app) => {
+ console.log("> [route.index] Inicial route")
   app
     .use("/", homePage)
     .use("/auth", auth)

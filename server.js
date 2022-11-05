@@ -5,8 +5,9 @@ import chalk from "chalk";
 
 try {
   app.listen(process.env.SERVER_PORT, () => {
+    console.log("> [server] Starting server")
     console.log(
-      chalk.blueBright.bold(`Server is running on ${process.env.SERVER_PORT}`)
+      chalk.blueBright.bold(`> [server] Server is running on ${process.env.SERVER_PORT}`)
     );
   });
 } catch (error) {

@@ -5,18 +5,22 @@ import chalk from "chalk";
 import cookieParser from "cookie-parser";
 
 const userService = {
+  
   register: async (reqBody) => {
+    console.log("> [userService.register]")
     const { singularUser, cpf, email, pass } = await reqBody;
     const passEncrypted = await cryptoArgon2.encrypt(pass);
 
     const table = "users";
     const fieldName = `"singularUser", "cpf", "email", "pass"`;
     const fieldValue = [singularUser, cpf, email, passEncrypted];
-
-    return (await dbMethod.add(table, fieldName, fieldValue)).message;
+    const teste = await dbMethod.add(table, fieldName, fieldValue)
+    return {status: teste.status, message: teste.message};
   },
 
   login: async (reqBody, res) => {
+    console.log("> [userService.login]")
+
     const { cpf, pass } = reqBody;
 
     const table = "users";
@@ -50,6 +54,7 @@ const userService = {
   //
 
   createGroup: async (reqBody) => {
+    console.log("> [userService.createGroup]")
     const { singularUser, singularData } = await reqBody;
 
     const table = "groups";
@@ -59,6 +64,7 @@ const userService = {
     return (await dbMethod.add(table, fieldName, fieldValue)).message;
   },
   editGroup: async (reqBody) => {
+    console.log("> [userService.editGroup]")
     const { singularUser, singularData } = await reqBody;
 
     const table = "groups";
@@ -69,6 +75,7 @@ const userService = {
   },
 
   deleteGroup: async (reqBody) => {
+    console.log("> [userService.deleteGroup]")
     const { singularEvent } = reqBody;
     const table = "groups";
     const nameItenToDeleteLine = `"singularEvent"`;
@@ -83,6 +90,7 @@ const userService = {
   //
 
   createCategory: async (reqBody) => {
+    console.log("> [userService.createCategory]")
     const { singularUser, singularData } = await reqBody;
 
     const table = "categories";
@@ -93,6 +101,7 @@ const userService = {
   },
 
   editCategory: async (reqBody) => {
+    console.log("> [userService.editCategory]")
     const { singularUser, singularData } = await reqBody;
 
     const table = "categories";
@@ -103,6 +112,7 @@ const userService = {
   },
 
   deleteCategory: async (reqBody) => {
+    console.log("> [userService.deleteCategory]")
     const { singularCategory } = reqBody;
     const table = "categories";
     const nameItenToDeleteLine = `"singularCategory"`;

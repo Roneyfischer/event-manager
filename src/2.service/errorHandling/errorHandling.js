@@ -1,5 +1,6 @@
 import chalk from "chalk";
 function errorHandling(error) {
+  console.log("> [errorHandling]");
   console.log(error);
   // const errorMessage = error;
 
@@ -19,7 +20,7 @@ function errorHandling(error) {
 const errorList = {
   generalErrorReturn: (errorMessage) => {
     console.log(chalk.red.bold.italic(errorMessage));
-    return errorMessage;
+    return { status: false, message: "aqui" + errorMessage };
   },
 };
 

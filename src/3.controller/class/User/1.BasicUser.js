@@ -12,15 +12,14 @@ import userService from "../../../2.service/busnessRoule/user/userService.js";
 
 class BasicUser {
   register = async (reqBody) => {
+    console.log("> [BasicUser.register]");
     try {
       const dataValidation = userRegisterDataValidation(reqBody);
 
       if (dataValidation.status) {
         return await userService.register(reqBody);
       } else {
-        
         throw dataValidation;
-        
       }
     } catch (error) {
       return errorHandling(error);
@@ -28,6 +27,7 @@ class BasicUser {
   };
 
   login = async (reqBody, res) => {
+    console.log("> [BasicUser.login]");
     try {
       //se houver erro na validação, o "userLoginDataValidation" lança/throw erro,
       //e o CATH desta função retorna para o console e frontEnd
@@ -35,23 +35,24 @@ class BasicUser {
 
       if (dataValidation.status) {
         console.log(
-          chalk.blue.bold.italic((await userService.login(reqBody)).message)
+          chalk.blue.bold.italic(
+            "> [BasicUser.login] " + (await userService.login(reqBody)).message
+          )
         );
         return await userService.login(reqBody);
-      } 
-        throw dataValidation;
-      
+      }
+      throw dataValidation;
     } catch (error) {
       return errorHandling(error);
     }
   };
 
-
-
-
-  logout = async (reqBody, res) => {};
+  logout = async (reqBody, res) => {
+    console.log("> [BasicUser.logout]");
+  };
 
   authorization = async (reqBody) => {
+    console.log("> [BasicUser.authorization]");
     try {
     } catch (error) {
       return errorHandling(error);
@@ -59,6 +60,7 @@ class BasicUser {
   };
 
   delete = async (reqBody) => {
+    console.log("> [BasicUser.delete]");
     try {
     } catch (error) {
       return errorHandling(error);
@@ -66,6 +68,7 @@ class BasicUser {
   };
 
   edit = async (reqBody) => {
+    console.log("> [BasicUser.edit]");
     try {
     } catch (error) {
       return errorHandling(error);

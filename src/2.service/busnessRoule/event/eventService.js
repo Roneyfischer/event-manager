@@ -4,8 +4,8 @@
 import dbMethod from "../../../1.model/dbMethods/dbMethod.js";
 
 const eventService = {
-
   add: async (data) => {
+    console.log("> [eventService.add]");
     //editar pra adicionar corretamente ao DB
     const singularEvent = data.singularEvent;
     const singulargroup = data.singularGroup;
@@ -17,7 +17,6 @@ const eventService = {
     const place = data.place;
     const maxCapacityPerson = data.maxCapacityPerson;
     const subscriberNumber = 0;
-
 
     const table = "events";
 
@@ -46,6 +45,7 @@ const eventService = {
 
     const returnAddDb = await dbMethod.add(table, fieldName, fieldValue);
     //pode retornar "_id _subscriberNumber, _subscribers" em uma read do DB, msa não precisa na etapa de criação.
+    console.log("> [eventService.add] " + returnAddDb.message);
     return {
       status: true,
       message: returnAddDb.message,
@@ -55,16 +55,19 @@ const eventService = {
   //      { eventName, eventId } = data;
   //   };
   read: async (reqBody) => {
+    console.log("> [eventService.read]");
     const { table, nameItenToSearch, valueItenToSearch, itenToReturn } =
       reqBody;
   },
 
   edit: async (reqBody) => {
+    console.log("> [eventService.edit]");
     const { table, nameItenToSearch, valueItenToSearch, itenToReturn } =
       reqBody;
   },
 
   delete: async (reqBody) => {
+    console.log("> [eventService.delete]");
     const { table, nameItenToSearch, valueItenToSearch, itenToReturn } =
       reqBody;
   },

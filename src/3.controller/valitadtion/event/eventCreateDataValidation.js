@@ -1,4 +1,5 @@
 const eventCreateDataValidation = (event) => {
+  console.log("> [eventCreateDataValidation] Validating data")
   if (
     (event.singularEvent,
     event.singularGroup,
@@ -10,6 +11,7 @@ const eventCreateDataValidation = (event) => {
     event.place,
     event.maxCapacityPerson)
   ) {
+    console.log("> [eventCreateDataValidation] Data has been validated")
     return { status: true, message: `field has been completed` };
   }
   throw { status: false, message: `All fields are mandatory` };

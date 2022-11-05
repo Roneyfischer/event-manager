@@ -1,7 +1,7 @@
 import eventService from "../../../2.service/busnessRoule/event/eventService.js";
 import errorHandling from "../../../2.service/errorHandling/errorHandling.js";
 import eventCreateDataValidation from "../../valitadtion/event/eventCreateDataValidation.js";
-import eventReadValidation from "../../valitadtion/event/eventReadValidation.js"
+import eventReadValidation from "../../valitadtion/event/eventReadValidation.js";
 export default class Event {
   constructor(data) {
     const {
@@ -42,7 +42,6 @@ export default class Event {
   }
   add = () => {
     try {
-      console.log("valor aqui: " + this.group);
       const dataValidation = eventCreateDataValidation(this);
       if (dataValidation.status) {
         //aguarda um retorno {status: true/false, message: `msg here`, id: ${id}, subscriberNumber: ${subscriberNumber}, subscribers: ${subscribers}}
@@ -59,18 +58,14 @@ export default class Event {
   };
 
   read = (data) => {
-    try {    
-      
-    const dataValidation = eventReadValidation(data)
+    try {
+      const dataValidation = eventReadValidation(data);
 
-    if(dataValidation) {
-
-      return eventService.read(data)
-    }throw dataValidation
-    
-  } catch (error) {
-      
-  }
+      if (dataValidation) {
+        return eventService.read(data);
+      }
+      throw dataValidation;
+    } catch (error) {}
   };
 
   // subscribre = (data) => {

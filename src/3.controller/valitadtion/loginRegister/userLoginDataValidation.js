@@ -2,6 +2,7 @@
 // embora tal validação possa ser realizada diretamente no DB.
 import errorHandling from "../../../2.service/errorHandling/errorHandling.js";
 const userLoginDataValidation = (reqBody) => {
+  console.log("> [userLoginDataValidation] Validating data")
   const { cpf, pass } = reqBody;
 
   if (cpf && pass) {
