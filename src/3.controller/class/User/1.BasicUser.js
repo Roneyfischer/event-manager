@@ -5,7 +5,6 @@
 
 import userRegisterDataValidation from "../../valitadtion/loginRegister/userRegisterDataValidation.js";
 import userLoginDataValidation from "../../valitadtion/loginRegister/userLoginDataValidation.js";
-import generalDataValidation from "../../valitadtion/FAILgeneralDataValidation.js";
 import errorHandling from "../../../2.service/errorHandling/errorHandling.js";
 import chalk from "chalk";
 import userService from "../../../2.service/busnessRoule/user/userService.js";

@@ -20,7 +20,7 @@ function errorHandling(error) {
 const errorList = {
   generalErrorReturn: (errorMessage) => {
     console.log(chalk.red.bold.italic(errorMessage));
-    return { status: false, message: "aqui" + errorMessage };
+    return { status: false, message: errorMessage };
   },
 };
 

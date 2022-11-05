@@ -74,7 +74,7 @@ class AdmUser extends GuestUser {
   createCategory = async (reqBody) => {
     console.log("> [AdmUser.createCategory]");
     try {
-      const dataValidation = groupAndCategoryValdiation(reqBody);
+      const dataValidation = await groupAndCategoryValdiation(reqBody);
       console.log(
         "> [AdmUser.createCategory] Data validation: " + dataValidation.status
       );
