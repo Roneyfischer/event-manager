@@ -21,7 +21,7 @@ const userService = {
     console.log("> [userService.login]");
 
     const { cpf, pass } = reqBody;
-
+    console.log("> [userService.login]" + cpf);
     const table = "users";
     const nameItenToSearch = "cpf";
     const valueItenToSearch = cpf;
@@ -35,6 +35,7 @@ const userService = {
         itenToReturn
       )
     ).pass;
+    console.log("> [userService.login]" + longHash); //ex
     const verifyPassword = await cryptoArgon2.verify(pass, longHash);
 
     //   console.log(chalk.green.bold.italic(verifyPassword.message));
@@ -44,17 +45,18 @@ const userService = {
 
   authorization: async (reqBody) => {},
 
-  delete: async (reqBody) => {  
-  console.log("> [userService.delete]");
-  const { singularData } = reqBody;
-  const table = "users";
-  const nameItenToDeleteLine = `"singularUser"`;
-  const valueItenToDeleteLine = [singularData];
-  return await dbMethod.delete(
-    table,
-    nameItenToDeleteLine,
-    valueItenToDeleteLine
-  );},
+  delete: async (reqBody) => {
+    console.log("> [userService.delete]");
+    const { singularData } = reqBody;
+    const table = "users";
+    const nameItenToDeleteLine = `"singularUser"`;
+    const valueItenToDeleteLine = [singularData];
+    return await dbMethod.delete(
+      table,
+      nameItenToDeleteLine,
+      valueItenToDeleteLine
+    );
+  },
 
   edit: async (reqBody) => {},
 
