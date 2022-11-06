@@ -61,6 +61,9 @@ class BasicUser {
 
   delete = async (reqBody) => {
     //em edição
+    //no auth faz o uso e verificação do jwToken recebido
+    //aqui, lê o jwToken e extrai o CPF  pra usar como singularData npm(valor do usuário a ser excluído)
+    //2.
     console.log("> [BasicUser.delete]");
     try {
       const dataValidation = await groupAndCategoryValdiation(reqBody);
