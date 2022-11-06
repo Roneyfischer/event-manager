@@ -8,6 +8,7 @@ import userLoginDataValidation from "../../valitadtion/loginRegister/userLoginDa
 import errorHandling from "../../../2.service/errorHandling/errorHandling.js";
 import chalk from "chalk";
 import userService from "../../../2.service/busnessRoule/user/userService.js";
+import groupAndCategoryValdiation from "../../valitadtion/groupAndCategory/groupAndCategoryValdiation.js";
 
 class BasicUser {
   register = async (reqBody) => {
@@ -59,8 +60,17 @@ class BasicUser {
   };
 
   delete = async (reqBody) => {
+    //em edição
     console.log("> [BasicUser.delete]");
     try {
+      const dataValidation = await groupAndCategoryValdiation(reqBody);
+      console.log(
+        "> [AdmUser.deleteGroup] Data validation: " + dataValidation.status
+      );
+      if (dataValidation.status) {
+        return await userService.delete(reqBody);
+      }
+      throw dataValidation;
     } catch (error) {
       return errorHandling(error);
     }

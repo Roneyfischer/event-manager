@@ -44,7 +44,17 @@ const userService = {
 
   authorization: async (reqBody) => {},
 
-  delete: async (reqBody) => {},
+  delete: async (reqBody) => {  
+  console.log("> [userService.delete]");
+  const { singularData } = reqBody;
+  const table = "users";
+  const nameItenToDeleteLine = `"singularUser"`;
+  const valueItenToDeleteLine = [singularData];
+  return await dbMethod.delete(
+    table,
+    nameItenToDeleteLine,
+    valueItenToDeleteLine
+  );},
 
   edit: async (reqBody) => {},
 
