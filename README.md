@@ -119,3 +119,4 @@ Concertar erro:
 2. parar de quebrar quando já tem o cadastro no DB
    3.burlar cookie mandando requisição de login com dados de cadastro/registro/group
 3. desfazer no auth/login macarrão
+4. o user comum pode excluir somente a própria conta. Fazer a leitura
