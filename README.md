@@ -3,19 +3,11 @@ Creiei esta estrutura pra ter um ponto de partida no desenvolvimento a partir do
 create table users (
 "id" serial unique,
 "singularUser" varchar(255) primary key not null,
+"role" varchar (32) not null,
 "cpf" varchar(255) not null unique,
 "email" varchar(512) not null unique,
 "pass" varchar(600) not null unique,
 "secondUserId" varchar(512) not null unique
-);
-
-create table users (
-"id" serial unique,
-"singularUser" varchar(255) primary key not null,
-"role" varchar (32),
-"cpf" varchar(255) not null unique,
-"email" varchar(512) not null unique,
-"pass" varchar(600) not null unique
 );
 
 create table groups (
@@ -42,8 +34,11 @@ create table events (
 "id" serial unique,
 "singularUser" varchar(255) not null,
 "singularEvent" varchar(255) PRIMARY KEY not null,
+
 "singularGroup" varchar(255) not null,
+
 "singularCategory" varchar(255) not null,
+
 "description" varchar(8000) not null,
 "createDate" Date not null,
 "date" Date not null,
@@ -51,8 +46,8 @@ create table events (
 "maxCapacityPerson" integer not null,
 "subscriberNumber" varchar(32),
 
-FOREIGN KEY ("singularUser") REFERENCES "users" ("singularUser"),
 FOREIGN KEY ("singularUser", "singularGroup") REFERENCES "groups" ("singularUser", "singularGroup") ON DELETE CASCADE ON UPDATE CASCADE,
+
 FOREIGN KEY ("singularUser","singularCategory") REFERENCES "categories" ("singularUser","singularCategory") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -119,3 +114,7 @@ Concertar erro:
 2. parar de quebrar quando já tem o cadastro no DB
    3.burlar cookie mandando requisição de login com dados de cadastro/registro/group
 3. desfazer no auth/login macarrão
+
+INFOS, DOCUMENTATION:
+
+secondUserIdHashed: serve pra utilizar no payload do jwToken, pra dificultar a falsificação do token, bem como identificar o usuário, juntamento com o CPF (a ser criptografado)

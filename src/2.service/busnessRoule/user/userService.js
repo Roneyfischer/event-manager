@@ -1,18 +1,30 @@
 import dbMethod from "../../../1.model/DAL/dbMethod.js";
-import cryptoArgon2 from "../crypto/cryptoOperator.js";
+import cryptography from "../crypto/cryptoOperator.js";
 import jwt from "jsonwebtoken";
 import chalk from "chalk";
 import cookieParser from "cookie-parser";
 
 const userService = {
   register: async (reqBody) => {
-    console.log("> [userService.register]");
-    const { singularUser, cpf, email, pass } = await reqBody;
-    const passEncrypted = await cryptoArgon2.encrypt(pass);
+    console.log("> [userService.register]: AQUIII >>>> " + cryptography);
+    const { singularUser, cpf, email, role, pass } = await reqBody;
+
+    const secondUserId = singularUser + cpf;
+    const secondUserIdHashed = (
+      await cryptography.basicCript.encript(secondUserId)
+    ).dataHashed;
+    const passEncrypted = await cryptography.cryptoArgon2.encrypt(pass);
 
     const table = "users";
-    const fieldName = `"singularUser", "cpf", "email", "pass"`;
-    const fieldValue = [singularUser, cpf, email, passEncrypted];
+    const fieldName = `"singularUser", "cpf", "email", "role", "pass", "secondUserId"`;
+    const fieldValue = [
+      singularUser,
+      cpf,
+      email,
+      role,
+      passEncrypted,
+      secondUserIdHashed,
+    ];
     const teste = await dbMethod.add(table, fieldName, fieldValue);
     return { status: teste.status, message: teste.message };
   },
@@ -35,7 +47,10 @@ const userService = {
       )
     ).dataFinded.pass;
 
-    const verifyPassword = await cryptoArgon2.verify(pass, longHash);
+    const verifyPassword = await cryptography.cryptoArgon2.verify(
+      pass,
+      longHash
+    );
 
     //   console.log(chalk.green.bold.italic(verifyPassword.message));
 

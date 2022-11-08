@@ -34,7 +34,7 @@ class BasicUser {
       const dataValidation = userLoginDataValidation(reqBody);
 
       if (dataValidation.status) {
-              return await userService.login(reqBody);
+        return await userService.login(reqBody);
       }
       throw dataValidation;
     } catch (error) {
