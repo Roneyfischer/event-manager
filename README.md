@@ -5,7 +5,8 @@ create table users (
 "singularUser" varchar(255) primary key not null,
 "cpf" varchar(255) not null unique,
 "email" varchar(512) not null unique,
-"pass" varchar(600) not null unique
+"pass" varchar(600) not null unique,
+"secondUserId" varchar(512) not null unique
 );
 
 create table users (
@@ -67,7 +68,7 @@ FOREIGN KEY ("singularUser") REFERENCES "users" ("singularUser") ON DELETE CASCA
 FOREIGN KEY ("singularEvent") REFERENCES "events" ("singularEvent") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-*********************************
+---
 
 INSERT INTO "groups"("singularUser", "singularGroup", "createDate") VALUES('01', 'Serviço Social', '2022/12/12');
 INSERT INTO "categories"("singularUser", "singularCategory") VALUES('01', 'Serviços Sociais');
@@ -116,5 +117,5 @@ Concertar erro:
 
 1. criptografar CPF pra não transitar aberto
 2. parar de quebrar quando já tem o cadastro no DB
-3.burlar cookie mandando requisição de login com dados de cadastro/registro/group
-4. desfazer no auth/login macarrão
+   3.burlar cookie mandando requisição de login com dados de cadastro/registro/group
+3. desfazer no auth/login macarrão
