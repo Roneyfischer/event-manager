@@ -49,6 +49,11 @@ const dbMethod = {
   // },
 
   delete: async (table, nameItenToDeleteLine, valueItenToDeleteLine) => {
+    console.log(
+      table,
+      nameItenToDeleteLine,
+      valueItenToDeleteLine + "<<<<<<<<<"
+    );
     const checkLineExists = await dbMethod.read(
       table,
       nameItenToDeleteLine,
@@ -57,7 +62,7 @@ const dbMethod = {
     );
 
     console.log(
-      `> [dbMethod.delete] check if the object exists on Db table: ${checkLineExists.status} `
+      `> [dbMethod.delete] Checking if the object exists on Db table: ${checkLineExists.status} `
     );
 
     if (!checkLineExists.status) {
@@ -86,10 +91,8 @@ const dbMethod = {
     const queryValues = valueItenToSearch;
     const client = await dbConnect();
 
-
     return await client.query(queryText, queryValues).then((res) => {
       const dataFinded = res.rows[0];
-      
 
       if (!dataFinded) {
         console.log("> [dbMethod.delete]  data not found!");

@@ -20,7 +20,7 @@ const userService = {
   login: async (reqBody, res) => {
     console.log("> [userService.login] Open");
 
-    const { cpf, pass } = reqBody;  
+    const { cpf, pass } = reqBody;
     const table = "users";
     const nameItenToSearch = "cpf";
     const valueItenToSearch = [cpf];
@@ -34,7 +34,7 @@ const userService = {
         itenToReturn
       )
     ).dataFinded.pass;
-    
+
     const verifyPassword = await cryptoArgon2.verify(pass, longHash);
 
     //   console.log(chalk.green.bold.italic(verifyPassword.message));
@@ -125,10 +125,10 @@ const userService = {
 
   deleteCategory: async (reqBody) => {
     console.log("> [userService.deleteCategory]");
-    const { singularCategory } = reqBody;
+    const { singularData } = reqBody;
     const table = "categories";
     const nameItenToDeleteLine = `"singularCategory"`;
-    const valueItenToDeleteLine = [singularCategory];
+    const valueItenToDeleteLine = [singularData];
 
     return (
       await dbMethod.delete(table, nameItenToDeleteLine, valueItenToDeleteLine)

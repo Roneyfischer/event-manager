@@ -108,9 +108,7 @@ class AdmUser extends GuestUser {
     try {
     
       const dataValidation = await groupAndCategoryValdiation(reqBody);
-      console.log(
-        "> [AdmUser.deleteCategory] Data validation: " + dataValidation.status
-      );
+    
       if (dataValidation.status) {
         return await userService.deleteCategory(reqBody);
       }
