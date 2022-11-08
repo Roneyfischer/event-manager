@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 const auth = express.Router();
 
 auth.post("/", async (req, res) => {
+  //desfazer esse macarrão
   console.log("> [route.auth]");
   const user = new AdmUser();
   const typeRequisition = req.body.type;
@@ -18,7 +19,9 @@ auth.post("/", async (req, res) => {
     if (operation.status) {
       console.log("> [route.auth] answered for to front-end.");
       const { cpf } = req.body;
-      const token = jwt.sign({ id_user: cpf }, process.env.JWT_KEY);
+      const token = jwt.sign({ userId: cpf }, process.env.JWT_KEY, {
+        expiresIn: 30000,
+      });
 
       return res
         .cookie("access_token", token, {

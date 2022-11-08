@@ -116,4 +116,5 @@ Concertar erro:
 
 1. criptografar CPF pra não transitar aberto
 2. parar de quebrar quando já tem o cadastro no DB
-   3.burlar cookie mandando requisição de login com dados de cadastro/registro/group
+3.burlar cookie mandando requisição de login com dados de cadastro/registro/group
+4. desfazer no auth/login macarrão
