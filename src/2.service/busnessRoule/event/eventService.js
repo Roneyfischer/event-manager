@@ -1,7 +1,7 @@
 //Methods: create/save(ADD), EDIT and DELETE
 //subscription, groups and category are party of userService.js
 
-import dbMethod from "../../../1.model/dbMethods/dbMethod.js";
+import dbMethod from "../../../1.model/DAL/dbMethod.js";
 
 const eventService = {
   add: async (data) => {

@@ -34,12 +34,7 @@ class BasicUser {
       const dataValidation = userLoginDataValidation(reqBody);
 
       if (dataValidation.status) {
-        console.log(
-          chalk.blue.bold.italic(
-            "> [BasicUser.login] " + (await userService.login(reqBody)).message
-          )
-        );
-        return await userService.login(reqBody);
+              return await userService.login(reqBody);
       }
       throw dataValidation;
     } catch (error) {

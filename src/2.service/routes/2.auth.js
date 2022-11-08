@@ -1,5 +1,5 @@
 import express from "express";
-import AdmUser from "../../3.controller/class/User/3.AdmUser.js";
+import AdmUser from "../../3.controller/Entities/User/3.AdmUser.js";
 import jwt from "jsonwebtoken";
 
 const auth = express.Router();

@@ -1,6 +1,6 @@
 import express from "express";
-import Event from "../../3.controller/class/Event/Event.js";
-import AdmUser from "../../3.controller/class/User/3.AdmUser.js";
+import Event from "../../3.controller/Entities/Event/Event.js";
+import AdmUser from "../../3.controller/Entities/User/3.AdmUser.js";
 const admUser = express.Router();
 
 admUser.post("/", async (req, res) => {

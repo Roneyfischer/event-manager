@@ -82,14 +82,17 @@ const dbMethod = {
   },
 
   read: async (table, nameItenToSearch, valueItenToSearch, itenToReturn) => {
-    const queryText = `SELECT ${itenToReturn} from ${table} WHERE ${nameItenToSearch} IN ($1)`;
+    const queryText = `SELECT ${itenToReturn} from ${table} WHERE ${nameItenToSearch} in ($1) `;
     const queryValues = valueItenToSearch;
     const client = await dbConnect();
 
+
     return await client.query(queryText, queryValues).then((res) => {
       const dataFinded = res.rows[0];
+      
 
       if (!dataFinded) {
+        console.log("> [dbMethod.delete]  data not found!");
         throw {
           status: false,
           message: `Unexpected error in database search. Data not found. Please check that the fields are filled in correctly. (developerMessage)`,

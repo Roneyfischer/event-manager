@@ -1,4 +1,4 @@
-import dbMethod from "../../../1.model/dbMethods/dbMethod.js";
+import dbMethod from "../../../1.model/DAL/dbMethod.js";
 import cryptoArgon2 from "../crypto/cryptoOperator.js";
 import jwt from "jsonwebtoken";
 import chalk from "chalk";
@@ -18,13 +18,12 @@ const userService = {
   },
 
   login: async (reqBody, res) => {
-    console.log("> [userService.login]");
+    console.log("> [userService.login] Open");
 
-    const { cpf, pass } = reqBody;
-    console.log("> [userService.login]" + cpf);
+    const { cpf, pass } = reqBody;  
     const table = "users";
     const nameItenToSearch = "cpf";
-    const valueItenToSearch = cpf;
+    const valueItenToSearch = [cpf];
     const itenToReturn = "pass";
 
     const longHash = (
@@ -34,8 +33,8 @@ const userService = {
         valueItenToSearch,
         itenToReturn
       )
-    ).pass;
-    console.log("> [userService.login]" + longHash); //ex
+    ).dataFinded.pass;
+    
     const verifyPassword = await cryptoArgon2.verify(pass, longHash);
 
     //   console.log(chalk.green.bold.italic(verifyPassword.message));
