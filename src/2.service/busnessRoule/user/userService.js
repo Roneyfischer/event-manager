@@ -19,30 +19,41 @@ const userService = {
 
   login: async (reqBody, res) => {
     console.log("> [userService.login] Open");
-
+    
     const { cpf, pass } = reqBody;
     const table = "users";
     const nameItenToSearch = "cpf";
     const valueItenToSearch = [cpf];
-    const itenToReturn = "pass";
+    const itenToReturn = "*";
 
-    const longHash = (
+    const dataFinded = (
       await dbMethod.read(
         table,
         nameItenToSearch,
         valueItenToSearch,
         itenToReturn
       )
-    ).dataFinded.pass;
+    ).dataFinded;
 
-    const verifyPassword = await cryptoArgon2.verify(pass, longHash);
+    const verifyPassword = await cryptoArgon2.verify(pass, dataFinded.pass);
+    
+    if(verifyPassword){
+    
+    const token = await userService.setJWToken(dataFinded.id, dataFinded.cpf, dataFinded.secondUserId)
+    return { status: verifyPassword.status, message: verifyPassword.message, token: token };
+    }
 
-    //   console.log(chalk.green.bold.italic(verifyPassword.message));
-
-    return { status: verifyPassword.status, message: verifyPassword.message };
+   return { status: verifyPassword.status, message: verifyPassword.message };
+    
   },
 
-  authorization: async (reqBody) => {},
+  setJWToken: async (id, cpf, secondUserId) => {
+   
+    const token = jwt.sign({ userId: id, userCpf: cpf, secondUserId: secondUserId}, process.env.JWT_KEY, {
+        expiresIn: 30000,
+      });
+    return token
+  },
 
   delete: async (reqBody) => {
     console.log("> [userService.delete]");
