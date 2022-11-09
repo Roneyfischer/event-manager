@@ -55,15 +55,11 @@ class StandardUser {
   };
 
   deleteMyUser = async (reqBody, singularUserId) => {
-    const reqBodyNew = reqBody;
-    console.log(
-      "*******************************************************************************"
-    );
-    console.log(reqBody);
-    // reqBody.push = singularUserId
-    return await userService.delete(reqBody, singularUserId);
+    
+    
+    return await userService.delete(reqBody.singularUserId);
 
-    throw dataValidation;
+    throw new Error;
   };
 
   edit = async (reqBody) => {
