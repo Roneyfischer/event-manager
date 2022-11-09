@@ -70,7 +70,8 @@ const userService = {
 
   setJWToken: async (id, cpf, secondUserId, role) => {
     const token = jwt.sign(
-      { userId: id, userCpf: cpf, secondUserId: secondUserId, role: role },
+      
+      { singularUserId: id, userCpf: cpf, secondUserId: secondUserId, role: role },
       process.env.JWT_KEY,
       {
         expiresIn: 30000,
@@ -80,10 +81,11 @@ const userService = {
   },
 
   delete: async (reqBody) => {
+    //para exclusão, não uso o "singularUserId". Na controler é preciso verificar o usuário e passar de lá o user a ser excluído.
     console.log("> [userService.delete]");
     const { singularData } = reqBody;
     const table = "users";
-    const nameItenToDeleteLine = `"singularUser"`;
+    const nameItenToDeleteLine = `"singularUserId"`;
     const valueItenToDeleteLine = [singularData];
     return await dbMethod.delete(
       table,
@@ -98,28 +100,28 @@ const userService = {
   //GROUPS:
   //
 
-  createGroup: async (reqBody) => {
-    console.log("> [userService.createGroup]");
-    const { singularUser, singularData } = await reqBody;
+  createGroup: async (reqBody, singularUserId) => {
+   
+    const { singularData } = await reqBody;
 
     const table = "groups";
-    const fieldName = `"singularUser", "singularGroup"`;
-    const fieldValue = [singularUser, singularData];
+    const fieldName = `"singularUserId", "singularGroup"`;
+    const fieldValue = [singularUserId, singularData];
 
-    return (await dbMethod.add(table, fieldName, fieldValue));
+    return await dbMethod.add(table, fieldName, fieldValue);
   },
-  editGroup: async (reqBody) => {
+  editGroup: async (reqBody, singularUserId) => {
     console.log("> [userService.editGroup]");
-    const { singularUser, singularData } = await reqBody;
+    const { singularData } = await reqBody;
 
     const table = "groups";
     const fieldName = `"singularGroup"`;
     const fieldValue = [singularData];
 
-    return (await dbMethod.edit(table, fieldName, fieldValue));
+    return await dbMethod.edit(table, fieldName, fieldValue);
   },
 
-  deleteGroup: async (reqBody) => {
+  deleteGroup: async (reqBody, singularUserId) => {
     console.log("> [userService.deleteGroup]");
     const { singularData } = reqBody;
     const table = "groups";
@@ -136,37 +138,39 @@ const userService = {
   //CATEGORIES:
   //
 
-  createCategory: async (reqBody) => {
+  createCategory: async (reqBody, singularUserId) => {
     console.log("> [userService.createCategory]");
-    const { singularUser, singularData } = await reqBody;
+    const { singularData } = await reqBody;
 
     const table = "categories";
-    const fieldName = `"singularUser", "singularCategory"`;
-    const fieldValue = [singularUser, singularData];
+    const fieldName = `"singularUserId", "singularCategory"`;
+    const fieldValue = [singularUserId, singularData];
 
-    return (await dbMethod.add(table, fieldName, fieldValue));
+    return await dbMethod.add(table, fieldName, fieldValue);
   },
 
-  editCategory: async (reqBody) => {
+  editCategory: async (reqBody, singularUserId) => {
     console.log("> [userService.editCategory]");
-    const { singularUser, singularData } = await reqBody;
+    const { singularData } = await reqBody;
 
     const table = "categories";
     const fieldName = `"singularCategory"`;
     const fieldValue = [singularData];
 
-    return (await dbMethod.edit(table, fieldName, fieldValue));
+    return await dbMethod.edit(table, fieldName, fieldValue);
   },
 
-  deleteCategory: async (reqBody) => {
+  deleteCategory: async (reqBody, singularUserId) => {
     console.log("> [userService.deleteCategory]");
     const { singularData } = reqBody;
     const table = "categories";
     const nameItenToDeleteLine = `"singularCategory"`;
     const valueItenToDeleteLine = [singularData];
 
-    return (
-      await dbMethod.delete(table, nameItenToDeleteLine, valueItenToDeleteLine)
+    return await dbMethod.delete(
+      table,
+      nameItenToDeleteLine,
+      valueItenToDeleteLine
     );
   },
 };

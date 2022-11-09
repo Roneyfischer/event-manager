@@ -106,25 +106,7 @@ const dbMethod = {
     });
   },
 
-  //   read: async (table, nameItenToSearch, valueItenToSearch, itenToReturn) => {
-  //     try {
-  //       const queryText =
-  //       `SELECT ${itenToReturn} from ${table} WHERE
-  //       "singularUser"  = $1
-  //       AND "email" = $2`;
-  //       const values = ["8", "8"];
-  //       const client = await dbConnect();
-  //       console.log(values);
-
-  //       return await client.query(queryText, values).then((res) => {
-  //         const dataFinded = res.rows[0];
-  //         console.log(dataFinded);
-  //         return dataFinded;
-  //       });
-  //     } catch (error) {
-  //       return errorHandling(error.detail);
-  //     }
-  //   },
+ 
 };
 
 export default dbMethod;

@@ -7,15 +7,15 @@ const eventService = {
   add: async (data) => {
     console.log("> [eventService.add]");
     //editar pra adicionar corretamente ao DB
-    const singularEvent = data.singularEvent;
-    const singulargroup = data.singularGroup;
-    const singularCategory = data.singularCategory;
-    const description = data.description;
-    const createDate = data.createDate;
-    const date = data.date;
-    const singularUser = data.singularUser;
-    const place = data.place;
-    const maxCapacityPerson = data.maxCapacityPerson;
+    const singularEvent = data._singularEvent;
+    const singulargroup = data._singularGroup;
+    const singularCategory = data._singularCategory;
+    const singularUserId = data._singularUserId;
+    const description = data._description;
+    const createDate = data._createDate;
+    const date = data._date;
+    const place = data._place;
+    const maxCapacityPerson = data._maxCapacityPerson;
     const subscriberNumber = 0;
 
     const table = "events";
@@ -26,7 +26,7 @@ const eventService = {
     "description",
     "createDate",
     "date",
-    "singularUser",
+    "singularUserId",
     "place",
     "maxCapacityPerson",
     "subscriberNumber"`;
@@ -37,11 +37,15 @@ const eventService = {
       description,
       createDate,
       date,
-      singularUser,
+      singularUserId,
       place,
       maxCapacityPerson,
       subscriberNumber,
     ];
+    console.log(
+      ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>." +
+        fieldValue
+    );
 
     const returnAddDb = await dbMethod.add(table, fieldName, fieldValue);
     //pode retornar "_id _subscriberNumber, _subscribers" em uma read do DB, msa não precisa na etapa de criação.

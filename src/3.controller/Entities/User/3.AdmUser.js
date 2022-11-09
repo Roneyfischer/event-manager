@@ -7,9 +7,9 @@ import Event from "../Event/Event.js";
 
 class AdmUser extends GuestUser {
   createEvent = async (reqBody,
-    userId) => {
+    singularUserId) => {
     console.log("> [AdmUser.createEvent]");
-    const event = new Event(reqBody);
+    const event = new Event(reqBody, singularUserId);
     return event.add(reqBody);
   };
 
@@ -20,13 +20,13 @@ class AdmUser extends GuestUser {
   // deleteEvent = async () => {};
 
   createGroup = async (reqBody,
-    userId) => {
+    singularUserId) => {
     console.log(
       "> [AdmUser.createGroup");
 
     try {
       const dataValidation = await groupAndCategoryValdiation(reqBody,
-        userId);
+        singularUserId);
 
       console.log(
         "> [AdmUser.createGroup] Data validation: " + dataValidation.status
@@ -34,7 +34,7 @@ class AdmUser extends GuestUser {
 
       if (dataValidation.status) {
         return await userService.createGroup(reqBody,
-          userId);
+          singularUserId);
       }
       throw dataValidation;
     } catch (error) {
@@ -43,11 +43,11 @@ class AdmUser extends GuestUser {
   };
 
   editGroup = async (reqBody,
-    userId) => {
+    singularUserId) => {
     console.log("> [AdmUser.editGroup]");
     try {
       const dataValidation = await groupAndCategoryValdiation(reqBody,
-        userId);
+        singularUserId);
 
       console.log(
         "> [AdmUser.editGroup] Data validation: " + dataValidation.status
@@ -55,7 +55,7 @@ class AdmUser extends GuestUser {
 
       if (dataValidation.status) {
         return await userService.editGroup(reqBody,
-          userId);
+          singularUserId);
       }
       throw dataValidation;
     } catch (error) {
@@ -64,17 +64,17 @@ class AdmUser extends GuestUser {
   };
 
   deleteGroup = async (reqBody,
-    userId) => {
+    singularUserId) => {
     console.log("> [AdmUser.deleteGroup]");
     try {
       const dataValidation = await groupAndCategoryValdiation(reqBody,
-        userId);
+        singularUserId);
       console.log(
         "> [AdmUser.deleteGroup] Data validation: " + dataValidation.status
       );
       if (dataValidation.status) {
         return await userService.deleteGroup(reqBody,
-          userId);
+          singularUserId);
       }
       throw dataValidation;
     } catch (error) {
@@ -83,17 +83,17 @@ class AdmUser extends GuestUser {
   };
 
   createCategory = async (reqBody,
-    userId) => {
+    singularUserId) => {
     console.log("> [AdmUser.createCategory]");
     try {
       const dataValidation = await groupAndCategoryValdiation(reqBody,
-        userId);
+        singularUserId);
       console.log(
         "> [AdmUser.createCategory] Data validation: " + dataValidation.status
       );
       if (dataValidation.status) {
         return await userService.createCategory(reqBody,
-          userId);
+          singularUserId);
       }
       throw dataValidation;
     } catch (error) {
@@ -102,17 +102,17 @@ class AdmUser extends GuestUser {
   };
 
   editCategory = async (reqBody,
-    userId) => {
+    singularUserId) => {
     console.log("> [AdmUser.editCategory]");
     try {
       const dataValidation = await groupAndCategoryValdiation(reqBody,
-        userId);
+        singularUserId);
       console.log(
         "> [AdmUser.editCategory] Data validation: " + dataValidation.status
       );
       if (dataValidation.status) {
         return await userService.editCategory(reqBody,
-          userId);
+          singularUserId);
       }
       throw dataValidation;
     } catch (error) {
@@ -121,15 +121,15 @@ class AdmUser extends GuestUser {
   };
 
   deleteCategory = async (reqBody,
-    userId) => {
+    singularUserId) => {
     console.log("> [AdmUser.deleteCategory]");
     try {
       const dataValidation = await groupAndCategoryValdiation(reqBody,
-        userId);
+        singularUserId);
 
       if (dataValidation.status) {
         return await userService.deleteCategory(reqBody,
-          userId);
+          singularUserId);
       }
       throw dataValidation;
     } catch (error) {

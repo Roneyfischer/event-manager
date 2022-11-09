@@ -7,8 +7,8 @@ create table userRoles(
 
 
 create table users (
-"id" serial unique,
-"singularUser" varchar(255) primary key not null,
+"id" serial unique primary key,
+"singularUser" varchar(255) not null,
 "role" varchar (32),
 "cpf" varchar(255) not null unique,
 "email" varchar(512) not null unique,
@@ -20,27 +20,27 @@ FOREIGN KEY ("role") REFERENCES "userroles" ("role") ON UPDATE CASCADE
 
 create table groups (
 "id" serial unique,
-"singularUser" varchar(255) not null,
+"singularUserId" integer not null,
 "singularGroup" varchar(255) not null,
 
-PRIMARY KEY ("singularUser", "singularGroup"),
+PRIMARY KEY ("singularUserId", "singularGroup"),
 
-FOREIGN KEY ("singularUser") REFERENCES "users" ("singularUser") ON DELETE CASCADE ON UPDATE CASCADE
+FOREIGN KEY ("singularUserId") REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 create table categories(
 "id" serial unique,
-"singularUser" varchar(255) not null,
+"singularUserId" integer not null,
 "singularCategory" VARCHAR(255) not null,
 
-primary key("singularUser","singularCategory"),
+primary key("singularUserId","singularCategory"),
 
-FOREIGN KEY ("singularUser") REFERENCES "users" ("singularUser") ON DELETE CASCADE ON UPDATE CASCADE
+FOREIGN KEY ("singularUserId") REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 create table events (
 "id" serial unique,
-"singularUser" varchar(255) not null,
+"singularUserId" integer not null,
 "singularEvent" varchar(255) PRIMARY KEY not null,
 "singularGroup" varchar(255) not null,
 "singularCategory" varchar(255) not null,
@@ -51,20 +51,20 @@ create table events (
 "maxCapacityPerson" integer not null,
 "subscriberNumber" varchar(32),
 
-FOREIGN KEY ("singularUser") REFERENCES "users" ("singularUser"),
-FOREIGN KEY ("singularUser", "singularGroup") REFERENCES "groups" ("singularUser", "singularGroup") ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY ("singularUser","singularCategory") REFERENCES "categories" ("singularUser","singularCategory") ON DELETE CASCADE ON UPDATE CASCADE
+FOREIGN KEY ("singularUserId") REFERENCES "users" ("id"),
+FOREIGN KEY ("singularUserId", "singularGroup") REFERENCES "groups" ("singularUserId", "singularGroup") ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY ("singularUserId","singularCategory") REFERENCES "categories" ("singularUserId","singularCategory") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 create table subscribers(
 "id" serial unique,
-"singularUser" VARCHAR(255) not null,
+"singularUserId" integer not null,
 "singularEvent" VARCHAR(255) not null,
 "subscriptionDate" Date,
 
-primary key("singularEvent","singularUser"),
+primary key("singularEvent","singularUserId"),
 
-FOREIGN KEY ("singularUser") REFERENCES "users" ("singularUser") ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY ("singularUserId") REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY ("singularEvent") REFERENCES "events" ("singularEvent") ON DELETE CASCADE ON UPDATE CASCADE
 );
 

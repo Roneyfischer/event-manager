@@ -3,7 +3,7 @@ import errorHandling from "../../../2.service/errorHandling/errorHandling.js";
 import eventCreateDataValidation from "../../valitadtion/event/eventCreateDataValidation.js";
 import eventReadValidation from "../../valitadtion/event/eventReadValidation.js";
 export default class Event {
-  constructor(data) {
+  constructor(data, singularUserId) {
     const {
       singularEvent,
       singularGroup,
@@ -11,7 +11,6 @@ export default class Event {
       description,
       createDate,
       date,
-      singularUser,
       place,
       maxCapacityPerson,
     } = data;
@@ -23,32 +22,20 @@ export default class Event {
     this._description = description;
     this._createDate = createDate;
     this._date = date;
-    this._singularUser = singularUser;
+    this._singularUserId = singularUserId;
     this._place = place;
     this._maxCapacityPerson = maxCapacityPerson;
     this._subscriberNumber = 0;
     this._subscribers = 0;
-    this._allData = [
-      this._singularEvent,
-      this._singularGroup,
-      this._singularCategory,
-      this._description,
-      this._createDate,
-      this._date,
-      this._singularUser,
-      this._place,
-      this._maxCapacityPerson,
-    ];
+ 
   }
   add = () => {
     try {
+
       const dataValidation = eventCreateDataValidation(this);
       if (dataValidation.status) {
-        //aguarda um retorno {status: true/false, message: `msg here`, id: ${id}, subscriberNumber: ${subscriberNumber}, subscribers: ${subscribers}}
         const returnAdd = eventService.add(this);
-        // this._id(returnAdd.id);
-        // this._subscriberNumber(returnAdd.subscriberNumber);
-        // this._subscribers(returnAdd.subscribers);
+
         return returnAdd;
       }
       throw erorr;
@@ -84,59 +71,59 @@ export default class Event {
     const { userCpf, pass } = data;
   };
 
-  get singularEvent() {
-    return this._singularEvent;
-  }
-  get singularGroup() {
-    return this._singularGroup;
-  }
-  get singularCategory() {
-    return this._singularCategory;
-  }
-  get description() {
-    return this._description;
-  }
-  get createDate() {
-    return this._createDate;
-  }
-  get date() {
-    return this._date;
-  }
-  get singularUser() {
-    return this._singularUser;
-  }
-  get place() {
-    return this._place;
-  }
-  get maxCapacityPerson() {
-    return this._maxCapacityPerson;
-  }
+  // get singularEvent() {
+  //   return this._singularEvent;
+  // }
+  // get singularGroup() {
+  //   return this._singularGroup;
+  // }
+  // get singularCategory() {
+  //   return this._singularCategory;
+  // }
+  // get description() {
+  //   return this._description;
+  // }
+  // get createDate() {
+  //   return this._createDate;
+  // }
+  // get date() {
+  //   return this._date;
+  // }
+  // get singularUser() {
+  //   return this._singularUser;
+  // }
+  // get place() {
+  //   return this._place;
+  // }
+  // get maxCapacityPerson() {
+  //   return this._maxCapacityPerson;
+  // }
 
-  set singularEvent(data) {
-    this._singularEvent;
-  }
-  set singularGroup(data) {
-    this._singularGroup;
-  }
-  set singularCategory(data) {
-    this._singularCategory;
-  }
-  set description(data) {
-    this._description;
-  }
-  set createDate(data) {
-    this._createDate;
-  }
-  set date(data) {
-    this._date;
-  }
-  set singularUser(data) {
-    this._singularUser;
-  }
-  set place(data) {
-    this._place;
-  }
-  set maxCapacityPerson(data) {
-    this._maxCapacityPerson;
-  }
+  // set singularEvent(data) {
+  //   this._singularEvent;
+  // }
+  // set singularGroup(data) {
+  //   this._singularGroup;
+  // }
+  // set singularCategory(data) {
+  //   this._singularCategory;
+  // }
+  // set description(data) {
+  //   this._description;
+  // }
+  // set createDate(data) {
+  //   this._createDate;
+  // }
+  // set date(data) {
+  //   this._date;
+  // }
+  // set singularUser(data) {
+  //   this._singularUser;
+  // }
+  // set place(data) {
+  //   this._place;
+  // }
+  // set maxCapacityPerson(data) {
+  //   this._maxCapacityPerson;
+  // }
 }

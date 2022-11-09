@@ -1,17 +1,17 @@
 const eventCreateDataValidation = (event) => {
-  console.log("> [eventCreateDataValidation] Validating data")
+
   if (
-    (event.singularEvent,
-    event.singularGroup,
-    event.singularCategory,
-    event.description,
-    event.createDate,
-    event.date,
-    event.singularUser,
-    event.place,
-    event.maxCapacityPerson)
+    (event._singularEvent,
+    event._singularGroup,
+    event._singularCategory,
+    event._description,
+    event._createDate,
+    event._date,
+    event.singularUserId,
+    event._place,
+    event._maxCapacityPerson)
   ) {
-    console.log("> [eventCreateDataValidation] Data has been validated")
+    console.log("> [eventCreateDataValidation] Data has been validated");
     return { status: true, message: `field has been completed` };
   }
   throw { status: false, message: `All fields are mandatory` };
