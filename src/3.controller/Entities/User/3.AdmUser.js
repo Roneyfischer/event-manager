@@ -139,4 +139,4 @@ class AdmUser extends GuestUser {
 }
 
 
-export default AdmUser;
+export default AdmUser

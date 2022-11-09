@@ -10,9 +10,9 @@ import chalk from "chalk";
 import userService from "../../../2.service/busnessRoule/user/userService.js";
 import groupAndCategoryValdiation from "../../valitadtion/groupAndCategory/groupAndCategoryValdiation.js";
 
-class BasicUser {
+class StandardUser {
   register = async (reqBody) => {
-    console.log("> [BasicUser.register]");
+    console.log("> [StandardUser.register]");
     try {
       const dataValidation = userRegisterDataValidation(reqBody);
 
@@ -27,14 +27,14 @@ class BasicUser {
   };
 
   login = async (reqBody, res) => {
-    console.log("> [BasicUser.login]");
+    console.log("> [StandardUser.login]");
     try {
       //se houver erro na validação, o "userLoginDataValidation" lança/throw erro,
       //e o CATH desta função retorna para o console e frontEnd
       const dataValidation = userLoginDataValidation(reqBody);
 
       if (dataValidation.status) {
-              return await userService.login(reqBody);
+        return await userService.login(reqBody);
       }
       throw dataValidation;
     } catch (error) {
@@ -43,39 +43,31 @@ class BasicUser {
   };
 
   logout = async (reqBody, res) => {
-    console.log("> [BasicUser.logout]");
+    console.log("> [StandardUser.logout]");
   };
 
   authorization = async (reqBody) => {
-    console.log("> [BasicUser.authorization]");
+    console.log("> [StandardUser.authorization]");
     try {
     } catch (error) {
       return errorHandling(error);
     }
   };
 
-  delete = async (reqBody) => {
-    //em edição
-    //no auth faz o uso e verificação do jwToken recebido
-    //aqui, lê o jwToken e extrai o CPF  pra usar como singularData npm(valor do usuário a ser excluído)
-    //2.
-    console.log("> [BasicUser.delete]");
-    try {
-      const dataValidation = await groupAndCategoryValdiation(reqBody);
-      console.log(
-        "> [AdmUser.deleteGroup] Data validation: " + dataValidation.status
-      );
-      if (dataValidation.status) {
-        return await userService.delete(reqBody);
-      }
-      throw dataValidation;
-    } catch (error) {
-      return errorHandling(error);
-    }
+  deleteMyUser = async (reqBody, singularUserId) => {
+    const reqBodyNew = reqBody;
+    console.log(
+      "*******************************************************************************"
+    );
+    console.log(reqBody);
+    // reqBody.push = singularUserId
+    return await userService.delete(reqBody, singularUserId);
+
+    throw dataValidation;
   };
 
   edit = async (reqBody) => {
-    console.log("> [BasicUser.edit]");
+    console.log("> [StandardUser.edit]");
     try {
     } catch (error) {
       return errorHandling(error);
@@ -83,4 +75,4 @@ class BasicUser {
   };
 }
 
-export default BasicUser;
+export default StandardUser;

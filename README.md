@@ -119,5 +119,9 @@ Concertar erro:
 2. parar de quebrar quando já tem o cadastro no DB
    3.burlar cookie mandando requisição de login com dados de cadastro/registro/group
 3. desfazer no auth/login macarrão
-4. o user comum pode excluir somente a própria conta. Fazer a leitura
-5. somente user adm pode editar e criar: categorias, grupos, eventos e outros usuários
+4. o user Standard e Adm pode excluir somente a própria conta. Fazer a leitura
+5. somente user adm pode editar e criar: categorias, grupos, eventos
+7-1.implementar funções de edição
+8.implementar função de un/subscription
+9. Na rota, chamar uma função externa que verificar o JWToken e retorna direciona o conteúdo. Tirar regras das rotas.
+10. masterUser pode: excluir usuários de terceiros, alterar ROLE de qualquer usuário, criar usuários de terceiros.

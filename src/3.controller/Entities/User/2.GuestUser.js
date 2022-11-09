@@ -3,13 +3,13 @@
 // Esta classe é herdada por outra(s) classe(s) de usuário(s).   //
 ///////////////////////////////////////////////////////////////////
 
-import BasicUser from "./1.BasicUser.js";
+import StandardUser from "./1.StandardUser.js";
 import errorHandling from "../../../2.service/errorHandling/errorHandling.js";
 import chalk from "chalk";
 import userService from "../../../2.service/busnessRoule/user/userService.js";
 import Event from "../Event/Event.js";
 
-class GuestUser extends BasicUser {
+class GuestUser extends StandardUser {
  
   subscribe = async (reqBody) => {
     console.log("> [GuestUser.subscribe]")

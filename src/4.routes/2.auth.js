@@ -27,8 +27,6 @@ auth.post("/", async (req, res) => {
         token: operation.token,
       });
   }
-
-  
 });
 
 export default auth;

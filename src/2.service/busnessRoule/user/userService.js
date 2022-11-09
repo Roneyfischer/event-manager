@@ -70,8 +70,12 @@ const userService = {
 
   setJWToken: async (id, cpf, secondUserId, role) => {
     const token = jwt.sign(
-      
-      { singularUserId: id, userCpf: cpf, secondUserId: secondUserId, role: role },
+      {
+        singularUserId: id,
+        userCpf: cpf,
+        secondUserId: secondUserId,
+        role: role,
+      },
       process.env.JWT_KEY,
       {
         expiresIn: 30000,
@@ -80,8 +84,9 @@ const userService = {
     return token;
   },
 
-  delete: async (reqBody) => {
+  delete: async (reqBody, singularUserId) => {
     //para exclusão, não uso o "singularUserId". Na controler é preciso verificar o usuário e passar de lá o user a ser excluído.
+    //utilizar singularUserId para fazer Log
     console.log("> [userService.delete]");
     const { singularData } = reqBody;
     const table = "users";
@@ -101,7 +106,6 @@ const userService = {
   //
 
   createGroup: async (reqBody, singularUserId) => {
-   
     const { singularData } = await reqBody;
 
     const table = "groups";

@@ -23,7 +23,7 @@ function verifyJWT(req, res, next) {
   const token = req.headers["access_token"];
   jwt.verify(token, process.env.JWT_KEY, (err, decoded) => {
     if (err) return res.status(401).end();
-   
+
     req.singularUserId = decoded.singularUserId;
     req.secondUserId = decoded.secondUserId;
     req.role = decoded.role;
