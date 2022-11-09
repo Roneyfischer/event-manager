@@ -1,4 +1,5 @@
 import argon2, { hash } from "argon2";
+import { createHmac } from "node:crypto";
 import errorHandling from "../../errorHandling/errorHandling.js";
 
 const cryptoArgon2 = {
@@ -24,5 +25,26 @@ const cryptoArgon2 = {
     throw { status: false, message: "Password did not match" };
   },
 };
+const basicCript = {
+  encript: async (data) => {
+    console.log("> [basicCript.encrypt] Open");
+    console.log("> [basicCript.encrypt] data: " + data);
+    console.log(
+      "> [basicCript.encrypt] data: " + process.env.SECRET_BASIC_CRYPT
+    );
 
-export default cryptoArgon2;
+    const dataHashed = createHmac("sha512", process.env.SECRET_BASIC_CRYPT)
+      .update(data)
+      .digest("hex");
+
+    console.log("> [basicCript.encrypt] data hashed: " + dataHashed);
+
+    return {
+      status: true,
+      message: "Data has been hashed (encript) by basicCrypt",
+      dataHashed: dataHashed,
+    };
+  },
+};
+
+export default { cryptoArgon2, basicCript };

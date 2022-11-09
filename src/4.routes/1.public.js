@@ -1,6 +1,6 @@
 import express from "express";
-import app from "../../0.config/server/app.js";
-import publicSend from "../busnessRoule/public/publicSend.js";
+import app from "../0.config/server/app.js";
+import publicSend from "../2.service/busnessRoule/public/publicSend.js";
 const homePage = express.Router();
 
 homePage.get("/", async (req, res) => {

@@ -6,7 +6,8 @@ import groupAndCategoryValdiation from "../../valitadtion/groupAndCategory/group
 import Event from "../Event/Event.js";
 
 class AdmUser extends GuestUser {
-  createEvent = async (reqBody) => {
+  createEvent = async (reqBody,
+    userId) => {
     console.log("> [AdmUser.createEvent]");
     const event = new Event(reqBody);
     return event.add(reqBody);
@@ -18,18 +19,22 @@ class AdmUser extends GuestUser {
 
   // deleteEvent = async () => {};
 
-  createGroup = async (reqBody) => {
-    console.log("> [AdmUser.createGroup]");
+  createGroup = async (reqBody,
+    userId) => {
+    console.log(
+      "> [AdmUser.createGroup");
 
     try {
-      const dataValidation = await groupAndCategoryValdiation(reqBody);
+      const dataValidation = await groupAndCategoryValdiation(reqBody,
+        userId);
 
       console.log(
         "> [AdmUser.createGroup] Data validation: " + dataValidation.status
       );
 
       if (dataValidation.status) {
-        return await userService.createGroup(reqBody);
+        return await userService.createGroup(reqBody,
+          userId);
       }
       throw dataValidation;
     } catch (error) {
@@ -37,17 +42,20 @@ class AdmUser extends GuestUser {
     }
   };
 
-  editGroup = async (reqBody) => {
+  editGroup = async (reqBody,
+    userId) => {
     console.log("> [AdmUser.editGroup]");
     try {
-      const dataValidation = await groupAndCategoryValdiation(reqBody);
+      const dataValidation = await groupAndCategoryValdiation(reqBody,
+        userId);
 
       console.log(
         "> [AdmUser.editGroup] Data validation: " + dataValidation.status
       );
 
       if (dataValidation.status) {
-        return await userService.editGroup(reqBody);
+        return await userService.editGroup(reqBody,
+          userId);
       }
       throw dataValidation;
     } catch (error) {
@@ -55,15 +63,18 @@ class AdmUser extends GuestUser {
     }
   };
 
-  deleteGroup = async (reqBody) => {
+  deleteGroup = async (reqBody,
+    userId) => {
     console.log("> [AdmUser.deleteGroup]");
     try {
-      const dataValidation = await groupAndCategoryValdiation(reqBody);
+      const dataValidation = await groupAndCategoryValdiation(reqBody,
+        userId);
       console.log(
         "> [AdmUser.deleteGroup] Data validation: " + dataValidation.status
       );
       if (dataValidation.status) {
-        return await userService.deleteGroup(reqBody);
+        return await userService.deleteGroup(reqBody,
+          userId);
       }
       throw dataValidation;
     } catch (error) {
@@ -71,15 +82,18 @@ class AdmUser extends GuestUser {
     }
   };
 
-  createCategory = async (reqBody) => {
+  createCategory = async (reqBody,
+    userId) => {
     console.log("> [AdmUser.createCategory]");
     try {
-      const dataValidation = await groupAndCategoryValdiation(reqBody);
+      const dataValidation = await groupAndCategoryValdiation(reqBody,
+        userId);
       console.log(
         "> [AdmUser.createCategory] Data validation: " + dataValidation.status
       );
       if (dataValidation.status) {
-        return await userService.createCategory(reqBody);
+        return await userService.createCategory(reqBody,
+          userId);
       }
       throw dataValidation;
     } catch (error) {
@@ -87,15 +101,18 @@ class AdmUser extends GuestUser {
     }
   };
 
-  editCategory = async (reqBody) => {
+  editCategory = async (reqBody,
+    userId) => {
     console.log("> [AdmUser.editCategory]");
     try {
-      const dataValidation = await groupAndCategoryValdiation(reqBody);
+      const dataValidation = await groupAndCategoryValdiation(reqBody,
+        userId);
       console.log(
         "> [AdmUser.editCategory] Data validation: " + dataValidation.status
       );
       if (dataValidation.status) {
-        return await userService.editCategory(reqBody);
+        return await userService.editCategory(reqBody,
+          userId);
       }
       throw dataValidation;
     } catch (error) {
@@ -103,14 +120,16 @@ class AdmUser extends GuestUser {
     }
   };
 
-  deleteCategory = async (reqBody) => {
+  deleteCategory = async (reqBody,
+    userId) => {
     console.log("> [AdmUser.deleteCategory]");
     try {
-    
-      const dataValidation = await groupAndCategoryValdiation(reqBody);
-    
+      const dataValidation = await groupAndCategoryValdiation(reqBody,
+        userId);
+
       if (dataValidation.status) {
-        return await userService.deleteCategory(reqBody);
+        return await userService.deleteCategory(reqBody,
+          userId);
       }
       throw dataValidation;
     } catch (error) {
@@ -118,5 +137,6 @@ class AdmUser extends GuestUser {
     }
   };
 }
+
 
 export default AdmUser;

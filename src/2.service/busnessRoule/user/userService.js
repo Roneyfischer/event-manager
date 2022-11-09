@@ -1,5 +1,6 @@
 import dbMethod from "../../../1.model/DAL/dbMethod.js";
-import cryptoArgon2 from "../crypto/cryptoOperator.js";
+import cryptography from "../crypto/cryptoOperator.js";
+
 import jwt from "jsonwebtoken";
 import chalk from "chalk";
 import cookieParser from "cookie-parser";
@@ -7,19 +8,29 @@ import cookieParser from "cookie-parser";
 const userService = {
   register: async (reqBody) => {
     console.log("> [userService.register]");
-    const { singularUser, cpf, email, pass } = await reqBody;
-    const passEncrypted = await cryptoArgon2.encrypt(pass);
+    const { singularUser, cpf, email, role, pass } = await reqBody;
+    const passEncrypted = await cryptography.cryptoArgon2.encrypt(pass);
+    const secondUserId = (
+      await cryptography.basicCript.encript(singularUser + cpf)
+    ).dataHashed;
 
     const table = "users";
-    const fieldName = `"singularUser", "cpf", "email", "pass"`;
-    const fieldValue = [singularUser, cpf, email, passEncrypted];
+    const fieldName = `"singularUser", "cpf", "email", "role", "secondUserId", "pass"`;
+    const fieldValue = [
+      singularUser,
+      cpf,
+      email,
+      role,
+      secondUserId,
+      passEncrypted,
+    ];
     const teste = await dbMethod.add(table, fieldName, fieldValue);
     return { status: teste.status, message: teste.message };
   },
 
   login: async (reqBody, res) => {
     console.log("> [userService.login] Open");
-    
+
     const { cpf, pass } = reqBody;
     const table = "users";
     const nameItenToSearch = "cpf";
@@ -35,24 +46,37 @@ const userService = {
       )
     ).dataFinded;
 
-    const verifyPassword = await cryptoArgon2.verify(pass, dataFinded.pass);
-    
-    if(verifyPassword){
-    
-    const token = await userService.setJWToken(dataFinded.id, dataFinded.cpf, dataFinded.secondUserId)
-    return { status: verifyPassword.status, message: verifyPassword.message, token: token };
+    const verifyPassword = await cryptography.cryptoArgon2.verify(
+      pass,
+      dataFinded.pass
+    );
+
+    if (verifyPassword) {
+      const token = await userService.setJWToken(
+        dataFinded.id,
+        dataFinded.cpf,
+        dataFinded.secondUserId,
+        dataFinded.role
+      );
+      return {
+        status: verifyPassword.status,
+        message: verifyPassword.message,
+        token: token,
+      };
     }
 
-   return { status: verifyPassword.status, message: verifyPassword.message };
-    
+    return { status: verifyPassword.status, message: verifyPassword.message };
   },
 
-  setJWToken: async (id, cpf, secondUserId) => {
-   
-    const token = jwt.sign({ userId: id, userCpf: cpf, secondUserId: secondUserId}, process.env.JWT_KEY, {
+  setJWToken: async (id, cpf, secondUserId, role) => {
+    const token = jwt.sign(
+      { userId: id, userCpf: cpf, secondUserId: secondUserId, role: role },
+      process.env.JWT_KEY,
+      {
         expiresIn: 30000,
-      });
-    return token
+      }
+    );
+    return token;
   },
 
   delete: async (reqBody) => {
@@ -82,7 +106,7 @@ const userService = {
     const fieldName = `"singularUser", "singularGroup"`;
     const fieldValue = [singularUser, singularData];
 
-    return (await dbMethod.add(table, fieldName, fieldValue)).message;
+    return (await dbMethod.add(table, fieldName, fieldValue));
   },
   editGroup: async (reqBody) => {
     console.log("> [userService.editGroup]");
@@ -92,7 +116,7 @@ const userService = {
     const fieldName = `"singularGroup"`;
     const fieldValue = [singularData];
 
-    return (await dbMethod.edit(table, fieldName, fieldValue)).message;
+    return (await dbMethod.edit(table, fieldName, fieldValue));
   },
 
   deleteGroup: async (reqBody) => {
@@ -120,7 +144,7 @@ const userService = {
     const fieldName = `"singularUser", "singularCategory"`;
     const fieldValue = [singularUser, singularData];
 
-    return (await dbMethod.add(table, fieldName, fieldValue)).message;
+    return (await dbMethod.add(table, fieldName, fieldValue));
   },
 
   editCategory: async (reqBody) => {
@@ -131,7 +155,7 @@ const userService = {
     const fieldName = `"singularCategory"`;
     const fieldValue = [singularData];
 
-    return (await dbMethod.edit(table, fieldName, fieldValue)).message;
+    return (await dbMethod.edit(table, fieldName, fieldValue));
   },
 
   deleteCategory: async (reqBody) => {
@@ -143,7 +167,7 @@ const userService = {
 
     return (
       await dbMethod.delete(table, nameItenToDeleteLine, valueItenToDeleteLine)
-    ).message;
+    );
   },
 };
 

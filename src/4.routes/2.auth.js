@@ -1,5 +1,5 @@
 import express from "express";
-import AdmUser from "../../3.controller/Entities/User/3.AdmUser.js";
+import AdmUser from "../3.controller/Entities/User/3.AdmUser.js";
 import jwt from "jsonwebtoken";
 import chalk from "chalk";
 const auth = express.Router();
@@ -27,6 +27,8 @@ auth.post("/", async (req, res) => {
         token: operation.token,
       });
   }
+
+  
 });
 
 export default auth;

@@ -5,25 +5,22 @@ import pg from "pg";
 
 const dbMethod = {
   add: async (table, fieldName, fieldValue) => {
-    try {
-      const fieldsNumber = fieldName.split(/,/).length;
+    const fieldsNumber = fieldName.split(/,/).length;
 
-      let fieldsNumberVariables = [];
+    let fieldsNumberVariables = [];
 
-      for (let i = 0; i < fieldsNumber; i++) {
-        fieldsNumberVariables.push("$" + (i + 1)); //o $ não contabiliza $0, portanto, deve começar com $1
-      }
-
-      const queryText = `INSERT INTO "${table}"(${fieldName}) VALUES(${fieldsNumberVariables}) RETURNING *`;
-      const queryValues = fieldValue;
-      const client = await dbConnect();
-
-      await client.query(queryText, queryValues).then((res) => {});
-      console.log("> [dbMethod.add] Registration successful");
-      return { status: true, message: `Registration successful` };
-    } catch (error) {
-      throw error;
+    for (let i = 0; i < fieldsNumber; i++) {
+      fieldsNumberVariables.push("$" + (i + 1)); //o $ não contabiliza $0, portanto, deve começar com $1
     }
+
+    const queryText = `INSERT INTO "${table}"(${fieldName}) VALUES(${fieldsNumberVariables}) RETURNING *`;
+    const queryValues = fieldValue;
+    const client = await dbConnect();
+
+    await client.query(queryText, queryValues).then((res) => {});
+    console.log("> [dbMethod.add] Registration successful");
+    return { status: true, message: `Registration successful` };
+    throw new Error();
   },
 
   // edit: async (table, fieldName, fieldValue) => {

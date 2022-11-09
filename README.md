@@ -1,13 +1,10 @@
 Creiei esta estrutura pra ter um ponto de partida no desenvolvimento a partir do express
 
-create table users (
+create table userRoles(
 "id" serial unique,
-"singularUser" varchar(255) primary key not null,
-"cpf" varchar(255) not null unique,
-"email" varchar(512) not null unique,
-"pass" varchar(600) not null unique,
-"secondUserId" varchar(512) not null unique
+"role" varchar(8) not null primary key
 );
+
 
 create table users (
 "id" serial unique,
@@ -15,7 +12,10 @@ create table users (
 "role" varchar (32),
 "cpf" varchar(255) not null unique,
 "email" varchar(512) not null unique,
-"pass" varchar(600) not null unique
+"secondUserId" varchar(512) not null unique,
+"pass" varchar(600) not null unique,
+
+FOREIGN KEY ("role") REFERENCES "userroles" ("role") ON UPDATE CASCADE
 );
 
 create table groups (
@@ -120,3 +120,4 @@ Concertar erro:
    3.burlar cookie mandando requisição de login com dados de cadastro/registro/group
 3. desfazer no auth/login macarrão
 4. o user comum pode excluir somente a própria conta. Fazer a leitura
+5. somente user adm pode editar e criar: categorias, grupos, eventos e outros usuários
