@@ -84,14 +84,14 @@ const userService = {
     return token;
   },
 
-  delete: async (reqBody, singularUserId) => {
+  delete: async (singularUserId) => {
     //para exclusão, não uso o "singularUserId". Na controler é preciso verificar o usuário e passar de lá o user a ser excluído.
     //utilizar singularUserId para fazer Log
     console.log("> [userService.delete]");
-    const { singularData } = reqBody;
+  
     const table = "users";
     const nameItenToDeleteLine = `"singularUserId"`;
-    const valueItenToDeleteLine = [singularData];
+    const valueItenToDeleteLine = [singularUserId];
     return await dbMethod.delete(
       table,
       nameItenToDeleteLine,
