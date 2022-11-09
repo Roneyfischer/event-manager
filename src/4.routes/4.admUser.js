@@ -8,7 +8,7 @@ const admUser = express.Router();
 
 admUser.post("/", verifyJWT, async (req, res) => {
   console.log("> [route.admUser] user: ");
-  const reqBody = req.body)
+  const reqBody = req.body
   const admUser = new AdmUser(req.body);
 
   const executeRequisition = await admUser[reqBody.type](
