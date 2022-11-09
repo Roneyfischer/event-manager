@@ -46,11 +46,6 @@ const dbMethod = {
   // },
 
   delete: async (table, nameItenToDeleteLine, valueItenToDeleteLine) => {
-    console.log(
-      table,
-      nameItenToDeleteLine,
-      valueItenToDeleteLine + "<<<<<<<<<"
-    );
     const checkLineExists = await dbMethod.read(
       table,
       nameItenToDeleteLine,
@@ -84,6 +79,12 @@ const dbMethod = {
   },
 
   read: async (table, nameItenToSearch, valueItenToSearch, itenToReturn) => {
+    console.log(
+      ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + table,
+      nameItenToSearch,
+      valueItenToSearch,
+      itenToReturn
+    );
     const queryText = `SELECT ${itenToReturn} from ${table} WHERE ${nameItenToSearch} in ($1) `;
     const queryValues = valueItenToSearch;
     const client = await dbConnect();
@@ -105,8 +106,6 @@ const dbMethod = {
       };
     });
   },
-
- 
 };
 
 export default dbMethod;

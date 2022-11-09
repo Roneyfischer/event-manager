@@ -54,10 +54,10 @@ class StandardUser {
     }
   };
 
-  deleteMyUser = async (reqBody, singularUserId) => {
+  deleteMyUser = async (reqBody) => {
     
     
-    return await userService.delete(reqBody.singularUserId);
+    return await userService.delete(reqBody);
 
     throw new Error;
   };

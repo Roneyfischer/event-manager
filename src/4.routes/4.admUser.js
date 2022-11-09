@@ -8,8 +8,10 @@ const admUser = express.Router();
 
 admUser.post("/", verifyJWT, async (req, res) => {
   console.log("> [route.admUser] user: ");
-  
-  const admUser = new AdmUser(req.body);
+  const reqBody = req.body;
+
+  const admUser = new AdmUser(reqBody);
+
 
   const executeRequisition = await admUser[reqBody.type](reqBody);
 
@@ -21,10 +23,8 @@ function verifyJWT(req, res, next) {
   jwt.verify(token, process.env.JWT_KEY, (err, decoded) => {
     if (err) return res.status(401).end();
 
-    let temporaryReqBody = req.body
-    temporaryReqBody.singularUserId = decoded.secondUserId
-    temporaryReqBody.role = decoded.role
-    Const reqBody = temporaryReqBody 
+    req.body.singularUserId = decoded.singularUserId;
+    req.body.role = decoded.role;
 
     if (decoded.role == "adm") {
       return next();

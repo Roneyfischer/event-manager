@@ -5,7 +5,6 @@ create table userRoles(
 "role" varchar(8) not null primary key
 );
 
-
 create table users (
 "id" serial unique primary key,
 "singularUser" varchar(255) not null,
@@ -70,6 +69,9 @@ FOREIGN KEY ("singularEvent") REFERENCES "events" ("singularEvent") ON DELETE CA
 
 ---
 
+insert into "userroles" ("role") values('adm');
+insert into "userroles" ("role") values('standard');
+
 INSERT INTO "groups"("singularUser", "singularGroup", "createDate") VALUES('01', 'Serviço Social', '2022/12/12');
 INSERT INTO "categories"("singularUser", "singularCategory") VALUES('01', 'Serviços Sociais');
 INSERT INTO "subscribers"("singularUser", "singularEvent", "subscriptionDate") VALUES ('01', '02', '2022/11/03');
@@ -121,7 +123,7 @@ Concertar erro:
 3. desfazer no auth/login macarrão
 4. o user Standard e Adm pode excluir somente a própria conta. Fazer a leitura
 5. somente user adm pode editar e criar: categorias, grupos, eventos
-7-1.implementar funções de edição
-8.implementar função de un/subscription
-9. Na rota, chamar uma função externa que verificar o JWToken e retorna direciona o conteúdo. Tirar regras das rotas.
-10. masterUser pode: excluir usuários de terceiros, alterar ROLE de qualquer usuário, criar usuários de terceiros.
+   7-1.implementar funções de edição
+   8.implementar função de un/subscription
+6. Na rota, chamar uma função externa que verificar o JWToken e retorna direciona o conteúdo. Tirar regras das rotas.
+7. masterUser pode: excluir usuários de terceiros, alterar ROLE de qualquer usuário, criar usuários de terceiros.

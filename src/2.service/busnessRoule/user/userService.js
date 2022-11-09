@@ -84,13 +84,17 @@ const userService = {
     return token;
   },
 
-  delete: async (singularUserId) => {
+  delete: async (reqBody) => {
     //para exclusão, não uso o "singularUserId". Na controler é preciso verificar o usuário e passar de lá o user a ser excluído.
     //utilizar singularUserId para fazer Log
-    console.log("> [userService.delete]");
-  
+
+    const { singularUserId } = await reqBody;
+    console.log(
+      "> [userService.delete] ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;" +
+        singularUserId
+    );
     const table = "users";
-    const nameItenToDeleteLine = `"singularUserId"`;
+    const nameItenToDeleteLine = `"id"`;
     const valueItenToDeleteLine = [singularUserId];
     return await dbMethod.delete(
       table,
@@ -105,8 +109,8 @@ const userService = {
   //GROUPS:
   //
 
-  createGroup: async (reqBody, singularUserId) => {
-    const { singularData } = await reqBody;
+  createGroup: async (reqBody) => {
+    const { singularData, singularUserId } = await reqBody;
 
     const table = "groups";
     const fieldName = `"singularUserId", "singularGroup"`;
@@ -114,9 +118,10 @@ const userService = {
 
     return await dbMethod.add(table, fieldName, fieldValue);
   },
-  editGroup: async (reqBody, singularUserId) => {
+
+  editGroup: async (reqBody) => {
     console.log("> [userService.editGroup]");
-    const { singularData } = await reqBody;
+    const { singularData, singularUserId } = await reqBody;
 
     const table = "groups";
     const fieldName = `"singularGroup"`;
@@ -125,9 +130,9 @@ const userService = {
     return await dbMethod.edit(table, fieldName, fieldValue);
   },
 
-  deleteGroup: async (reqBody, singularUserId) => {
+  deleteGroup: async (reqBody) => {
     console.log("> [userService.deleteGroup]");
-    const { singularData } = reqBody;
+    const { singularData, singularUserId } = await reqBody;
     const table = "groups";
     const nameItenToDeleteLine = `"singularGroup"`;
     const valueItenToDeleteLine = [singularData];
@@ -142,9 +147,9 @@ const userService = {
   //CATEGORIES:
   //
 
-  createCategory: async (reqBody, singularUserId) => {
+  createCategory: async (reqBody) => {
     console.log("> [userService.createCategory]");
-    const { singularData } = await reqBody;
+    const { singularData, singularUserId } = await reqBody;
 
     const table = "categories";
     const fieldName = `"singularUserId", "singularCategory"`;
