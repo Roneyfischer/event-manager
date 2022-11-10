@@ -1,11 +1,9 @@
-import AdmUser from "./3.AdmUser"
+import AdmUser from "./3.AdmUser.js";
 
-class ComapnyUser extends AdmUser{
-
-    //excluir usuários de terceiros
-    //alterar ROLE de qualquer usuário
-    //criar usuários de terceiros
-
+class MasterUser extends AdmUser {
+  //excluir usuários de terceiros
+  //alterar ROLE de qualquer usuário
+  //criar usuários de terceiros
 }
 
-export default ComapnyUser;
+export default MasterUser;
