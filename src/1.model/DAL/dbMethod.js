@@ -61,7 +61,7 @@ const dbMethod = {
       throw { status: false, message: `Value to delete not exists` };
     }
 
-    const queryText = `DELETE FROM ${table} WHERE ${nameItenToDeleteLine} IN ($1)`;
+    const queryText = `DELETE FROM "${table}" WHERE ${nameItenToDeleteLine} IN ($1)`;
     const queryValues = valueItenToDeleteLine;
 
     const client = await dbConnect();
@@ -79,18 +79,15 @@ const dbMethod = {
   },
 
   read: async (table, nameItenToSearch, valueItenToSearch, itenToReturn) => {
-    console.log(
-      ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + table,
-      nameItenToSearch,
-      valueItenToSearch,
-      itenToReturn
-    );
-    const queryText = `SELECT ${itenToReturn} from ${table} WHERE ${nameItenToSearch} in ($1) `;
+    const queryText = `SELECT ${itenToReturn} from "${table}" WHERE ${nameItenToSearch} in ($1) `;
     const queryValues = valueItenToSearch;
     const client = await dbConnect();
 
+    console.log("[dbMethod.read]" + queryText, queryValues);
+
     return await client.query(queryText, queryValues).then((res) => {
       const dataFinded = res.rows[0];
+      
 
       if (!dataFinded) {
         console.log("> [dbMethod.delete]  data not found!");

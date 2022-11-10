@@ -6,11 +6,14 @@
 import userRegisterDataValidation from "../../valitadtion/loginRegister/userRegisterDataValidation.js";
 import userLoginDataValidation from "../../valitadtion/loginRegister/userLoginDataValidation.js";
 import errorHandling from "../../../2.service/errorHandling/errorHandling.js";
+
 import chalk from "chalk";
 import userService from "../../../2.service/busnessRoule/user/userService.js";
 import groupAndCategoryValdiation from "../../valitadtion/groupAndCategory/groupAndCategoryValdiation.js";
+import AnonimousUser from "./0.AnonimousUser.js";
 
-class StandardUser {
+class StandardUser extends AnonimousUser{
+  
   register = async (reqBody) => {
     console.log("> [StandardUser.register]");
     try {
@@ -55,11 +58,9 @@ class StandardUser {
   };
 
   deleteMyUser = async (reqBody) => {
-    
-    
     return await userService.delete(reqBody);
 
-    throw new Error;
+    throw new Error();
   };
 
   edit = async (reqBody) => {
@@ -69,6 +70,8 @@ class StandardUser {
       return errorHandling(error);
     }
   };
+
+
 }
 
 export default StandardUser;

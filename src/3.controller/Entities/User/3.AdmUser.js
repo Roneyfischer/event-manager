@@ -9,7 +9,7 @@ class AdmUser extends GuestUser {
   createEvent = async (reqBody,
     singularUserId) => {
     console.log("> [AdmUser.createEvent]");
-    const event = new Event(reqBody, singularUserId);
+    const event = new Event(reqBody);
     return event.add(reqBody);
   };
 
@@ -63,18 +63,15 @@ class AdmUser extends GuestUser {
     }
   };
 
-  deleteGroup = async (reqBody,
-    singularUserId) => {
+  deleteGroup = async (reqBody) => {
     console.log("> [AdmUser.deleteGroup]");
     try {
-      const dataValidation = await groupAndCategoryValdiation(reqBody,
-        singularUserId);
-      console.log(
-        "> [AdmUser.deleteGroup] Data validation: " + dataValidation.status
-      );
+      const dataValidation = await groupAndCategoryValdiation(reqBody);
+
       if (dataValidation.status) {
-        return await userService.deleteGroup(reqBody,
-          singularUserId);
+
+
+        return await userService.deleteGroup(reqBody);
       }
       throw dataValidation;
     } catch (error) {

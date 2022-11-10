@@ -58,10 +58,25 @@ const eventService = {
   //    read = (data) => {
   //      { eventName, eventId } = data;
   //   };
-  read: async (reqBody) => {
+  read: async (data) => {
     console.log("> [eventService.read]");
-    const { table, nameItenToSearch, valueItenToSearch, itenToReturn } =
-      reqBody;
+
+    const { table, nameItenToSearch, valueItenToSearch, itenToReturn } = data;
+  
+
+    const dataFinded = (
+      await dbMethod.read(
+        table,
+        nameItenToSearch,
+        valueItenToSearch,
+        itenToReturn
+      )
+    ).dataFinded;
+    console.log(
+      "[dbMethod.read] O retorno da busca é: " + dataFinded.singularUserId
+    );
+
+    return dataFinded;
   },
 
   edit: async (reqBody) => {

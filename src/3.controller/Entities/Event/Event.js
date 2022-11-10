@@ -2,35 +2,35 @@ import eventService from "../../../2.service/busnessRoule/event/eventService.js"
 import errorHandling from "../../../2.service/errorHandling/errorHandling.js";
 import eventCreateDataValidation from "../../valitadtion/event/eventCreateDataValidation.js";
 import eventReadValidation from "../../valitadtion/event/eventReadValidation.js";
-export default class Event {
-  constructor(data, singularUserId) {
-    const {
-      singularEvent,
-      singularGroup,
-      singularCategory,
-      description,
-      createDate,
-      date,
-      place,
-      maxCapacityPerson,
-    } = data;
 
-    this._id = null;
-    this._singularEvent = singularEvent;
-    this._singularGroup = singularGroup;
-    this._singularCategory = singularCategory;
-    this._description = description;
-    this._createDate = createDate;
-    this._date = date;
-    this._singularUserId = singularUserId;
-    this._place = place;
-    this._maxCapacityPerson = maxCapacityPerson;
-    this._subscriberNumber = 0;
-    this._subscribers = 0;
- 
-  }
-  add = () => {
+export default class Event {
+  constructor(reqBody) {}
+  add = (reqBody) => {
     try {
+      const {
+        singularEvent,
+        singularGroup,
+        singularCategory,
+        singularUserId,
+        description,
+        createDate,
+        date,
+        place,
+        maxCapacityPerson,
+      } = reqBody;
+
+      this._id = null;
+      this._singularEvent = singularEvent;
+      this._singularGroup = singularGroup;
+      this._singularCategory = singularCategory;
+      this._description = description;
+      this._createDate = createDate;
+      this._date = date;
+      this._singularUserId = singularUserId;
+      this._place = place;
+      this._maxCapacityPerson = maxCapacityPerson;
+      this._subscriberNumber = 0;
+      this._subscribers = 0;
 
       const dataValidation = eventCreateDataValidation(this);
       if (dataValidation.status) {
@@ -44,15 +44,24 @@ export default class Event {
     }
   };
 
-  read = (data) => {
-    try {
-      const dataValidation = eventReadValidation(data);
+  readEvents = (reqBody) => {
+    console.log("[Event.readEvents]");
+    const { table, nameItenToSearch, valueItenToSearch, itenToReturn } =
+      reqBody;
+    // let temporaryData = reqBody;
+    // temporaryData.valueItenToSearch = [temporaryData.valueItenToSearch];
+    // const data = temporaryData;
+    // console.log(
+    //   "aqui >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" +
+    //     reqBody.valueItenToSearch
+    // );
+    return eventService.read(reqBody);
+  };
 
-      if (dataValidation) {
-        return eventService.read(data);
-      }
-      throw dataValidation;
-    } catch (error) {}
+  readSelected = (reqBody) => {
+    const dataValidation = eventReadValidation(reqBody);
+
+    return eventService.read(reqBody);
   };
 
   // subscribre = (data) => {

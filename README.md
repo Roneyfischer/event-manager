@@ -49,8 +49,9 @@ create table events (
 "place" varchar(255) not null,
 "maxCapacityPerson" integer not null,
 "subscriberNumber" varchar(32),
+"company" varchar(8),
 
-FOREIGN KEY ("singularUserId") REFERENCES "users" ("id"),
+FOREIGN KEY ("singularUserId") REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY ("singularUserId", "singularGroup") REFERENCES "groups" ("singularUserId", "singularGroup") ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY ("singularUserId","singularCategory") REFERENCES "categories" ("singularUserId","singularCategory") ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -119,11 +120,12 @@ Concertar erro:
 
 1. criptografar CPF pra não transitar aberto
 2. parar de quebrar quando já tem o cadastro no DB
-   3.burlar cookie mandando requisição de login com dados de cadastro/registro/group
+   4.burlar cookie mandando requisição de login com dados de cadastro/registro/group
 3. desfazer no auth/login macarrão
-4. o user Standard e Adm pode excluir somente a própria conta. Fazer a leitura
-5. somente user adm pode editar e criar: categorias, grupos, eventos
-   7-1.implementar funções de edição
-   8.implementar função de un/subscription
-6. Na rota, chamar uma função externa que verificar o JWToken e retorna direciona o conteúdo. Tirar regras das rotas.
-7. masterUser pode: excluir usuários de terceiros, alterar ROLE de qualquer usuário, criar usuários de terceiros.
+   7-1 o user Standard e Adm pode excluir somente a própria conta. Fazer a leitura
+4. somente user adm pode editar e criar: categorias, grupos, eventos
+   8-1.implementar funções de edição
+   9.implementar função de un/subscription
+5. Na rota, chamar uma função externa que verificar o JWToken e retorna direciona o conteúdo. Tirar regras das rotas.
+6. masterUser pode: excluir usuários de terceiros, alterar ROLE de qualquer usuário, criar usuários de terceiros.
+   7.Alterar horário de criação para now

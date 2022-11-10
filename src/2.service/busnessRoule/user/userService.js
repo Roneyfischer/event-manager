@@ -35,6 +35,7 @@ const userService = {
     const table = "users";
     const nameItenToSearch = "cpf";
     const valueItenToSearch = [cpf];
+
     const itenToReturn = "*";
 
     const dataFinded = (
@@ -94,7 +95,7 @@ const userService = {
         singularUserId
     );
     const table = "users";
-    const nameItenToDeleteLine = `"id"`;
+    const nameItenToDeleteLine = "id";
     const valueItenToDeleteLine = [singularUserId];
     return await dbMethod.delete(
       table,
@@ -132,7 +133,7 @@ const userService = {
 
   deleteGroup: async (reqBody) => {
     console.log("> [userService.deleteGroup]");
-    const { singularData, singularUserId } = await reqBody;
+    const { singularData } = await reqBody;
     const table = "groups";
     const nameItenToDeleteLine = `"singularGroup"`;
     const valueItenToDeleteLine = [singularData];
@@ -158,7 +159,7 @@ const userService = {
     return await dbMethod.add(table, fieldName, fieldValue);
   },
 
-  editCategory: async (reqBody, singularUserId) => {
+  editCategory: async (reqBody) => {
     console.log("> [userService.editCategory]");
     const { singularData } = await reqBody;
 
@@ -169,7 +170,7 @@ const userService = {
     return await dbMethod.edit(table, fieldName, fieldValue);
   },
 
-  deleteCategory: async (reqBody, singularUserId) => {
+  deleteCategory: async (reqBody) => {
     console.log("> [userService.deleteCategory]");
     const { singularData } = reqBody;
     const table = "categories";
@@ -181,6 +182,9 @@ const userService = {
       nameItenToDeleteLine,
       valueItenToDeleteLine
     );
+  },
+  readEvent: async (reqBody) => {
+    return event;
   },
 };
 
