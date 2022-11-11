@@ -88,8 +88,6 @@ const dbMethod = {
     const queryValues = valueItenToSearch;
     const client = await dbConnect();
 
-    console.log("[dbMethod.read]" + queryText, queryValues);
-
     return await client.query(queryText, queryValues).then((res) => {
       const dataFinded = res.rows[0];
 
@@ -102,7 +100,7 @@ const dbMethod = {
       }
       return {
         status: true,
-        message: `Unexpected error in database search. Data not found. Please check that the fields are filled in correctly. (developerMessage)`,
+        message: `The data "${dataFinded.singularEvent}" has been searched`,
         dataFinded: dataFinded,
       };
     });

@@ -71,10 +71,8 @@ const eventService = {
         valueItenToSearch,
         itenToReturn
       )
-    ).dataFinded;
-    console.log(
-      "[dbMethod.read] O retorno da busca é: " + dataFinded.singularUserId
     );
+
 
     return dataFinded;
   },
