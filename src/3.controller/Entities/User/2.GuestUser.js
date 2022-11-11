@@ -13,6 +13,8 @@ class GuestUser extends StandardUser {
  
   subscribe = async (reqBody) => {
     console.log("> [GuestUser.subscribe]")
+
+    //
     const event = new Event();
     try {
       const table = "events";
@@ -20,24 +22,27 @@ class GuestUser extends StandardUser {
       const valueItenToSearch = reqBody.singularEvent;
       const itenToReturn = "*";
 
-      const eventOnScreen = event.read(
+      const eventOnScreen = (await event.read(
         table,
         nameItenToSearch,
         valueItenToSearch,
         itenToReturn
-      );
+      )).dataFinded;
+      
       if (eventOnScreen.subscriberNumber < eventOnScreen.maxCapacityPerson) {
         const table = "subscribers";
         const fieldName = `"subscriberNumber"`;
         const fieldValue = [eventOnScreen.subscriberNumber + 1];
-
-        return {
+        
+        //conferir depois se tudo deu certo, se não, reverter.
+        return { 
           subscprition: await event.subscribe(reqBody),
-          newSubscriberNumber: event.edit(table, fieldName, fieldValue),
+          newSubscriberNumber: await event.edit(table, fieldName, fieldValue),
         };
       }
       throw { msg: "Ops, já foi atingido o número máximo de inscritos." };
-    } catch (error) {
+    } 
+    catch (error) {
       return errorHandling(error);
     }
   };

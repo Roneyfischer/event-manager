@@ -42,22 +42,16 @@ const eventService = {
       maxCapacityPerson,
       subscriberNumber,
     ];
-    console.log(
-      ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>." +
-        fieldValue
-    );
+
 
     const returnAddDb = await dbMethod.add(table, fieldName, fieldValue);
     //pode retornar "_id _subscriberNumber, _subscribers" em uma read do DB, msa não precisa na etapa de criação.
-    console.log("> [eventService.add] " + returnAddDb.message);
-    return {
+     return {
       status: true,
       message: returnAddDb.message,
     };
   },
-  //    read = (data) => {
-  //      { eventName, eventId } = data;
-  //   };
+
   read: async (data) => {
     console.log("> [eventService.read]");
 

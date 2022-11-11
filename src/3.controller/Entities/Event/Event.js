@@ -48,13 +48,7 @@ export default class Event {
     console.log("[Event.readEvents]");
     const { table, nameItenToSearch, valueItenToSearch, itenToReturn } =
       reqBody;
-    // let temporaryData = reqBody;
-    // temporaryData.valueItenToSearch = [temporaryData.valueItenToSearch];
-    // const data = temporaryData;
-    // console.log(
-    //   "aqui >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" +
-    //     reqBody.valueItenToSearch
-    // );
+
     return eventService.read(reqBody);
   };
 
@@ -63,6 +57,12 @@ export default class Event {
 
     return eventService.read(reqBody);
   };
+
+  subscribe = async (reqBody) => {
+    
+  };
+  
+  edit = async (reqBody) => {};
 
   // subscribre = (data) => {
   //   const { userCpf, pass } = data;

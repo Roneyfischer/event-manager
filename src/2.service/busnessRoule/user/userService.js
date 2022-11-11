@@ -27,7 +27,6 @@ const userService = {
     const teste = await dbMethod.add(table, fieldName, fieldValue);
     return { status: teste.status, message: teste.message };
   },
-
   login: async (reqBody) => {
     console.log("> [userService.login] Open");
 

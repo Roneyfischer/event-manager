@@ -118,15 +118,7 @@ SUBSCRIBE/UNSUBSCRIBE
 
 Concertar erro:
 
-1. criptografar CPF pra não transitar aberto
-2. parar de quebrar quando já tem o cadastro no DB
-   4.burlar cookie mandando requisição de login com dados de cadastro/registro/group
-3. desfazer no auth/login macarrão
-   ok 4. desfazer macarrão no loggedUser
-   ok 7-1 o user Standard e Adm pode excluir somente a própria conta. Fazer a leitura
-   ok 4. somente user adm pode editar e criar: categorias, grupos, eventos
-   8-1.implementar funções de edição
-   9.implementar função de un/subscription
-   ok 5. Na rota, chamar uma função externa que verificar o JWToken e retorna direciona o conteúdo. Tirar regras das rotas.
-4. masterUser pode: excluir usuários de terceiros, alterar ROLE de qualquer usuário, criar usuários de terceiros.
+
+
+4. masterUser pode: .
    7.Alterar horário de criação para now
