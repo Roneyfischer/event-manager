@@ -5,12 +5,12 @@ import jwt from "jsonwebtoken";
 
 const verifyJWT = async (req, res, next) => {
   const token = req.headers["access_token"];
+
   jwt.verify(token, process.env.JWT_KEY, (err, decoded) => {
     if (err) return res.status(401).end();
 
     req.body.singularUserId = decoded.singularUserId;
     req.body.role = decoded.role;
-    return userDriver[req.body.role](req.body, res);
 
     if (err) {
       return res
@@ -27,13 +27,13 @@ const userDriver = {
     //continuar
   },
 
-  adm: async (reqBody, res) => {
+  adm: async (reqBody) => {
     console.log("> [authorization.adm]");
     const admUser = new AdmUser(reqBody);
 
     const executeRequisition = await admUser[reqBody.type](reqBody);
 
-    return res.status(200).json({ msg: executeRequisition.message });
+    return executeRequisition;
   },
 
   master: async (reqBody) => {

@@ -28,7 +28,7 @@ const userService = {
     return { status: teste.status, message: teste.message };
   },
 
-  login: async (reqBody, res) => {
+  login: async (reqBody) => {
     console.log("> [userService.login] Open");
 
     const { cpf, pass } = reqBody;

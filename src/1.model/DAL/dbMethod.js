@@ -5,22 +5,27 @@ import pg from "pg";
 
 const dbMethod = {
   add: async (table, fieldName, fieldValue) => {
-    const fieldsNumber = fieldName.split(/,/).length;
+    try {
+      const fieldsNumber = fieldName.split(/,/).length;
 
-    let fieldsNumberVariables = [];
+      let fieldsNumberVariables = [];
 
-    for (let i = 0; i < fieldsNumber; i++) {
-      fieldsNumberVariables.push("$" + (i + 1)); //o $ não contabiliza $0, portanto, deve começar com $1
+      for (let i = 0; i < fieldsNumber; i++) {
+        fieldsNumberVariables.push("$" + (i + 1)); //o $ não contabiliza $0, portanto, deve começar com $1
+      }
+
+      const queryText = `INSERT INTO "${table}"(${fieldName}) VALUES(${fieldsNumberVariables}) RETURNING *`;
+      const queryValues = fieldValue;
+      const client = await dbConnect();
+
+      await client.query(queryText, queryValues).then((res) => {});
+
+      console.log("> [dbMethod.add] Registration successful");
+      return { status: true, message: `Registration successful` };
+    } catch (error) {
+      errorHandling(error);
+      return { status: false, message: error.message };
     }
-
-    const queryText = `INSERT INTO "${table}"(${fieldName}) VALUES(${fieldsNumberVariables}) RETURNING *`;
-    const queryValues = fieldValue;
-    const client = await dbConnect();
-
-    await client.query(queryText, queryValues).then((res) => {});
-    console.log("> [dbMethod.add] Registration successful");
-    return { status: true, message: `Registration successful` };
-    throw new Error();
   },
 
   // edit: async (table, fieldName, fieldValue) => {
@@ -87,7 +92,6 @@ const dbMethod = {
 
     return await client.query(queryText, queryValues).then((res) => {
       const dataFinded = res.rows[0];
-      
 
       if (!dataFinded) {
         console.log("> [dbMethod.delete]  data not found!");

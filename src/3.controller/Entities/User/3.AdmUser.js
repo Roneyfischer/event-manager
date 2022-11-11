@@ -6,8 +6,7 @@ import groupAndCategoryValdiation from "../../valitadtion/groupAndCategory/group
 import Event from "../Event/Event.js";
 
 class AdmUser extends GuestUser {
-  createEvent = async (reqBody,
-    singularUserId) => {
+  createEvent = async (reqBody) => {
     console.log("> [AdmUser.createEvent]");
     const event = new Event(reqBody);
     return event.add(reqBody);
@@ -19,27 +18,20 @@ class AdmUser extends GuestUser {
 
   // deleteEvent = async () => {};
 
-  createGroup = async (reqBody,
-    singularUserId) => {
+  createGroup = async (reqBody) => {
     console.log(
       "> [AdmUser.createGroup");
 
-    try {
-      const dataValidation = await groupAndCategoryValdiation(reqBody,
-        singularUserId);
+   
+      const dataValidation = await groupAndCategoryValdiation(reqBody);
 
-      console.log(
-        "> [AdmUser.createGroup] Data validation: " + dataValidation.status
-      );
+    
 
       if (dataValidation.status) {
-        return await userService.createGroup(reqBody,
-          singularUserId);
+        return await userService.createGroup(reqBody);
       }
       throw dataValidation;
-    } catch (error) {
-      return errorHandling(error);
-    }
+    
   };
 
   editGroup = async (reqBody,

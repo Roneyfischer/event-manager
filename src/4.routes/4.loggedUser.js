@@ -10,6 +10,12 @@ import chalk from "chalk";
 
 const admUser = express.Router();
 
-admUser.post("/", authorization.verifyJWT);
+admUser.post("/", authorization.verifyJWT, async (req, res) => {
+  const executeRequisitionReturn = (
+    await authorization.userDriver[req.body.role](req.body)
+  ).message;
+
+  return res.status(200).json({ msg: executeRequisitionReturn });
+});
 
 export default admUser;
