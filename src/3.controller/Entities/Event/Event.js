@@ -2,8 +2,9 @@ import eventService from "../../../2.service/busnessRoule/event/eventService.js"
 import errorHandling from "../../../2.service/errorHandling/errorHandling.js";
 import eventCreateDataValidation from "../../valitadtion/event/eventCreateDataValidation.js";
 import eventReadValidation from "../../valitadtion/event/eventReadValidation.js";
+import eventService from "../../../2.service/busnessRoule/event/eventService.js";
 
-export default class Event {
+export default class Event { //alterar para EventController
   constructor(reqBody) {}
   add = (reqBody) => {
     try {
@@ -44,7 +45,7 @@ export default class Event {
     }
   };
 
-  readEvents = (reqBody) => {
+  read = (reqBody) => {
     console.log("[Event.readEvents]");
     const { table, nameItenToSearch, valueItenToSearch, itenToReturn } =
       reqBody;
@@ -52,15 +53,42 @@ export default class Event {
     return eventService.read(reqBody);
   };
 
-  readSelected = (reqBody) => {
-    const dataValidation = eventReadValidation(reqBody);
-
-    return eventService.read(reqBody);
-  };
+ 
 
   subscribe = async (reqBody) => {
+
+    try {
+      const table = "events";
+      const nameItenToSearch = "singularEvent";
+      const valueItenToSearch = reqBody.singularEvent;
+      const itenToReturn = "*";
+
+      const eventOnScreen = (await Event.read(
+        table,
+        nameItenToSearch,
+        valueItenToSearch,
+        itenToReturn
+      )).dataFinded;
+      
+      if (eventOnScreen.subscriberNumber < eventOnScreen.maxCapacityPerson) {
+        // const table = "events";
+        // const fieldName = `"subscriberNumber"`;
+        // const fieldValue = [eventOnScreen.subscriberNumber + 1];
+        
+        //conferir depois se tudo deu certo, se não, reverter.
+        return { 
+          subscprition: await eventService.subscribe(reqBody),
+          // newSubscriberNumber: await Event.edit(table, fieldName, fieldValue),
+        };
+      }
+      throw { msg: "Ops, já foi atingido o número máximo de inscritos." };
+    } 
+    catch (error) {
+      return errorHandling(error);
+    }
     
   };
+ 
   
   edit = async (reqBody) => {};
 

@@ -52,6 +52,12 @@ const eventService = {
     };
   },
 
+  subscribe: async (reqBody) => {
+    const table = "subscribers";
+        const fieldName = `"singularUserId", "singularEvent", "subscriptionDate"`;
+        const fieldValue = [reqBody.singularUserId, eventOnScreen.id, "2022/11/11"]
+  },
+
   read: async (data) => {
     console.log("> [eventService.read]");
 

@@ -16,35 +16,8 @@ class GuestUser extends StandardUser {
 
     //
     const event = new Event();
-    try {
-      const table = "events";
-      const nameItenToSearch = "singularEvent";
-      const valueItenToSearch = reqBody.singularEvent;
-      const itenToReturn = "*";
-
-      const eventOnScreen = (await event.read(
-        table,
-        nameItenToSearch,
-        valueItenToSearch,
-        itenToReturn
-      )).dataFinded;
-      
-      if (eventOnScreen.subscriberNumber < eventOnScreen.maxCapacityPerson) {
-        const table = "subscribers";
-        const fieldName = `"subscriberNumber"`;
-        const fieldValue = [eventOnScreen.subscriberNumber + 1];
-        
-        //conferir depois se tudo deu certo, se não, reverter.
-        return { 
-          subscprition: await event.subscribe(reqBody),
-          newSubscriberNumber: await event.edit(table, fieldName, fieldValue),
-        };
-      }
-      throw { msg: "Ops, já foi atingido o número máximo de inscritos." };
-    } 
-    catch (error) {
-      return errorHandling(error);
-    }
+    return await event.subscribe(reqBody)
+    
   };
 
   unsubscribe = async (reqBody) => {
