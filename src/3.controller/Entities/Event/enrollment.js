@@ -11,14 +11,19 @@ const enrollement = {
     reqBodyNew.valueItenToSearch = [reqBody.singularEventId];
     reqBodyNew.itenToReturn = "*";
 
-    const eventOnScreen = (await event.read(reqBodyNew)).dataFinded;
+    const eventOnScreen = (await event.readEvents(reqBodyNew)).dataFinded[0];
     if (eventOnScreen.subscriberNumber < eventOnScreen.maxCapacityPerson) {
       return {
         status: true,
         dataFinded: eventOnScreen,
       };
     }
-    return {status: false, message: "Erro ao realizar inscrição. Este evento já atingiu o número máximo de inscritos"};
+
+    return {
+      status: false,
+      message:
+        "Erro ao realizar inscrição. Este evento já atingiu o número máximo de inscritos",
+    };
   },
 
   add: async (reqBody, eventOnScreen) => {
@@ -29,8 +34,8 @@ const enrollement = {
     dataToGetUserName.valueItenToSearch = [reqBody.singularUserId];
     dataToGetUserName.itenToReturn = `"singularUser"`;
 
-    const singularUserToEvent = (await event.read(dataToGetUserName)).dataFinded
-      .singularUser;
+    const singularUserToEvent = (await event.readEvents(dataToGetUserName))
+      .dataFinded.singularUser;
 
     const executeSubscribers = await eventService.subscribersAdd(
       reqBody,

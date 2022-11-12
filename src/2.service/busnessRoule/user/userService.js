@@ -28,13 +28,13 @@ const userService = {
     return { status: teste.status, message: teste.message };
   },
   login: async (reqBody) => {
+    
     console.log("> [userService.login] Open");
 
     const { cpf, pass } = reqBody;
     const table = "users";
     const nameItenToSearch = "cpf";
     const valueItenToSearch = [cpf];
-
     const itenToReturn = "*";
 
     const dataFinded = (
@@ -44,7 +44,7 @@ const userService = {
         valueItenToSearch,
         itenToReturn
       )
-    ).dataFinded;
+    ).dataFinded[0];
 
     const verifyPassword = await cryptography.cryptoArgon2.verify(
       pass,

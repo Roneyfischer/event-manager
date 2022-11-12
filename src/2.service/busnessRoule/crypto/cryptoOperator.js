@@ -18,6 +18,7 @@ const cryptoArgon2 = {
 
   verify: async function (pass, longHash) {
     if (await argon2.verify(longHash, pass)) {
+      
       console.log("> [cryptoOperator] Password match");
       return { status: true, message: "Password match" };
     }

@@ -84,7 +84,7 @@ const dbMethod = {
 
   read: async (table, nameItenToSearch, valueItenToSearch, itenToReturn) => {
     console.log(
-      "> [dbMethod.read]" + table,
+      "> [dbMethod.read] >>>>>>>>>>>>>>>>>>>>>>>>>" + table,
       nameItenToSearch,
       valueItenToSearch,
       itenToReturn
@@ -95,8 +95,8 @@ const dbMethod = {
 
     return await client.query(queryText, queryValues).then((res) => {
       // res.rows.length
-   
-      const dataFinded = res.rows;
+
+      const dataFinded = res.rows; //alterar
 
       if (!dataFinded) {
         console.log("> [dbMethod.delete]  data not found!");
