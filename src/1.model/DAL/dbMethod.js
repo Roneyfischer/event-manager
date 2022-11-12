@@ -28,27 +28,27 @@ const dbMethod = {
     }
   },
 
-  // edit: async (table, fieldName, fieldValue) => {
-  //   try {
-  //     const fieldsNumber = fieldName.split(/,/).length;
+  update: async (
+    table,
+    nameItenToSearch,
+    valueItenToSearch,
+    nameItenToUpdate,
+    valueItenToUpdate
+  ) => {
+    const queryText = `UPDATE "${table}" SET "${nameItenToUpdate}" = ($1)  WHERE "${nameItenToSearch}" = ${valueItenToSearch}`;
+    const queryValues = valueItenToUpdate;
 
-  //     let fieldsNumberVariables = [];
-
-  //     for (let i = 0; i < fieldsNumber; i++) {
-  //       fieldsNumberVariables.push("$" + (i + 1)); //o $ não contabiliza $0, portanto, deve começar com $1
-  //     }
-
-  //     const queryText = `INSERT INTO "${table}"(${fieldName}) VALUES(${fieldsNumberVariables}) RETURNING *`;
-  //     const queryValues = fieldValue
-  //     const client = await dbConnect();
-
-  //     await client.query(queryText, queryValues).then((res) => {});
-  //     console.log(chalk.blue.bold.italic(`Registration successful`));
-  //     return { status: true, message: `Registration successful` };
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // },
+    const client = await dbConnect();
+    console.log(
+      ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>." +
+        queryText +
+        "////////" +
+        queryValues
+    );
+    await client.query(queryText, queryValues).then((res, error) => {
+      console.log(`> [dbMethod.delete] ${res}`);
+    });
+  },
 
   delete: async (table, nameItenToDeleteLine, valueItenToDeleteLine) => {
     const checkLineExists = await dbMethod.read(
@@ -84,6 +84,12 @@ const dbMethod = {
   },
 
   read: async (table, nameItenToSearch, valueItenToSearch, itenToReturn) => {
+    console.log(
+      "> [dbMethod.read]" + table,
+      nameItenToSearch,
+      valueItenToSearch,
+      itenToReturn
+    );
     const queryText = `SELECT ${itenToReturn} from "${table}" WHERE ${nameItenToSearch} in ($1) `;
     const queryValues = valueItenToSearch;
     const client = await dbConnect();

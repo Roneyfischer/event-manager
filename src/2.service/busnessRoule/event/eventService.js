@@ -43,42 +43,59 @@ const eventService = {
       subscriberNumber,
     ];
 
-
     const returnAddDb = await dbMethod.add(table, fieldName, fieldValue);
     //pode retornar "_id _subscriberNumber, _subscribers" em uma read do DB, msa não precisa na etapa de criação.
-     return {
+    return {
       status: true,
       message: returnAddDb.message,
     };
   },
 
-  subscribe: async (reqBody) => {
+  subscribe: async (reqBody, eventOnScreen, singularUserToEvent) => {
+    const dateNow = new Date().toISOString();
+    console.log(dateNow);
     const table = "subscribers";
-        const fieldName = `"singularUserId", "singularEvent", "subscriptionDate"`;
-        const fieldValue = [reqBody.singularUserId, eventOnScreen.id, "2022/11/11"]
+    const fieldName = `"singularUserId", "singularUser", "singularEventId", "singularEvent", "subscriptionDate"`;
+    const fieldValue = [
+      reqBody.singularUserId,
+      singularUserToEvent,
+      eventOnScreen.id,
+      eventOnScreen.singularEvent,
+      dateNow,
+    ];
+    return await dbMethod.add(table, fieldName, fieldValue);
+  },
+
+  update: async ( table,
+    nameItenToSearch,
+    valueItenToSearch,
+    nameItenToUpdate,
+    valueItenToUpdate) => {
+     return dbMethod.update( table,
+        nameItenToSearch,
+        valueItenToSearch,
+        nameItenToUpdate,
+        valueItenToUpdate)
+
   },
 
   read: async (data) => {
-    console.log("> [eventService.read]");
-
     const { table, nameItenToSearch, valueItenToSearch, itenToReturn } = data;
-  
 
-    const dataFinded = (
-      await dbMethod.read(
-        table,
-        nameItenToSearch,
-        valueItenToSearch,
-        itenToReturn
-      )
+    const dataFinded = await dbMethod.read(
+      table,
+      nameItenToSearch,
+      valueItenToSearch,
+      itenToReturn
     );
-
 
     return dataFinded;
   },
 
   edit: async (reqBody) => {
     console.log("> [eventService.edit]");
+ 
+
     const { table, nameItenToSearch, valueItenToSearch, itenToReturn } =
       reqBody;
   },

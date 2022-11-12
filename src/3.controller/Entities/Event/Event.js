@@ -2,9 +2,9 @@ import eventService from "../../../2.service/busnessRoule/event/eventService.js"
 import errorHandling from "../../../2.service/errorHandling/errorHandling.js";
 import eventCreateDataValidation from "../../valitadtion/event/eventCreateDataValidation.js";
 import eventReadValidation from "../../valitadtion/event/eventReadValidation.js";
-import eventService from "../../../2.service/busnessRoule/event/eventService.js";
 
-export default class Event { //alterar para EventController
+export default class Event {
+  //alterar para EventController
   constructor(reqBody) {}
   add = (reqBody) => {
     try {
@@ -46,50 +46,62 @@ export default class Event { //alterar para EventController
   };
 
   read = (reqBody) => {
-    console.log("[Event.readEvents]");
-    const { table, nameItenToSearch, valueItenToSearch, itenToReturn } =
-      reqBody;
+    console.log("[Event.readEvents]" + reqBody);
 
     return eventService.read(reqBody);
   };
 
- 
-
   subscribe = async (reqBody) => {
-
     try {
-      const table = "events";
-      const nameItenToSearch = "singularEvent";
-      const valueItenToSearch = reqBody.singularEvent;
-      const itenToReturn = "*";
+      let reqBodyNew = reqBody;
+      reqBodyNew.table = "events";
+      reqBodyNew.nameItenToSearch = "id";
+      reqBodyNew.valueItenToSearch = [reqBody.singularEventId];
+      reqBodyNew.itenToReturn = "*";
 
-      const eventOnScreen = (await Event.read(
-        table,
-        nameItenToSearch,
-        valueItenToSearch,
-        itenToReturn
-      )).dataFinded;
-      
+      const eventOnScreen = (await this.read(reqBodyNew)).dataFinded;
+
       if (eventOnScreen.subscriberNumber < eventOnScreen.maxCapacityPerson) {
-        // const table = "events";
-        // const fieldName = `"subscriberNumber"`;
-        // const fieldValue = [eventOnScreen.subscriberNumber + 1];
-        
-        //conferir depois se tudo deu certo, se não, reverter.
-        return { 
-          subscprition: await eventService.subscribe(reqBody),
-          // newSubscriberNumber: await Event.edit(table, fieldName, fieldValue),
-        };
+        let dataToGetUserName = {};
+        dataToGetUserName.table = "users";
+        dataToGetUserName.nameItenToSearch = "id";
+        dataToGetUserName.valueItenToSearch = [reqBody.singularUserId];
+        dataToGetUserName.itenToReturn = `"singularUser"`;
+        const singularUserToEvent = (await this.read(dataToGetUserName))
+          .dataFinded.singularUser;
+
+        await eventService
+          .subscribe(reqBody, eventOnScreen, singularUserToEvent)
+          .then(async (res) => {
+            if (res.status) {
+              const subscriberNumber = parseInt(eventOnScreen.subscriberNumber);
+              const table = "events";
+              const nameItenToSearch = "id";
+              const valueItenToSearch = reqBody.singularEventId;
+              const nameItenToUpdate = "subscriberNumber";
+              const valueItenToUpdate = [subscriberNumber + 1];
+              //se não for possível adicionar, tem que reverter o subscribe em subscribers;
+              await eventService.update(
+                table,
+                nameItenToSearch,
+                valueItenToSearch,
+                nameItenToUpdate,
+                valueItenToUpdate
+              );
+              console.log("log: Inscrição realizada com sucesso");
+              return { msg: "Inscrição realizada com sucesso." };
+            }
+          })
+          .catch((err) => {
+            throw { msg: "Ops, você já está inscrito neste evento." };
+          });
       }
       throw { msg: "Ops, já foi atingido o número máximo de inscritos." };
-    } 
-    catch (error) {
+    } catch (error) {
       return errorHandling(error);
     }
-    
   };
- 
-  
+
   edit = async (reqBody) => {};
 
   // subscribre = (data) => {

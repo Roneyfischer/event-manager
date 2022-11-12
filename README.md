@@ -22,7 +22,7 @@ create table groups (
 "singularUserId" integer not null,
 "singularGroup" varchar(255) not null,
 
-PRIMARY KEY ("singularUserId", "singularGroup"),
+PRIMARY KEY ("singularGroup"),
 
 FOREIGN KEY ("singularUserId") REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -32,7 +32,7 @@ create table categories(
 "singularUserId" integer not null,
 "singularCategory" VARCHAR(255) not null,
 
-primary key("singularUserId","singularCategory"),
+primary key("singularCategory"),
 
 FOREIGN KEY ("singularUserId") REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -52,18 +52,19 @@ create table events (
 "company" varchar(8),
 
 FOREIGN KEY ("singularUserId") REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY ("singularUserId", "singularGroup") REFERENCES "groups" ("singularUserId", "singularGroup") ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY ("singularUserId","singularCategory") REFERENCES "categories" ("singularUserId","singularCategory") ON DELETE CASCADE ON UPDATE CASCADE
+FOREIGN KEY ("singularGroup") REFERENCES "groups" ("singularGroup") ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY ("singularCategory") REFERENCES "categories" ("singularCategory") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 create table subscribers(
 "id" serial unique,
 "singularUserId" integer not null,
-"singularEvent" VARCHAR(255) not null,
+"singularUser" VARCHAR(255) not null,
+"singularEventId" VARCHAR(255) not null,
+"singularEvent" VARCHAR(512) not null,
 "subscriptionDate" Date,
 
-primary key("singularEvent","singularUserId"),
-
+primary key("singularEventId","singularUserId"),
 FOREIGN KEY ("singularUserId") REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY ("singularEvent") REFERENCES "events" ("singularEvent") ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -117,8 +118,6 @@ SUBSCRIBE/UNSUBSCRIBE
 }
 
 Concertar erro:
-
-
 
 4. masterUser pode: .
    7.Alterar horário de criação para now

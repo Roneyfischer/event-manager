@@ -12,14 +12,13 @@ class AnonimousUser {
     const eventController = new EventController();
     let temporaryDataToFormat = reqBody;
     temporaryDataToFormat.itenToReturn = "*";
-    temporaryDataToFormat.nameItenToSearch = `"${temporaryDataToFormat.nameItenToSearch}"`
-    temporaryDataToFormat.valueItenToSearch = [temporaryDataToFormat.valueItenToSearch];
+    temporaryDataToFormat.nameItenToSearch = `"${temporaryDataToFormat.nameItenToSearch}"`;
+    temporaryDataToFormat.valueItenToSearch = [
+      temporaryDataToFormat.valueItenToSearch,
+    ];
 
     const reqBodyDataModified = temporaryDataToFormat;
-    console.log(
-      ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" +
-        reqBodyDataModified.valueItenToSearch
-    );
+
     const dataFinded = await eventController[reqBodyDataModified.type](
       reqBodyDataModified
     );
