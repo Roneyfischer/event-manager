@@ -15,7 +15,7 @@ const verifyJWT = async (req, res, next) => {
     if (err) {
       return res
         .status(401)
-        .json({ status: false, msg: `Error on verifty token$: ${err}` });
+        .json({ status: false, message: `Error on verifty token$: ${err}` });
     }
     return next();
   });

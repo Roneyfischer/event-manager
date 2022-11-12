@@ -2,6 +2,8 @@ import eventService from "../../../2.service/busnessRoule/event/eventService.js"
 import errorHandling from "../../../2.service/errorHandling/errorHandling.js";
 import eventCreateDataValidation from "../../valitadtion/event/eventCreateDataValidation.js";
 import eventReadValidation from "../../valitadtion/event/eventReadValidation.js";
+import dbMethod from "../../../1.model/DAL/dbMethod.js";
+import enrollement from "./enrollment.js";
 
 export default class Event {
   //alterar para EventController
@@ -32,6 +34,7 @@ export default class Event {
       this._maxCapacityPerson = maxCapacityPerson;
       this._subscriberNumber = 0;
       this._subscribers = 0;
+      this._company = "company";
 
       const dataValidation = eventCreateDataValidation(this);
       if (dataValidation.status) {
@@ -45,7 +48,7 @@ export default class Event {
     }
   };
 
-  read = (reqBody) => {
+  readEvents = (reqBody) => {
     console.log("[Event.readEvents]" + reqBody);
 
     return eventService.read(reqBody);
@@ -53,56 +56,81 @@ export default class Event {
 
   subscribe = async (reqBody) => {
     try {
-      let reqBodyNew = reqBody;
-      reqBodyNew.table = "events";
-      reqBodyNew.nameItenToSearch = "id";
-      reqBodyNew.valueItenToSearch = [reqBody.singularEventId];
-      reqBodyNew.itenToReturn = "*";
+      const ticketAvailability = async (reqBody) => {
+        const ticketAvailability = await enrollement.ticketAvailability(
+          reqBody
+        );
 
-      const eventOnScreen = (await this.read(reqBodyNew)).dataFinded;
+        if (ticketAvailability.status) {
+          return enrollementAdd(reqBody, ticketAvailability.dataFinded);
+        }
+        return ticketAvailability;
+      };
 
-      if (eventOnScreen.subscriberNumber < eventOnScreen.maxCapacityPerson) {
-        let dataToGetUserName = {};
-        dataToGetUserName.table = "users";
-        dataToGetUserName.nameItenToSearch = "id";
-        dataToGetUserName.valueItenToSearch = [reqBody.singularUserId];
-        dataToGetUserName.itenToReturn = `"singularUser"`;
-        const singularUserToEvent = (await this.read(dataToGetUserName))
-          .dataFinded.singularUser;
+      const enrollementAdd = async (reqBody, ticketAvailabilityData) => {
+        const enrollementAdd = await enrollement.add(
+          reqBody,
+          ticketAvailabilityData
+        );
 
-        await eventService
-          .subscribe(reqBody, eventOnScreen, singularUserToEvent)
-          .then(async (res) => {
-            if (res.status) {
-              const subscriberNumber = parseInt(eventOnScreen.subscriberNumber);
-              const table = "events";
-              const nameItenToSearch = "id";
-              const valueItenToSearch = reqBody.singularEventId;
-              const nameItenToUpdate = "subscriberNumber";
-              const valueItenToUpdate = [subscriberNumber + 1];
-              //se não for possível adicionar, tem que reverter o subscribe em subscribers;
-              await eventService.update(
-                table,
-                nameItenToSearch,
-                valueItenToSearch,
-                nameItenToUpdate,
-                valueItenToUpdate
-              );
-              console.log("log: Inscrição realizada com sucesso");
-              return { msg: "Inscrição realizada com sucesso." };
-            }
-          })
-          .catch((err) => {
-            throw { msg: "Ops, você já está inscrito neste evento." };
-          });
-      }
-      throw { msg: "Ops, já foi atingido o número máximo de inscritos." };
+        if (enrollementAdd.status) {
+          return addInscriptionOnEvent(reqBody, ticketAvailabilityData);
+        }
+
+        return fail();
+      };
+
+      const addInscriptionOnEvent = async (reqBody, ticketAvailabilityData) => {
+        const addInscriptionOnEvent = await enrollement.addInscriptionOnEvent(
+          reqBody,
+          ticketAvailabilityData
+        );
+
+        if (addInscriptionOnEvent) {
+          return succsses();
+        }
+        enrollementDelete(ticketAvailabilityData);
+        return fail();
+      };
+
+      const enrollementDelete = async (enrollementAdd) => {
+        console.log(">[enrollementDelete]");
+        return await enrollement.delete(enrollementAdd);
+      };
+
+      const succsses = () => {
+        console.log("SUCCSSESS");
+        return { status: true, message: "Inscrição realizada com sucesso!" };
+      };
+      const fail = () => {
+        console.log("FAIL");
+        return { status: true, message: "Erro. Contate o adm!" };
+      };
+      return await ticketAvailability(reqBody);
     } catch (error) {
-      return errorHandling(error);
+      errorHandling(error);
     }
   };
 
-  edit = async (reqBody) => {};
+  update = async (
+    table,
+    nameItenToSearch,
+    valueItenToSearch,
+    nameItenToUpdate,
+    valueItenToUpdate
+  ) => {
+    const executeUpdate = await eventService.update(
+      table,
+      nameItenToSearch,
+      valueItenToSearch,
+      nameItenToUpdate,
+      valueItenToUpdate
+    );
+    return {
+      message1: "Inscrição realizada com sucesso.",
+      return: executeUpdate,
+    };
+  };
 
   // subscribre = (data) => {
   //   const { userCpf, pass } = data;

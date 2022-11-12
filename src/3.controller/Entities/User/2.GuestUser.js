@@ -10,18 +10,23 @@ import userService from "../../../2.service/busnessRoule/user/userService.js";
 import Event from "../Event/Event.js";
 
 class GuestUser extends StandardUser {
- 
   subscribe = async (reqBody) => {
-    console.log("> [GuestUser.subscribe]")
+    console.log("> [GuestUser.subscribe]");
 
     //
     const event = new Event();
-    return await event.subscribe(reqBody)
-    
+    const subscribeEnvet = await event.subscribe(reqBody);
+    console.log(
+      chalk.red.bold.italic(
+        ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+      )
+    );
+    console.log(subscribeEnvet);
+    return subscribeEnvet;
   };
 
   unsubscribe = async (reqBody) => {
-    console.log("> [GuestUser.unsubscribe]")
+    console.log("> [GuestUser.unsubscribe]");
     const event = new Event();
     subscribe = async (reqBody) => {
       try {

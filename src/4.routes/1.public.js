@@ -15,7 +15,7 @@ homePage.get("/", async (req, res) => {
 
   const executeRequisition = await anonimousUser[reqBody.type](reqBody);
 
-  return res.status(200).json({ msg: executeRequisition.message });
+  return res.status(200).json({ message3: executeRequisition.message });
 
 
 

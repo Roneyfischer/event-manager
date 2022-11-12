@@ -18,10 +18,14 @@ const dbMethod = {
       const queryValues = fieldValue;
       const client = await dbConnect();
 
-      await client.query(queryText, queryValues).then((res) => {});
+      const dataFinded = (await client.query(queryText, queryValues)).rows[0];
 
-      console.log("> [dbMethod.add] Registration successful");
-      return { status: true, message: `Registration successful` };
+      console.log(dataFinded);
+      return {
+        status: true,
+        message: `Registration successful`,
+        dataFinded: dataFinded,
+      };
     } catch (error) {
       errorHandling(error);
       return { status: false, message: error.message };
@@ -39,14 +43,9 @@ const dbMethod = {
     const queryValues = valueItenToUpdate;
 
     const client = await dbConnect();
-    console.log(
-      ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>." +
-        queryText +
-        "////////" +
-        queryValues
-    );
+
     await client.query(queryText, queryValues).then((res, error) => {
-      console.log(`> [dbMethod.delete] ${res}`);
+      console.log(`> [dbMethod.update] ${res}`);
     });
   },
 
@@ -95,7 +94,9 @@ const dbMethod = {
     const client = await dbConnect();
 
     return await client.query(queryText, queryValues).then((res) => {
-      const dataFinded = res.rows[0];
+      // res.rows.length
+   
+      const dataFinded = res.rows;
 
       if (!dataFinded) {
         console.log("> [dbMethod.delete]  data not found!");

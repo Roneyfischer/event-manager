@@ -17,7 +17,7 @@ const eventService = {
     const place = data._place;
     const maxCapacityPerson = data._maxCapacityPerson;
     const subscriberNumber = 0;
-
+    const company = data._company;
     const table = "events";
 
     const fieldName = `"singularEvent", 
@@ -29,7 +29,8 @@ const eventService = {
     "singularUserId",
     "place",
     "maxCapacityPerson",
-    "subscriberNumber"`;
+    "subscriberNumber",
+    "company"`;
     const fieldValue = [
       singularEvent,
       singulargroup,
@@ -41,6 +42,7 @@ const eventService = {
       place,
       maxCapacityPerson,
       subscriberNumber,
+      company,
     ];
 
     const returnAddDb = await dbMethod.add(table, fieldName, fieldValue);
@@ -51,7 +53,7 @@ const eventService = {
     };
   },
 
-  subscribe: async (reqBody, eventOnScreen, singularUserToEvent) => {
+  subscribersAdd: async (reqBody, eventOnScreen, singularUserToEvent) => {
     const dateNow = new Date().toISOString();
     console.log(dateNow);
     const table = "subscribers";
@@ -65,18 +67,28 @@ const eventService = {
     ];
     return await dbMethod.add(table, fieldName, fieldValue);
   },
+  subscribersDelete: async (
+    table,
+    nameItenToDeleteLine,
+    valueItenToDeleteLine
+  ) => {
+    dbMethod.delete(table, nameItenToDeleteLine, valueItenToDeleteLine);
+  },
 
-  update: async ( table,
+  update: async (
+    table,
     nameItenToSearch,
     valueItenToSearch,
     nameItenToUpdate,
-    valueItenToUpdate) => {
-     return dbMethod.update( table,
-        nameItenToSearch,
-        valueItenToSearch,
-        nameItenToUpdate,
-        valueItenToUpdate)
-
+    valueItenToUpdate
+  ) => {
+    return dbMethod.update(
+      table,
+      nameItenToSearch,
+      valueItenToSearch,
+      nameItenToUpdate,
+      valueItenToUpdate
+    );
   },
 
   read: async (data) => {
@@ -94,7 +106,6 @@ const eventService = {
 
   edit: async (reqBody) => {
     console.log("> [eventService.edit]");
- 
 
     const { table, nameItenToSearch, valueItenToSearch, itenToReturn } =
       reqBody;

@@ -22,10 +22,8 @@ class AnonimousUser {
     const dataFinded = await eventController[reqBodyDataModified.type](
       reqBodyDataModified
     );
-    console.log(
-      "> [AnonimousUser.readEvents] Data finded: " + dataFinded.singularEvent
-    );
-    return dataFinded;
+  
+    return await dataFinded;
   };
   subscribe = async () => {};
 
