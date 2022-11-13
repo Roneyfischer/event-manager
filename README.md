@@ -120,4 +120,9 @@ SUBSCRIBE/UNSUBSCRIBE
 Concertar erro:
 
 4. masterUser pode: .
-   7.Alterar horário de criação para now
+   ok 7.Alterar horário de criação para now
+
+   implementar "edições"
+   implementar "unsubscribe"
+   implementar "cancel event"
+   implementar "delete event"
