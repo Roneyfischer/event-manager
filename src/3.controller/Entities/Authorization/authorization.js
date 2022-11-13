@@ -1,3 +1,4 @@
+import StandardUser from "../User/1.StandardUser.js";
 import GuestUser from "../User/2.GuestUser.js";
 import AdmUser from "../User/3.AdmUser.js";
 import MasterUser from "../User/5.MasterUser.js";
@@ -23,21 +24,68 @@ const verifyJWT = async (req, res, next) => {
 
 const userDriver = {
   standard: async (reqBody) => {
-    console.log("> [authorization.standard]");
+    try {
+      console.log("> [authorization.standard]");
+
+      const user = new StandardUser(reqBody);
+
+      const executeRequisition = await user[reqBody.type](reqBody);
+
+      return executeRequisition;
+    } catch (error) {
+      return {
+        status: false,
+        message: `Ops, seu usuário (${reqBody.role}) não tem pemissão pra executar essa função (${reqBody.type})`,
+      };
+    }
+
+    //continuar
+  },
+  guest: async (reqBody) => {
+    try {
+      console.log("> [authorization.standard]");
+
+      const user = new GuestUser(reqBody);
+
+      const executeRequisition = await user[reqBody.type](reqBody);
+
+      return executeRequisition;
+    } catch (error) {
+      return {
+        status: false,
+        message: `Ops, seu usuário (${reqBody.role}) não tem pemissão pra executar essa função (${reqBody.type})`,
+      };
+    }
+
     //continuar
   },
 
   adm: async (reqBody) => {
-    console.log("> [authorization.adm]");
-    const admUser = new AdmUser(reqBody);
+    try {
+      console.log("> [authorization.adm]");
+      const user = new AdmUser(reqBody);
 
-    const executeRequisition = await admUser[reqBody.type](reqBody);
+      const executeRequisition = await user[reqBody.type](reqBody);
 
-    return executeRequisition;
+      return executeRequisition;
+    } catch (error) {
+      return {
+        status: false,
+        message: `Ops, seu usuário (${reqBody.role}) não tem pemissão pra executar essa função (${reqBody.type})`,
+      };
+    }
   },
 
   master: async (reqBody) => {
     console.log("> [authorization.master]");
+    try {
+    } catch (error) {
+      return {
+        status: false,
+        message: `Ops, seu usuário (${reqBody.role}) não tem pemissão pra executar essa função (${reqBody.type})`,
+      };
+    }
+
     //continuar
   },
 };
