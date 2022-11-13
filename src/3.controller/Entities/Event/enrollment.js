@@ -27,20 +27,21 @@ const enrollement = {
   },
 
   add: async (reqBody, eventOnScreen) => {
+    console.log(">[enrollement.add]");
     const event = new Event();
     let dataToGetUserName = {};
     dataToGetUserName.table = "users";
     dataToGetUserName.nameItenToSearch = "id";
     dataToGetUserName.valueItenToSearch = [reqBody.singularUserId];
-    dataToGetUserName.itenToReturn = `"singularUser"`;
+    dataToGetUserName.itenToReturn = `*`;
 
-    const singularUserToEvent = (await event.readEvents(dataToGetUserName))
-      .dataFinded.singularUser;
+    const userToEvent = (await event.readEvents(dataToGetUserName))
+      .dataFinded[0];
 
     const executeSubscribers = await eventService.subscribersAdd(
       reqBody,
       eventOnScreen,
-      singularUserToEvent
+      userToEvent
     );
     return executeSubscribers;
   },

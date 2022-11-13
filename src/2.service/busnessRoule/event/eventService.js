@@ -53,14 +53,14 @@ const eventService = {
     };
   },
 
-  subscribersAdd: async (reqBody, eventOnScreen, singularUserToEvent) => {
+  subscribersAdd: async (reqBody, eventOnScreen, userToEvent) => {
     const dateNow = new Date().toISOString();
     console.log(dateNow);
     const table = "subscribers";
     const fieldName = `"singularUserId", "singularUser", "singularEventId", "singularEvent", "subscriptionDate"`;
     const fieldValue = [
-      reqBody.singularUserId,
-      singularUserToEvent,
+      userToEvent.id,
+      userToEvent.singularUser,
       eventOnScreen.id,
       eventOnScreen.singularEvent,
       dateNow,

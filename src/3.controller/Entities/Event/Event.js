@@ -57,6 +57,7 @@ export default class Event {
   subscribe = async (reqBody) => {
     try {
       const ticketAvailability = async (reqBody) => {
+        console.log(">[ticketAvailability]");
         const ticketAvailability = await enrollement.ticketAvailability(
           reqBody
         );
@@ -68,6 +69,7 @@ export default class Event {
       };
 
       const enrollementAdd = async (reqBody, ticketAvailabilityData) => {
+        console.log(">[enrollementAdd]");
         const enrollementAdd = await enrollement.add(
           reqBody,
           ticketAvailabilityData

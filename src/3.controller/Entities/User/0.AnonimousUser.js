@@ -22,7 +22,7 @@ class AnonimousUser {
     const dataFinded = await eventController[reqBodyDataModified.type](
       reqBodyDataModified
     );
-  
+
     return await dataFinded;
   };
   subscribe = async () => {};

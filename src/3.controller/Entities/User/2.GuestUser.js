@@ -16,11 +16,7 @@ class GuestUser extends StandardUser {
     //
     const event = new Event();
     const subscribeEnvet = await event.subscribe(reqBody);
-    console.log(
-      chalk.red.bold.italic(
-        ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-      )
-    );
+ 
     console.log(subscribeEnvet);
     return subscribeEnvet;
   };
