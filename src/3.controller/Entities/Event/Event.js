@@ -114,6 +114,29 @@ export default class Event {
     }
   };
 
+  unsubscribe = async (reqBody) => {
+    //recebe no reqBody:
+    //verificar se a pessoa tá inscrita.
+    const = table,
+      nameItenToSearch,
+      valueItenToSearch,
+      itenToReturn
+    const table = "subscribers";
+    const queryText = `SELECT * FROM "subscribers" WHERE "singularUserId" IN ($1) AND "singularEventId" IN ($2)`;
+    const queryValues = ["3", "7"];
+    const teste = await dbMethod.readMutiple(queryText, queryValues);
+
+    console.log(teste);
+    return teste;
+
+    //se tiver, remove ela do subscribers;
+    //se a remoção for Ok, diminui um subscribesNumber no Event
+    //se a "diminuição" for ok, return OK,.
+    //caso contrário, adiciona a pessoa novamente:
+    //return {
+    // status: false, message: "Erro. Tente novamente.", data: enrollement.add(reqBody, ticketAvailabilityData)};
+  };
+
   update = async (
     table,
     nameItenToSearch,

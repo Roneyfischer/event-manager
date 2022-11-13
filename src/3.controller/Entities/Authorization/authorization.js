@@ -62,16 +62,15 @@ const userDriver = {
 
   adm: async (reqBody) => {
     try {
-      console.log("> [authorization.adm]");
       const user = new AdmUser(reqBody);
-
+      console.log("> [authorization.adm] >>>>>>>>>>>>>>>" + user[reqBody.type]);
       const executeRequisition = await user[reqBody.type](reqBody);
 
       return executeRequisition;
     } catch (error) {
       return {
         status: false,
-        message: `Ops, seu usuário (${reqBody.role}) não tem pemissão pra executar essa função (${reqBody.type})`,
+        message: `Ops, seu usuário (${reqBody.role}) não tem pemissão pra executar essa função (${reqBody.type}): ${error}`,
       };
     }
   },

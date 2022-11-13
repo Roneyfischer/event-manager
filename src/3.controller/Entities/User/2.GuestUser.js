@@ -24,14 +24,12 @@ class GuestUser extends StandardUser {
   unsubscribe = async (reqBody) => {
     console.log("> [GuestUser.unsubscribe]");
     const event = new Event();
-    subscribe = async (reqBody) => {
-      try {
-        return await event.unsubscribe(reqBody);
-      } catch (error) {
-        return errorHandling(error);
-      }
-    };
+
+    const cancelEnrollEnvet = await event.unsubscribe(reqBody);
+
+    return cancelEnrollEnvet;
   };
+
 }
 
 export default GuestUser;

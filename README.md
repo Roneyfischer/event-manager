@@ -49,6 +49,7 @@ create table events (
 "place" varchar(255) not null,
 "maxCapacityPerson" integer not null,
 "subscriberNumber" varchar(32),
+"state" varchar(32) not null, //a implementar
 "company" varchar(8),
 
 FOREIGN KEY ("singularUserId") REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
@@ -60,7 +61,7 @@ create table subscribers(
 "id" serial unique,
 "singularUserId" integer not null,
 "singularUser" VARCHAR(255) not null,
-"singularEventId" VARCHAR(255) not null,
+"singularEventId" interger not null,
 "singularEvent" VARCHAR(512) not null,
 "subscriptionDate" Date,
 
@@ -124,5 +125,6 @@ Concertar erro:
 
    implementar "edições"
    implementar "unsubscribe"
+   implementar "status" do event: aguardando/em inscrição/encerrado/cancelado
    implementar "cancel event"
    implementar "delete event"

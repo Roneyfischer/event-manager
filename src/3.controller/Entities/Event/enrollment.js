@@ -46,6 +46,7 @@ const enrollement = {
     return executeSubscribers;
   },
 
+
   delete: async (executeSubscribers) => {
     const table = "subscribers";
     const nameItenToDeleteLine = "id";

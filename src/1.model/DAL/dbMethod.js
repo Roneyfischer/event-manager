@@ -112,6 +112,32 @@ const dbMethod = {
       };
     });
   },
+
+  readMutiple: async (
+    queryText,
+    queryValues
+  ) => {        
+    const client = await dbConnect();
+
+    return await client.query(queryText, queryValues).then((res) => {
+      // res.rows.length
+
+      const dataFinded = res.rows; //alterar
+
+      if (!dataFinded) {
+        console.log("> [dbMethod.delete]  data not found!");
+        throw {
+          status: false,
+          message: `Unexpected error in database search. Data not found. Please check that the fields are filled in correctly. (developerMessage)`,
+        };
+      }
+      return {
+        status: true,
+        message: `The data "${dataFinded.singularEvent}" has been searched`,
+        dataFinded: dataFinded,
+      };
+    });
+  },
 };
 
 export default dbMethod;
