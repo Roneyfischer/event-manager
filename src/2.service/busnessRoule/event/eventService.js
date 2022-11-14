@@ -20,7 +20,6 @@ const eventService = {
       eventStatus,
       company,
     } = data;
-   
 
     const table = "events";
 
@@ -109,6 +108,10 @@ const eventService = {
     );
 
     return dataFinded;
+  },
+  
+  readAll: async (data) => {
+    return await dbMethod.readAll(data);
   },
 
   edit: async (reqBody) => {

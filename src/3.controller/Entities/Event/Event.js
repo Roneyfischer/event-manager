@@ -7,10 +7,9 @@ import enrollement from "./enrollment.js";
 
 export default class Event {
   //alterar para EventController
-  constructor(reqBody) {}
+
   add = (reqBody) => {
     try {
-           
       const reqBodyNew = reqBody;
       reqBodyNew.subscriberNumber = 0;
       reqBodyNew.createDate = new Date(Date.now());
@@ -28,12 +27,27 @@ export default class Event {
     }
   };
 
-  readEvents = (reqBody) => {
-    console.log("[Event.readEvents]");
-    console.log(reqBody);
+
+  readAllEvents = async () => {
+    console.log("> [AnonimousUser.readAll]");
+
+    return eventService.readAll("events");
+  };
+
+  readAllCategories = async () => {
+    return eventService.readAll("categories");
+  };
+
+  readAllGroups = async () => {
+    return eventService.readAll("groups");
+  };
+
+  readEvents = async (reqBody) => {
 
     return eventService.read(reqBody);
+
   };
+
 
   subscribe = async (reqBody) => {
     try {
@@ -110,7 +124,6 @@ export default class Event {
 
       const verifyUseExists = await enrollement.read(reqBodyNew);
 
-      
       if (verifyUseExists.status) {
         const subscribeOnScreen = verifyUseExists.dataFinded[0];
         const reqBodyNew = reqBody;

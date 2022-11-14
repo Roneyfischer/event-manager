@@ -81,6 +81,8 @@ const dbMethod = {
   },
 
   read: async (table, nameItenToSearch, valueItenToSearch, itenToReturn) => {
+    console.log("> [dbMethod.read]  open");
+    console.log(table, nameItenToSearch, valueItenToSearch, itenToReturn);
     let numberOfColumns = `$1`;
     for (let i = 1; i < valueItenToSearch.length; i++) {
       numberOfColumns = numberOfColumns + `, $${i + 1}`;
@@ -94,7 +96,30 @@ const dbMethod = {
       const dataFinded = res.rows; //alterar
 
       if (!dataFinded[0]) {
-        console.log("> [dbMethod.delete]  data not found!");
+        console.log("> [dbMethod.read]  data not found!");
+        return {
+          status: false,
+          message: `Unexpected error in database search. Data not found. Please check that the fields are filled in correctly. (developerMessage)`,
+        };
+      }
+      return {
+        status: true,
+        message: `The data "${dataFinded.singularEvent}" has been searched`,
+        dataFinded: dataFinded,
+      };
+    });
+  },
+
+  readAll: async (table) => {
+    const queryText = `SELECT * from "${table}"`;
+    //const queryValues = valueItenToSearch; //inútil?
+    const client = await dbConnect();
+
+    return await client.query(queryText).then((res) => {
+      const dataFinded = res.rows; //alterar
+
+      if (!dataFinded[0]) {
+        console.log("> [dbMethod.readAll]  data not found!");
         return {
           status: false,
           message: `Unexpected error in database search. Data not found. Please check that the fields are filled in correctly. (developerMessage)`,

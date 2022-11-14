@@ -6,18 +6,53 @@
 import userRegisterDataValidation from "../../valitadtion/loginRegister/userRegisterDataValidation.js";
 import userLoginDataValidation from "../../valitadtion/loginRegister/userLoginDataValidation.js";
 import errorHandling from "../../../2.service/errorHandling/errorHandling.js";
+import EventController from "../Event/Event.js";
+
+import userService from "../../../2.service/busnessRoule/user/userService.js";
 
 import chalk from "chalk";
-import userService from "../../../2.service/busnessRoule/user/userService.js";
-import groupAndCategoryValdiation from "../../valitadtion/groupAndCategory/groupAndCategoryValdiation.js";
 import AnonimousUser from "./0.AnonimousUser.js";
+import groupAndCategoryValdiation from "../../valitadtion/groupAndCategory/groupAndCategoryValdiation.js";
 
 class StandardUser {
-  //composição:
-  readEvents = async (reqBody) => {
-    const anonimousUser = new AnonimousUser();
-    return await anonimousUser.readEvents(reqBody);
+  // início composição:
+  readAllEvents = async (reqBody) => {
+    console.log("> [AnonimousUser.readAll]");
+
+    const eventController = new EventController();
+    return await eventController[reqBody.type]();
   };
+  readAllGroups = async (reqBody) => {
+    console.log("> [AnonimousUser.readAll]");
+
+    const eventController = new EventController();
+    return await eventController[reqBody.type]();
+  };
+  readAllCategories = async (reqBody) => {
+    console.log("> [AnonimousUser.readAll]");
+
+    const eventController = new EventController();
+    return await eventController[reqBody.type]();
+  };
+
+  readEvent = async (reqBody) => {
+    console.log("> [AnonimousUser.filter]");
+    const anonimousUser = new AnonimousUser();
+    return await anonimousUser[reqBody.type](reqBody);
+  };
+
+  readGroup = async (reqBody) => {
+    console.log("> [AnonimousUser.filter]");
+    const anonimousUser = new AnonimousUser();
+    return await anonimousUser[reqBody.type](reqBody);
+  };
+  readCategories = async (reqBody) => {
+    console.log("> [AnonimousUser.filter]");
+    const anonimousUser = new AnonimousUser();
+    return await anonimousUser[reqBody.type](reqBody);
+  };
+
+  //fim composição
 
   register = async (reqBody) => {
     console.log("> [StandardUser.register]");
