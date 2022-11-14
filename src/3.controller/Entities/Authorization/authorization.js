@@ -65,7 +65,7 @@ const userDriver = {
       const user = new AdmUser(reqBody);
 
       const executeRequisition = await user[reqBody.type](reqBody);
-      console.log(reqBody.type);
+
       return executeRequisition;
     } catch (error) {
       return {

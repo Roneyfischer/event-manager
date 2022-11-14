@@ -66,7 +66,20 @@ class StandardUser {
     } catch (error) {
       return errorHandling(error);
     }
-  };
+  };  
+
+  selfFilter = async (reqBody) => {
+    const data = {}
+    data.table = "users";
+    data.nameItenToSearch = "id";
+    data.valueItenToSearch = [reqBody.singularUserId];
+    data.itenToReturn = `*`;
+       
+      const dataFinded = await userService.read(data)
+  
+      return dataFinded;
+
+  }
 
   login = async (reqBody, res) => {
     console.log("> [StandardUser.login]");

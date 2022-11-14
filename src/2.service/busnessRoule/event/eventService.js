@@ -99,6 +99,7 @@ const eventService = {
 
   read: async (data) => {
     const { table, nameItenToSearch, valueItenToSearch, itenToReturn } = data;
+    
 
     const dataFinded = await dbMethod.read(
       table,

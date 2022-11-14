@@ -111,6 +111,20 @@ const userService = {
 
   edit: async (reqBody) => {},
 
+  read: async (data) => {
+    const { table, nameItenToSearch, valueItenToSearch, itenToReturn } = data;
+    
+
+    const dataFinded = await dbMethod.read(
+      table,
+      nameItenToSearch,
+      valueItenToSearch,
+      itenToReturn
+    );
+
+    return dataFinded;
+  },
+
   //
   //GROUPS:
   //

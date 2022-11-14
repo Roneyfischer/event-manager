@@ -42,26 +42,36 @@ export default class Event {
   };
 
   filterEvent = async (reqBody) => {
+    console.log("[Event].filterEvent]");
     const reqBodyTemporario = reqBody;
     reqBodyTemporario.table = "events";
     const reqBodyNew = reqBodyTemporario;
     return eventService.read(reqBodyNew);
   };
   filterGroup = async (reqBody) => {
-    return eventService.read(reqBody);
+    const reqBodyTemporario = reqBody;
+    reqBodyTemporario.table = "groups";
+    const reqBodyNew = reqBodyTemporario;
+    return eventService.read(reqBodyNew);
   };
 
   filterCategory = async (reqBody) => {
-    return eventService.read(reqBody);
+    const reqBodyTemporario = reqBody;
+    reqBodyTemporario.table = "categories";
+    const reqBodyNew = reqBodyTemporario;
+    return eventService.read(reqBodyNew);
   };
 
   subscribe = async (reqBody) => {
     try {
       const ticketAvailability = async (reqBody) => {
         console.log(">[ticketAvailability]");
+
         const ticketAvailability = await enrollement.ticketAvailability(
           reqBody
         );
+        
+        console.log(">[ticketAvailability] " + ticketAvailability.status);
 
         if (ticketAvailability.status) {
           return enrollementAdd(reqBody, ticketAvailability.dataFinded);
@@ -71,6 +81,7 @@ export default class Event {
 
       const enrollementAdd = async (reqBody, ticketAvailabilityData) => {
         console.log(">[enrollementAdd]");
+
         const enrollementAdd = await enrollement.add(
           reqBody,
           ticketAvailabilityData
@@ -84,6 +95,8 @@ export default class Event {
       };
 
       const addInscriptionOnEvent = async (reqBody, ticketAvailabilityData) => {
+        console.log(">[Event.addInscriptionOnEvent]");
+
         const addInscriptionOnEvent = await enrollement.addInscriptionOnEvent(
           reqBody,
           ticketAvailabilityData
@@ -142,7 +155,7 @@ export default class Event {
         const enrollementDelete = await enrollement.delete(subscribeOnScreen);
 
         if (enrollementDelete.status) {
-          const eventOnScreen = (await this.readEvents(reqBodyNew))
+          const eventOnScreen = (await this.filterEvent(reqBodyNew))
             .dataFinded[0];
           await enrollement.deleteInscriptionOnEvent(eventOnScreen);
         }

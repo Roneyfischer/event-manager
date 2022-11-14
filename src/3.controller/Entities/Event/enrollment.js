@@ -1,6 +1,7 @@
 import Event from "./Event.js";
 import eventService from "../../../2.service/busnessRoule/event/eventService.js";
 import dbMethod from "../../../1.model/DAL/dbMethod.js";
+import StandardUser from "../User/1.StandardUser.js";
 const enrollement = {
   read: async (data) => {
     const { table, nameItenToSearch, valueItenToSearch, itenToReturn } = data;
@@ -16,6 +17,7 @@ const enrollement = {
   },
 
   ticketAvailability: async (reqBody) => {
+    console.log("> [enrollment.ticketAvailability]");
     const event = new Event();
 
     let reqBodyNew = reqBody;
@@ -24,7 +26,7 @@ const enrollement = {
     reqBodyNew.valueItenToSearch = [reqBody.singularEventId];
     reqBodyNew.itenToReturn = "*";
 
-    const eventOnScreen = (await event.readEvents(reqBodyNew)).dataFinded[0];
+    const eventOnScreen = (await event.filterEvent(reqBodyNew)).dataFinded[0];
     if (eventOnScreen.subscriberNumber < eventOnScreen.maxCapacityPerson) {
       return {
         status: true,
@@ -41,14 +43,9 @@ const enrollement = {
 
   add: async (reqBody, eventOnScreen) => {
     console.log(">[enrollement.add]");
-    const event = new Event();
-    let dataToGetUserName = {};
-    dataToGetUserName.table = "users";
-    dataToGetUserName.nameItenToSearch = "id";
-    dataToGetUserName.valueItenToSearch = [reqBody.singularUserId];
-    dataToGetUserName.itenToReturn = `*`;
+    const userControllerClass = new StandardUser();
 
-    const userToEvent = (await event.readEvents(dataToGetUserName))
+    const userToEvent = (await userControllerClass.selfFilter(reqBody))
       .dataFinded[0];
 
     const executeSubscribers = await eventService.subscribersAdd(
@@ -98,7 +95,7 @@ const enrollement = {
     const valueItenToSearch = eventOnScreen.id;
     const nameItenToUpdate = "subscriberNumber";
     const valueItenToUpdate = [subscriberNumber - 1];
-    
+
     const subscribeExecuteUpdateOnEvent = await event.update(
       table,
       nameItenToSearch,
