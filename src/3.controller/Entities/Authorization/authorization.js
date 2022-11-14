@@ -63,7 +63,7 @@ const userDriver = {
   adm: async (reqBody) => {
     try {
       const user = new AdmUser(reqBody);
-      console.log("> [authorization.adm] >>>>>>>>>>>>>>>" + user[reqBody.type]);
+      
       const executeRequisition = await user[reqBody.type](reqBody);
 
       return executeRequisition;

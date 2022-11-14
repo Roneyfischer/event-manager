@@ -83,15 +83,13 @@ const dbMethod = {
   },
 
   read: async (table, nameItenToSearch, valueItenToSearch, itenToReturn) => {
-    console.log(
-      "> [dbMethod.read] >>>>>>>>>>>>>>>>>>>>>>>>>" + table,
-      nameItenToSearch,
-      valueItenToSearch,
-      itenToReturn
-    );
-    const queryText = `SELECT ${itenToReturn} from "${table}" WHERE ${nameItenToSearch} in ($1) `;
+    const queryText = `SELECT ${itenToReturn} from "${table}" WHERE (${nameItenToSearch}) = ($1) `;
     const queryValues = valueItenToSearch;
     const client = await dbConnect();
+    console.log(
+      "> [dbMethod.read] >>>>>>>>>>>>>>>>>>>>>>>>>" + queryText,
+      queryValues
+    );
 
     return await client.query(queryText, queryValues).then((res) => {
       // res.rows.length
@@ -113,10 +111,7 @@ const dbMethod = {
     });
   },
 
-  readMutiple: async (
-    queryText,
-    queryValues
-  ) => {        
+  readMutiple: async (queryText, queryValues) => {
     const client = await dbConnect();
 
     return await client.query(queryText, queryValues).then((res) => {
