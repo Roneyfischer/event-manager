@@ -83,16 +83,16 @@ const dbMethod = {
   },
 
   read: async (table, nameItenToSearch, valueItenToSearch, itenToReturn) => {
-    const queryText = `SELECT ${itenToReturn} from "${table}" WHERE (${nameItenToSearch}) = ($1) `;
+    let numberColumnsToSearch = `$1`;
+    for (let i = 1; i < valueItenToSearch.length; i++) {
+      numberColumnsToSearch = numberColumnsToSearch + `, $${i + 1}`;
+    }
+    
+    const queryText = `SELECT ${itenToReturn} from "${table}" WHERE (${nameItenToSearch}) = (${numberColumnsToSearch}) `;
     const queryValues = valueItenToSearch;
     const client = await dbConnect();
-    console.log(
-      "> [dbMethod.read] >>>>>>>>>>>>>>>>>>>>>>>>>" + queryText,
-      queryValues
-    );
 
     return await client.query(queryText, queryValues).then((res) => {
-      // res.rows.length
 
       const dataFinded = res.rows; //alterar
 
@@ -111,28 +111,7 @@ const dbMethod = {
     });
   },
 
-  readMutiple: async (queryText, queryValues) => {
-    const client = await dbConnect();
 
-    return await client.query(queryText, queryValues).then((res) => {
-      // res.rows.length
-
-      const dataFinded = res.rows; //alterar
-
-      if (!dataFinded) {
-        console.log("> [dbMethod.delete]  data not found!");
-        throw {
-          status: false,
-          message: `Unexpected error in database search. Data not found. Please check that the fields are filled in correctly. (developerMessage)`,
-        };
-      }
-      return {
-        status: true,
-        message: `The data "${dataFinded.singularEvent}" has been searched`,
-        dataFinded: dataFinded,
-      };
-    });
-  },
 };
 
 export default dbMethod;
