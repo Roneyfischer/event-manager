@@ -15,7 +15,6 @@ import AnonimousUser from "./0.AnonimousUser.js";
 import groupAndCategoryValdiation from "../../valitadtion/groupAndCategory/groupAndCategoryValdiation.js";
 
 class StandardUser {
-  // início composição:
   readAllEvents = async (reqBody) => {
     console.log("> [AnonimousUser.readAll]");
 
@@ -35,24 +34,24 @@ class StandardUser {
     return await eventController[reqBody.type]();
   };
 
-  readEvent = async (reqBody) => {
+  filterEvent = async (reqBody) => {
     console.log("> [AnonimousUser.filter]");
-    const anonimousUser = new AnonimousUser();
-    return await anonimousUser[reqBody.type](reqBody);
+
+    
+    const eventController = new EventController();
+    return await eventController[reqBody.type](reqBody);
   };
 
-  readGroup = async (reqBody) => {
+  filterGroup = async (reqBody) => {
     console.log("> [AnonimousUser.filter]");
-    const anonimousUser = new AnonimousUser();
-    return await anonimousUser[reqBody.type](reqBody);
+    const eventController = new EventController();
+    return await eventController[reqBody.type](reqBody);
   };
-  readCategories = async (reqBody) => {
+  filterCategory = async (reqBody) => {
     console.log("> [AnonimousUser.filter]");
-    const anonimousUser = new AnonimousUser();
-    return await anonimousUser[reqBody.type](reqBody);
+    const eventController = new EventController();
+    return await eventController[reqBody.type](reqBody);
   };
-
-  //fim composição
 
   register = async (reqBody) => {
     console.log("> [StandardUser.register]");

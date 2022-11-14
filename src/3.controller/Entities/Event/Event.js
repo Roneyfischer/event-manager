@@ -27,7 +27,6 @@ export default class Event {
     }
   };
 
-
   readAllEvents = async () => {
     console.log("> [AnonimousUser.readAll]");
 
@@ -42,12 +41,19 @@ export default class Event {
     return eventService.readAll("groups");
   };
 
-  readEvents = async (reqBody) => {
-
+  filterEvent = async (reqBody) => {
+    const reqBodyTemporario = reqBody;
+    reqBodyTemporario.table = "events";
+    const reqBodyNew = reqBodyTemporario;
+    return eventService.read(reqBodyNew);
+  };
+  filterGroup = async (reqBody) => {
     return eventService.read(reqBody);
-
   };
 
+  filterCategory = async (reqBody) => {
+    return eventService.read(reqBody);
+  };
 
   subscribe = async (reqBody) => {
     try {
