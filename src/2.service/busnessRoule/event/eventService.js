@@ -6,21 +6,26 @@ import dbMethod from "../../../1.model/DAL/dbMethod.js";
 const eventService = {
   add: async (data) => {
     console.log("> [eventService.add]");
-    //editar pra adicionar corretamente ao DB
-    const singularEvent = data._singularEvent;
-    const singulargroup = data._singularGroup;
-    const singularCategory = data._singularCategory;
-    const singularUserId = data._singularUserId;
-    const description = data._description;
-    const createDate = data._createDate;
-    const date = data._date;
-    const place = data._place;
-    const maxCapacityPerson = data._maxCapacityPerson;
-    const subscriberNumber = 0;
-    const company = data._company;
+    const {
+      singularEvent,
+      singularGroup,
+      singularCategory,
+      singularUserId,
+      description,
+      createDate,
+      date,
+      place,
+      subscriberNumber,
+      maxCapacityPerson,
+      eventStatus,
+      company,
+    } = data;
+   
+
     const table = "events";
 
-    const fieldName = `"singularEvent", 
+    const fieldName = `
+    "singularEvent", 
     "singularGroup",
     "singularCategory",
     "description",
@@ -30,10 +35,11 @@ const eventService = {
     "place",
     "maxCapacityPerson",
     "subscriberNumber",
-    "company"`;
+    "company",
+    "eventStatus"`;
     const fieldValue = [
       singularEvent,
-      singulargroup,
+      singularGroup,
       singularCategory,
       description,
       createDate,
@@ -43,6 +49,7 @@ const eventService = {
       maxCapacityPerson,
       subscriberNumber,
       company,
+      eventStatus,
     ];
 
     const returnAddDb = await dbMethod.add(table, fieldName, fieldValue);

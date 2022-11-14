@@ -5,14 +5,19 @@ create table userRoles(
 "role" varchar(8) not null primary key
 );
 
+create table eventStatus(
+"id" serial unique,
+"statusName" varchar(32) not null primary key
+);
+
 create table users (
 "id" serial unique primary key,
 "singularUser" varchar(255) not null,
 "role" varchar (32),
-"cpf" varchar(255) not null unique,
+"cpf" varchar(512) not null unique,
 "email" varchar(512) not null unique,
 "secondUserId" varchar(512) not null unique,
-"pass" varchar(600) not null unique,
+"pass" varchar(856) not null unique,
 
 FOREIGN KEY ("role") REFERENCES "userroles" ("role") ON UPDATE CASCADE
 );
@@ -49,9 +54,10 @@ create table events (
 "place" varchar(255) not null,
 "maxCapacityPerson" integer not null,
 "subscriberNumber" varchar(32),
-"state" varchar(32) not null, //a implementar
 "company" varchar(8),
+"eventStatus" varchar(32) not null,
 
+FOREIGN KEY ("eventStatus") REFERENCES "eventstatus" ("statusName") ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY ("singularUserId") REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY ("singularGroup") REFERENCES "groups" ("singularGroup") ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY ("singularCategory") REFERENCES "categories" ("singularCategory") ON DELETE CASCADE ON UPDATE CASCADE
@@ -74,6 +80,13 @@ FOREIGN KEY ("singularEvent") REFERENCES "events" ("singularEvent") ON DELETE CA
 
 insert into "userroles" ("role") values('adm');
 insert into "userroles" ("role") values('standard');
+insert into "userroles" ("role") values('guest');
+
+insert into "eventstatus" ("statusName") values('aguardando');
+insert into "eventstatus" ("statusName") values('aberto');
+insert into "eventstatus" ("statusName") values('encerrado');
+insert into "eventstatus" ("statusName") values('cancelado');
+
 
 INSERT INTO "groups"("singularUser", "singularGroup", "createDate") VALUES('01', 'Serviço Social', '2022/12/12');
 INSERT INTO "categories"("singularUser", "singularCategory") VALUES('01', 'Serviços Sociais');
@@ -118,13 +131,20 @@ SUBSCRIBE/UNSUBSCRIBE
 "singularEvent": "event"
 }
 
-Concertar erro:
 
-4. masterUser pode: .
-   ok 7.Alterar horário de criação para now
 
-   implementar "edições"
-   implementar "unsubscribe"
-   implementar "status" do event: aguardando/em inscrição/encerrado/cancelado
-   implementar "cancel event"
-   implementar "delete event"
+
+
+FALTA:
+ok implementar "unsubscribe"
+ok 7.Alterar horário de criação para now
+
+
+    masterUser pode: .
+    implementar "edições"
+  
+    implementar "status" do event: aguardando/em inscrição/encerrado/cancelado
+    implementar "cancel event"
+    implementar "delete event"
+
+

@@ -10,6 +10,9 @@ const userService = {
     console.log("> [userService.register]");
     const { singularUser, cpf, email, role, pass } = await reqBody;
     const passEncrypted = await cryptography.cryptoArgon2.encrypt(pass);
+    const cpfEncrypted = (await cryptography.basicCript.encript(cpf))
+      .dataHashed;
+
     const secondUserId = (
       await cryptography.basicCript.encript(singularUser + cpf)
     ).dataHashed;
@@ -18,7 +21,7 @@ const userService = {
     const fieldName = `"singularUser", "cpf", "email", "role", "secondUserId", "pass"`;
     const fieldValue = [
       singularUser,
-      cpf,
+      cpfEncrypted,
       email,
       role,
       secondUserId,
@@ -28,13 +31,16 @@ const userService = {
     return { status: teste.status, message: teste.message };
   },
   login: async (reqBody) => {
-    
     console.log("> [userService.login] Open");
 
     const { cpf, pass } = reqBody;
+
+    const cpfEncrypted = (await cryptography.basicCript.encript(cpf))
+      .dataHashed;
+
     const table = "users";
     const nameItenToSearch = "cpf";
-    const valueItenToSearch = [cpf];
+    const valueItenToSearch = [cpfEncrypted];
     const itenToReturn = "*";
 
     const dataFinded = (

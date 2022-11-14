@@ -98,14 +98,7 @@ const enrollement = {
     const valueItenToSearch = eventOnScreen.id;
     const nameItenToUpdate = "subscriberNumber";
     const valueItenToUpdate = [subscriberNumber - 1];
-    console.log("000000000000000000000000000000000000000000000000000");
-    console.log(
-      table,
-      nameItenToSearch,
-      valueItenToSearch,
-      nameItenToUpdate,
-      valueItenToUpdate
-    );
+    
     const subscribeExecuteUpdateOnEvent = await event.update(
       table,
       nameItenToSearch,

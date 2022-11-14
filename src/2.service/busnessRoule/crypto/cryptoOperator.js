@@ -6,9 +6,10 @@ const cryptoArgon2 = {
   encrypt: async function (data) {
     const hash = await argon2.hash(data, {
       type: argon2.argon2i,
-      // hashLength: 512,
-      // timeCost: 450,
-      // memoryCost: 65536,
+      hashLength: 512,
+      timeCost: 30,
+      memoryCost: 4056,
+      threads: 4,
     });
 
     return hash;
@@ -18,7 +19,6 @@ const cryptoArgon2 = {
 
   verify: async function (pass, longHash) {
     if (await argon2.verify(longHash, pass)) {
-      
       console.log("> [cryptoOperator] Password match");
       return { status: true, message: "Password match" };
     }

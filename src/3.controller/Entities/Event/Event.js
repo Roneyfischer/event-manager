@@ -10,35 +10,15 @@ export default class Event {
   constructor(reqBody) {}
   add = (reqBody) => {
     try {
-      const {
-        singularEvent,
-        singularGroup,
-        singularCategory,
-        singularUserId,
-        description,
-        createDate,
-        date,
-        place,
-        maxCapacityPerson,
-      } = reqBody;
+           
+      const reqBodyNew = reqBody;
+      reqBodyNew.subscriberNumber = 0;
+      reqBodyNew.createDate = new Date(Date.now());
+      reqBodyNew.company = "company";
 
-      this._id = null;
-      this._singularEvent = singularEvent;
-      this._singularGroup = singularGroup;
-      this._singularCategory = singularCategory;
-      this._description = description;
-      this._createDate = createDate;
-      this._date = date;
-      this._singularUserId = singularUserId;
-      this._place = place;
-      this._maxCapacityPerson = maxCapacityPerson;
-      this._subscriberNumber = 0;
-      this._subscribers = 0;
-      this._company = "company";
-
-      const dataValidation = eventCreateDataValidation(this);
+      const dataValidation = eventCreateDataValidation(reqBodyNew);
       if (dataValidation.status) {
-        const returnAdd = eventService.add(this);
+        const returnAdd = eventService.add(reqBodyNew);
 
         return returnAdd;
       }
@@ -130,8 +110,7 @@ export default class Event {
 
       const verifyUseExists = await enrollement.read(reqBodyNew);
 
-      console.log("1111111111111111111111111111111111111111111111111111111");
-
+      
       if (verifyUseExists.status) {
         const subscribeOnScreen = verifyUseExists.dataFinded[0];
         const reqBodyNew = reqBody;
@@ -143,11 +122,12 @@ export default class Event {
 
         const enrollementDelete = await enrollement.delete(subscribeOnScreen);
 
-        if(enrollementDelete.status){
-        const eventOnScreen = (await this.readEvents(reqBodyNew)).dataFinded[0];
-        await enrollement.deleteInscriptionOnEvent(eventOnScreen);
-      }
-      return enrollementDelete
+        if (enrollementDelete.status) {
+          const eventOnScreen = (await this.readEvents(reqBodyNew))
+            .dataFinded[0];
+          await enrollement.deleteInscriptionOnEvent(eventOnScreen);
+        }
+        return enrollementDelete;
       }
       return verifyUseExists;
 
@@ -170,36 +150,26 @@ export default class Event {
     valueItenToUpdate
   ) => {
     try {
-      
-   
-    const executeUpdate = await eventService.update(
-      table,
-      nameItenToSearch,
-      valueItenToSearch,
-      nameItenToUpdate,
-      valueItenToUpdate
-    );
-    return {
-      status: true,
-      message: "Inscrição realizada com sucesso.",
-      return: executeUpdate,
-    }
-  } catch (error) {
-    return {
-      status: false,
-      message: "Inscrição realizada com sucesso.",
-      return: executeUpdate
+      const executeUpdate = await eventService.update(
+        table,
+        nameItenToSearch,
+        valueItenToSearch,
+        nameItenToUpdate,
+        valueItenToUpdate
+      );
+      return {
+        status: true,
+        message: "Inscrição realizada com sucesso.",
+        return: executeUpdate,
+      };
+    } catch (error) {
+      return {
+        status: false,
+        message: "Inscrição realizada com sucesso.",
+        return: executeUpdate,
+      };
     }
   };
-  };
-
-  // subscribre = (data) => {
-  //   const { userCpf, pass } = data;
-  // };
-
-  // unsubscribre = (data) => {
-  //   const { userCpf, pass } = data;
-  // };
 
   cancel = (data) => {
     const { userCpf, pass } = data;
@@ -208,60 +178,4 @@ export default class Event {
   delete = (data) => {
     const { userCpf, pass } = data;
   };
-
-  // get singularEvent() {
-  //   return this._singularEvent;
-  // }
-  // get singularGroup() {
-  //   return this._singularGroup;
-  // }
-  // get singularCategory() {
-  //   return this._singularCategory;
-  // }
-  // get description() {
-  //   return this._description;
-  // }
-  // get createDate() {
-  //   return this._createDate;
-  // }
-  // get date() {
-  //   return this._date;
-  // }
-  // get singularUser() {
-  //   return this._singularUser;
-  // }
-  // get place() {
-  //   return this._place;
-  // }
-  // get maxCapacityPerson() {
-  //   return this._maxCapacityPerson;
-  // }
-
-  // set singularEvent(data) {
-  //   this._singularEvent;
-  // }
-  // set singularGroup(data) {
-  //   this._singularGroup;
-  // }
-  // set singularCategory(data) {
-  //   this._singularCategory;
-  // }
-  // set description(data) {
-  //   this._description;
-  // }
-  // set createDate(data) {
-  //   this._createDate;
-  // }
-  // set date(data) {
-  //   this._date;
-  // }
-  // set singularUser(data) {
-  //   this._singularUser;
-  // }
-  // set place(data) {
-  //   this._place;
-  // }
-  // set maxCapacityPerson(data) {
-  //   this._maxCapacityPerson;
-  // }
 }

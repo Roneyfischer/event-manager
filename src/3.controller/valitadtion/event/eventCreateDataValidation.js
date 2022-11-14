@@ -1,15 +1,14 @@
 const eventCreateDataValidation = (event) => {
 
   if (
-    (event._singularEvent,
-    event._singularGroup,
-    event._singularCategory,
-    event._description,
-    event._createDate,
-    event._date,
+    (event.singularEvent,
+    event.singularGroup,
+    event.singularCategory,
+    event.description, 
+    event.date,
     event.singularUserId,
-    event._place,
-    event._maxCapacityPerson)
+    event.place,
+    event.maxCapacityPerson)
   ) {
     console.log("> [eventCreateDataValidation] Data has been validated");
     return { status: true, message: `field has been completed` };
