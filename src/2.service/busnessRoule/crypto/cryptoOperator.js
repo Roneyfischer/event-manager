@@ -7,8 +7,8 @@ const cryptoArgon2 = {
     const hash = await argon2.hash(data, {
       type: argon2.argon2i,
       hashLength: 512,
-      timeCost: 30,
-      memoryCost: 4056,
+      timeCost: 2,
+      memoryCost: 2000000, // em kilobits3000000
       threads: 4,
     });
 
