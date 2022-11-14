@@ -129,10 +129,11 @@ export default class Event {
       reqBodyNew.itenToReturn = "*";
 
       const verifyUseExists = await enrollement.read(reqBodyNew);
-      const subscribeOnScreen = verifyUseExists.dataFinded[0];
+
       console.log("1111111111111111111111111111111111111111111111111111111");
-      console.log(subscribeOnScreen);
+
       if (verifyUseExists.status) {
+        const subscribeOnScreen = verifyUseExists.dataFinded[0];
         const reqBodyNew = reqBody;
 
         reqBodyNew.table = "events";
