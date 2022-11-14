@@ -44,9 +44,11 @@ const dbMethod = {
 
     const client = await dbConnect();
 
-    await client.query(queryText, queryValues).then((res, error) => {
-      console.log(`> [dbMethod.update] ${res}`);
-    });
+    await client.query(queryText, queryValues);
+    return {
+      status: true,
+      message: `Update ${nameItenToUpdate} where "${nameItenToSearch}", to "${valueItenToSearch}", on "${table}"`,
+    };
   },
 
   delete: async (table, nameItenToDeleteLine, valueItenToDeleteLine) => {
@@ -70,15 +72,11 @@ const dbMethod = {
 
     const client = await dbConnect();
 
-    await client.query(queryText, queryValues).then((res, error) => {
-      console.log(
-        `> [dbMethod.delete] ${nameItenToDeleteLine} has been deleted`
-      );
-    });
+    await client.query(queryText, queryValues);
 
     return {
       status: true,
-      message: `${nameItenToDeleteLine} has been deleted`,
+      message: `${nameItenToDeleteLine} ${valueItenToDeleteLine} on ${table} has been deleted`,
     };
   },
 

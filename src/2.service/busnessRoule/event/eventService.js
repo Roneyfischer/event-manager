@@ -72,7 +72,7 @@ const eventService = {
     nameItenToDeleteLine,
     valueItenToDeleteLine
   ) => {
-    dbMethod.delete(table, nameItenToDeleteLine, valueItenToDeleteLine);
+    return dbMethod.delete(table, nameItenToDeleteLine, valueItenToDeleteLine);
   },
 
   update: async (

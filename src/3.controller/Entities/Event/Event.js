@@ -141,10 +141,13 @@ export default class Event {
         reqBodyNew.valueItenToSearch = [reqBody.singularEventId];
         reqBodyNew.itenToReturn = "*";
 
-        await enrollement.delete(subscribeOnScreen);
+        const enrollementDelete = await enrollement.delete(subscribeOnScreen);
 
+        if(enrollementDelete.status){
         const eventOnScreen = (await this.readEvents(reqBodyNew)).dataFinded[0];
         await enrollement.deleteInscriptionOnEvent(eventOnScreen);
+      }
+      return enrollementDelete
       }
       return verifyUseExists;
 
@@ -166,6 +169,9 @@ export default class Event {
     nameItenToUpdate,
     valueItenToUpdate
   ) => {
+    try {
+      
+   
     const executeUpdate = await eventService.update(
       table,
       nameItenToSearch,
@@ -174,9 +180,17 @@ export default class Event {
       valueItenToUpdate
     );
     return {
-      message1: "Inscrição realizada com sucesso.",
+      status: true,
+      message: "Inscrição realizada com sucesso.",
       return: executeUpdate,
-    };
+    }
+  } catch (error) {
+    return {
+      status: false,
+      message: "Inscrição realizada com sucesso.",
+      return: executeUpdate
+    }
+  };
   };
 
   // subscribre = (data) => {

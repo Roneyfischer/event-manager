@@ -30,4 +30,5 @@ class AnonimousUser {
   unsubscribe = async () => {};
 }
 
+
 export default AnonimousUser;

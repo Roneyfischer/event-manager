@@ -12,8 +12,13 @@ import userService from "../../../2.service/busnessRoule/user/userService.js";
 import groupAndCategoryValdiation from "../../valitadtion/groupAndCategory/groupAndCategoryValdiation.js";
 import AnonimousUser from "./0.AnonimousUser.js";
 
-class StandardUser extends AnonimousUser{
-  
+class StandardUser {
+  //composição:
+  readEvents = async (reqBody) => {
+    const anonimousUser = new AnonimousUser();
+    return await anonimousUser.readEvents(reqBody);
+  };
+
   register = async (reqBody) => {
     console.log("> [StandardUser.register]");
     try {
@@ -70,8 +75,6 @@ class StandardUser extends AnonimousUser{
       return errorHandling(error);
     }
   };
-
-
 }
 
 export default StandardUser;

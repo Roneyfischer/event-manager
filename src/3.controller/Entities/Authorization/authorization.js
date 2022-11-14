@@ -33,9 +33,10 @@ const userDriver = {
 
       return executeRequisition;
     } catch (error) {
+      console.log("eroooooooooooooooooooooooooooooooooooooooooou");
       return {
         status: false,
-        message: `Ops, seu usuário (${reqBody.role}) não tem pemissão pra executar essa função (${reqBody.type})`,
+        message: `Ops, seu usuário (${reqBody.role}) não tem pemissão pra executar essa função (${reqBody.type}): ${error}`,
       };
     }
 
@@ -53,7 +54,7 @@ const userDriver = {
     } catch (error) {
       return {
         status: false,
-        message: `Ops, seu usuário (${reqBody.role}) não tem pemissão pra executar essa função (${reqBody.type})`,
+        message: `Ops, seu usuário (${reqBody.role}) não tem pemissão pra executar essa função (${reqBody.type}): ${error}`,
       };
     }
 
@@ -63,7 +64,7 @@ const userDriver = {
   adm: async (reqBody) => {
     try {
       const user = new AdmUser(reqBody);
-      
+
       const executeRequisition = await user[reqBody.type](reqBody);
 
       return executeRequisition;
