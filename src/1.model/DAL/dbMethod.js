@@ -83,22 +83,21 @@ const dbMethod = {
   },
 
   read: async (table, nameItenToSearch, valueItenToSearch, itenToReturn) => {
-    let numberColumnsToSearch = `$1`;
+    let numberOfColumns = `$1`;
     for (let i = 1; i < valueItenToSearch.length; i++) {
-      numberColumnsToSearch = numberColumnsToSearch + `, $${i + 1}`;
+      numberOfColumns = numberOfColumns + `, $${i + 1}`;
     }
-    
-    const queryText = `SELECT ${itenToReturn} from "${table}" WHERE (${nameItenToSearch}) = (${numberColumnsToSearch}) `;
+
+    const queryText = `SELECT ${itenToReturn} from "${table}" WHERE (${nameItenToSearch}) = (${numberOfColumns}) `;
     const queryValues = valueItenToSearch;
     const client = await dbConnect();
 
     return await client.query(queryText, queryValues).then((res) => {
-
       const dataFinded = res.rows; //alterar
 
-      if (!dataFinded) {
+      if (!dataFinded[0]) {
         console.log("> [dbMethod.delete]  data not found!");
-        throw {
+        return {
           status: false,
           message: `Unexpected error in database search. Data not found. Please check that the fields are filled in correctly. (developerMessage)`,
         };
@@ -110,8 +109,6 @@ const dbMethod = {
       };
     });
   },
-
-
 };
 
 export default dbMethod;

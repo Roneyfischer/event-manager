@@ -49,7 +49,8 @@ export default class Event {
   };
 
   readEvents = (reqBody) => {
-    console.log("[Event.readEvents]" + reqBody);
+    console.log("[Event.readEvents]");
+    console.log(reqBody);
 
     return eventService.read(reqBody);
   };
@@ -127,8 +128,23 @@ export default class Event {
       ];
       reqBodyNew.itenToReturn = "*";
 
-      const verifyUseExists = await eventService.read(reqBodyNew);
-      console.log(verifyUseExists);
+      const verifyUseExists = await enrollement.read(reqBodyNew);
+      const subscribeOnScreen = verifyUseExists.dataFinded[0];
+      console.log("1111111111111111111111111111111111111111111111111111111");
+      console.log(subscribeOnScreen);
+      if (verifyUseExists.status) {
+        const reqBodyNew = reqBody;
+
+        reqBodyNew.table = "events";
+        reqBodyNew.nameItenToSearch = "id";
+        reqBodyNew.valueItenToSearch = [reqBody.singularEventId];
+        reqBodyNew.itenToReturn = "*";
+
+        await enrollement.delete(subscribeOnScreen);
+
+        const eventOnScreen = (await this.readEvents(reqBodyNew)).dataFinded[0];
+        await enrollement.deleteInscriptionOnEvent(eventOnScreen);
+      }
       return verifyUseExists;
 
       //se tiver, remove ela do subscribers;

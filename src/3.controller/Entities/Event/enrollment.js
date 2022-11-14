@@ -1,7 +1,20 @@
 import Event from "./Event.js";
 import eventService from "../../../2.service/busnessRoule/event/eventService.js";
-
+import dbMethod from "../../../1.model/DAL/dbMethod.js";
 const enrollement = {
+  read: async (data) => {
+    const { table, nameItenToSearch, valueItenToSearch, itenToReturn } = data;
+
+    const dataFinded = await dbMethod.read(
+      table,
+      nameItenToSearch,
+      valueItenToSearch,
+      itenToReturn
+    );
+
+    return dataFinded;
+  },
+
   ticketAvailability: async (reqBody) => {
     const event = new Event();
 
@@ -46,7 +59,6 @@ const enrollement = {
     return executeSubscribers;
   },
 
-
   delete: async (executeSubscribers) => {
     const table = "subscribers";
     const nameItenToDeleteLine = "id";
@@ -68,6 +80,32 @@ const enrollement = {
     const nameItenToUpdate = "subscriberNumber";
     const valueItenToUpdate = [subscriberNumber + 1];
 
+    const subscribeExecuteUpdateOnEvent = await event.update(
+      table,
+      nameItenToSearch,
+      valueItenToSearch,
+      nameItenToUpdate,
+      valueItenToUpdate
+    );
+    return subscribeExecuteUpdateOnEvent;
+  },
+
+  deleteInscriptionOnEvent: async (eventOnScreen) => {
+    const event = new Event();
+    const subscriberNumber = parseInt(eventOnScreen.subscriberNumber);
+    const table = "events";
+    const nameItenToSearch = "id";
+    const valueItenToSearch = eventOnScreen.id;
+    const nameItenToUpdate = "subscriberNumber";
+    const valueItenToUpdate = [subscriberNumber - 1];
+    console.log("000000000000000000000000000000000000000000000000000");
+    console.log(
+      table,
+      nameItenToSearch,
+      valueItenToSearch,
+      nameItenToUpdate,
+      valueItenToUpdate
+    );
     const subscribeExecuteUpdateOnEvent = await event.update(
       table,
       nameItenToSearch,
