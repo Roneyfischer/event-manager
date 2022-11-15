@@ -7,6 +7,7 @@ import enrollement from "./enrollment.js";
 
 export default class Event {
   //alterar para EventController
+  //alterar futuramente pra obj?
 
   add = (reqBody) => {
     try {
@@ -66,13 +67,13 @@ export default class Event {
     try {
       const ticketAvailability = async (reqBody) => {
         console.log(">[ticketAvailability]");
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        console.log(reqBody.userGroup);
 
         const ticketAvailability = await enrollement.ticketAvailability(reqBody);
 
         console.log(">[ticketAvailability] " + ticketAvailability.status);
+
         const eventOnScreen = ticketAvailability.dataFinded;
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + ticketAvailability.status);
         if (ticketAvailability.status) {
           console.log(eventOnScreen.singularGroup + "==" + reqBody.userGroup);
           if (eventOnScreen.singularGroup == reqBody.userGroup) {
@@ -80,10 +81,7 @@ export default class Event {
           }
           fail();
         }
-        return {
-          status: false,
-          message: `Ops, não foi possível realizar a inscrição, pois este evento é destinado somente aos usuários do grupo "${eventOnScreen.singularGroup}", e você percente ao grupo "${reqBody.userGroup}"`,
-        };
+        return {status: ticketAvailability.status, message: ticketAvailability.message};
       };
 
       const enrollementAdd = async (reqBody, ticketAvailabilityData) => {
@@ -174,7 +172,9 @@ export default class Event {
   editEvent = async (reqBody) => {
     console.log(">[eventController.editEvent]");
     const { nameItenToSearch, valueItenToSearch, nameItenToUpdate, valueItenToUpdate } = reqBody;
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + nameItenToUpdate);
+    const valueItenToUpdateFormated = [`${valueItenToUpdate}`];
+    const valueItenToSearchFormated = [valueItenToSearch];
+    console.log(valueItenToUpdateFormated);
     if (
       nameItenToUpdate == "createDate" ||
       nameItenToUpdate == "company" ||
@@ -185,14 +185,22 @@ export default class Event {
     }
     const table = "events";
 
-    const executeEditEvent = eventService.update(table, nameItenToSearch, valueItenToSearch, nameItenToUpdate, valueItenToUpdate);
+    const executeEditEvent = eventService.update(
+      table,
+      nameItenToSearch,
+      valueItenToSearchFormated,
+      nameItenToUpdate,
+      valueItenToUpdateFormated
+    );
     return executeEditEvent;
   };
 
-  cancelEvent = async (reqBody) => {};
+  cancel = async (reqBody) => {};
 
-  deleteEvent = async (reqBody) => {
-    
+  delete = async (reqBody) => {
+    const { table, nameItenToDeleteLine, valueItenToDeleteLine } = reqBody;
+    const executeDelete = dbMethod.delete(table, nameItenToDeleteLine, valueItenToDeleteLine);
+    return executeDelete;
   };
 
   //função que não pode ser direcionada para o user, pois permite alterar qualquer table. Deve ser utilizado somente internamente
@@ -211,13 +219,5 @@ export default class Event {
         return: executeUpdate,
       };
     }
-  };
-
-  cancel = (data) => {
-    const { userCpf, pass } = data;
-  };
-
-  delete = (data) => {
-    const { userCpf, pass } = data;
   };
 }

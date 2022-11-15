@@ -91,7 +91,7 @@ const userService = {
 
   read: async (data) => {
     const { table, nameItenToSearch, valueItenToSearch, itenToReturn } = data;
-    
+
     const dataFinded = await dbMethod.read(table, nameItenToSearch, valueItenToSearch, itenToReturn);
 
     return dataFinded;
@@ -123,15 +123,11 @@ const userService = {
     return await dbMethod.add(table, fieldName, fieldValue);
   },
 
-  editGroup: async (reqBody) => {
+  editItem: async (reqBody) => {
     console.log("> [userService.editGroup]");
-    const { singularData, singularUserId } = await reqBody;
+    const { table, nameItenToSearch, valueItenToSearch, nameItenToUpdate, valueItenToUpdate } = await reqBody;
 
-    const table = "groups";
-    const fieldName = `"singularGroup"`;
-    const fieldValue = [singularData];
-
-    return await dbMethod.edit(table, fieldName, fieldValue);
+    return await dbMethod.update(table, nameItenToSearch, valueItenToSearch, nameItenToUpdate, valueItenToUpdate);
   },
 
   deleteGroup: async (reqBody) => {

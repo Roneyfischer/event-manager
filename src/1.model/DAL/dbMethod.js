@@ -34,6 +34,14 @@ const dbMethod = {
 
   update: async (table, nameItenToSearch, valueItenToSearch, nameItenToUpdate, valueItenToUpdate) => {
     try {
+      const checkLineExists = await dbMethod.read(table, nameItenToSearch, valueItenToSearch, "*");
+
+      console.log(`> [dbMethod.delete] Checking if the object exists on Db table: ${checkLineExists.status} `);
+
+      if (!checkLineExists.status) {
+        throw { status: false, message: `Item ${nameItenToSearch} with value ${valueItenToSearch} not exists` };
+      }
+
       console.log(">[dbMethod.update]");
       const queryText = `UPDATE "${table}" SET "${nameItenToUpdate}" = ($1)  WHERE "${nameItenToSearch}" = ${valueItenToSearch}`;
       const queryValues = valueItenToUpdate;
@@ -62,7 +70,7 @@ const dbMethod = {
     console.log(`> [dbMethod.delete] Checking if the object exists on Db table: ${checkLineExists.status} `);
 
     if (!checkLineExists.status) {
-      throw { status: false, message: `Value to delete not exists` };
+      throw { status: false, message: `Item ${nameItenToDeleteLine} with value ${valueItenToDeleteLine} not exists` };
     }
 
     const queryText = `DELETE FROM "${table}" WHERE ${nameItenToDeleteLine} IN ($1)`;

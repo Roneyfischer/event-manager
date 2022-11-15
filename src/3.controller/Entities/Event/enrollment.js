@@ -6,12 +6,7 @@ const enrollement = {
   read: async (data) => {
     const { table, nameItenToSearch, valueItenToSearch, itenToReturn } = data;
 
-    const dataFinded = await dbMethod.read(
-      table,
-      nameItenToSearch,
-      valueItenToSearch,
-      itenToReturn
-    );
+    const dataFinded = await dbMethod.read(table, nameItenToSearch, valueItenToSearch, itenToReturn);
 
     return dataFinded;
   },
@@ -28,17 +23,24 @@ const enrollement = {
 
     const eventOnScreen = (await event.filterEvent(reqBodyNew)).dataFinded[0];
     if (eventOnScreen.subscriberNumber < eventOnScreen.maxCapacityPerson) {
+      if (eventOnScreen.eventStatus == "aberto") {
+        return {
+          status: true,
+          dataFinded: eventOnScreen,
+          eventOnScreen: eventOnScreen,
+        };
+      }
       return {
-        status: true,
+        status: false,
         dataFinded: eventOnScreen,
-        eventOnScreen: eventOnScreen
+        eventOnScreen: eventOnScreen,
+        message: `Ops, o evento não está disponível para inscrição. Status atual: ${eventOnScreen.eventStatus}`,
       };
     }
 
     return {
       status: false,
-      message:
-        "Erro ao realizar inscrição. Este evento já atingiu o número máximo de inscritos",
+      message: "Erro ao realizar inscrição. Este evento já atingiu o número máximo de inscritos",
     };
   },
 
@@ -46,14 +48,9 @@ const enrollement = {
     console.log(">[enrollement.add]");
     const userControllerClass = new StandardUser();
 
-    const userToEvent = (await userControllerClass.selfFilter(reqBody))
-      .dataFinded[0];
+    const userToEvent = (await userControllerClass.selfFilter(reqBody)).dataFinded[0];
 
-    const executeSubscribers = await eventService.subscribersAdd(
-      reqBody,
-      eventOnScreen,
-      userToEvent
-    );
+    const executeSubscribers = await eventService.subscribersAdd(reqBody, eventOnScreen, userToEvent);
     return executeSubscribers;
   },
 
@@ -62,11 +59,7 @@ const enrollement = {
     const nameItenToDeleteLine = "id";
     const valueItenToDeleteLine = [executeSubscribers.id];
 
-    return await eventService.subscribersDelete(
-      table,
-      nameItenToDeleteLine,
-      valueItenToDeleteLine
-    );
+    return await eventService.subscribersDelete(table, nameItenToDeleteLine, valueItenToDeleteLine);
   },
 
   addInscriptionOnEvent: async (reqBody, eventOnScreen) => {

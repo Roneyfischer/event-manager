@@ -18,23 +18,32 @@ class AdmUser extends GuestUser {
     return event.editEvent(reqBody);
   };
 
-  cancelEvent = async (reqBody) => {
+  alterStatusEvent = async (reqBody) => {
     console.log("> [AdmUser.cancelEvent]");
-    const event = new Event(reqBody);
-    return event.cancel(reqBody);
+
+    let reqBodyTemporary = reqBody;
+    reqBodyTemporary.table = "events";
+    reqBodyTemporary.nameItenToSearch = "id";
+    reqBodyTemporary.valueItenToSearch = [reqBody.singularEventId];
+    reqBodyNew.nameItenToUpdate = "status";
+    reqBodyNew.valueItenToUpdate = reqBody.newStatus;
+    const reqBodyNew = reqBodyTemporary;
+
+    const event = new Event();
+    return event.cancel(reqBodyNew);
   };
 
   deleteEvent = async (reqBody) => {
     console.log("> [AdmUser.deleteEvent]");
-    const event = new Event(reqBody);
-    return event.delete(reqBody);
+    let reqBodyTemporary = reqBody;
+    reqBodyTemporary.table = "events";
+    reqBodyTemporary.nameItenToDeleteLine = "id";
+    reqBodyTemporary.valueItenToDeleteLine = [reqBody.singularEventId];
+    const reqBodyNew = reqBodyTemporary;
+
+    const event = new Event();
+    return event.delete(reqBodyNew);
   };
-
-  // editEvent = async (reqBody) => {};
-
-  // cancelEvent = async (reqBody) => {};
-
-  // deleteEvent = async () => {};
 
   createGroup = async (reqBody) => {
     console.log("> [AdmUser.createGroup");
@@ -47,17 +56,19 @@ class AdmUser extends GuestUser {
     throw dataValidation;
   };
 
-  editGroup = async (reqBody, singularUserId) => {
+  editGroup = async (reqBody) => {
     console.log("> [AdmUser.editGroup]");
     try {
-      const dataValidation = await groupAndCategoryValdiation(reqBody, singularUserId);
+      let reqBodyTemporary = reqBody;
+      reqBodyTemporary.table = "groups";
+      reqBodyTemporary.nameItenToSearch = "id";
+      reqBodyTemporary.valueItenToSearch = [reqBody.groupId];
+      reqBodyTemporary.nameItenToUpdate = "singularGroup";
+      reqBodyTemporary.valueItenToUpdate = [reqBody.newGroupName];
 
-      console.log("> [AdmUser.editGroup] Data validation: " + dataValidation.status);
+      const reqBodyNew = reqBodyTemporary;
 
-      if (dataValidation.status) {
-        return await userService.editGroup(reqBody, singularUserId);
-      }
-      throw dataValidation;
+      return await userService.editItem(reqBodyNew);
     } catch (error) {
       return errorHandling(error);
     }
@@ -94,12 +105,16 @@ class AdmUser extends GuestUser {
   editCategory = async (reqBody, singularUserId) => {
     console.log("> [AdmUser.editCategory]");
     try {
-      const dataValidation = await groupAndCategoryValdiation(reqBody, singularUserId);
-      console.log("> [AdmUser.editCategory] Data validation: " + dataValidation.status);
-      if (dataValidation.status) {
-        return await userService.editCategory(reqBody, singularUserId);
-      }
-      throw dataValidation;
+      let reqBodyTemporary = reqBody;
+      reqBodyTemporary.table = "categories";
+      reqBodyTemporary.nameItenToSearch = "id";
+      reqBodyTemporary.valueItenToSearch = [reqBody.categoryId];
+      reqBodyTemporary.nameItenToUpdate = "singularCategory";
+      reqBodyTemporary.valueItenToUpdate = [reqBody.newCategoryName];
+
+      const reqBodyNew = reqBodyTemporary;
+
+      return await userService.editItem(reqBodyNew);
     } catch (error) {
       return errorHandling(error);
     }
