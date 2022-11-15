@@ -17,7 +17,7 @@ create table groups (
 
 create table users (
 "id" serial unique primary key,
-"singularUser" varchar(255) not null,
+"completeName" varchar(255) not null unique,
 "role" varchar (32) not null,
 "userGroup" varchar(32) not null,
 "cpf" varchar(512) not null unique,
@@ -65,8 +65,8 @@ FOREIGN KEY ("singularCategory") REFERENCES "categories" ("singularCategory") ON
 create table subscribers(
 "id" serial unique,
 "singularUserId" integer not null,
-"singularUser" VARCHAR(255) not null,
-"singularEventId" interger not null,
+"completeName" VARCHAR(255) not null,
+"singularEventId" integer not null,
 "singularEvent" VARCHAR(512) not null,
 "subscriptionDate" Date,
 
@@ -96,15 +96,15 @@ insert into "eventstatus" ("statusName") values('aberto');
 insert into "eventstatus" ("statusName") values('encerrado');
 insert into "eventstatus" ("statusName") values('cancelado');
 
-INSERT INTO "groups"("singularUser", "singularGroup", "createDate") VALUES('01', 'Serviço Social', '2022/12/12');
-INSERT INTO "categories"("singularUser", "singularCategory") VALUES('01', 'Serviços Sociais');
-INSERT INTO "subscribers"("singularUser", "singularEvent", "subscriptionDate") VALUES ('01', '02', '2022/11/03');
+INSERT INTO "groups"("completeName", "singularGroup", "createDate") VALUES('01', 'Serviço Social', '2022/12/12');
+INSERT INTO "categories"("completeName", "singularCategory") VALUES('01', 'Serviços Sociais');
+INSERT INTO "subscribers"("completeName", "singularEvent", "subscriptionDate") VALUES ('01', '02', '2022/11/03');
 
 FRONT-END REQUISITION/POSTMAN (/auth):
 
 {
 "type": "register",
-"singularUser":"roney01",
+"completeName":"roney01",
 "cpf": "07399617996",
 "email": "fischer.roney@gmail.com",
 "pass": "123456",

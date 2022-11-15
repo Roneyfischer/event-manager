@@ -15,7 +15,6 @@ import chalk from "chalk";
 // import AnonimousUser from "./0.AnonimousUser.js";
 // import groupAndCategoryValdiation from "../../valitadtion/groupAndCategory/groupAndCategoryValdiation.js";
 
-
 class StandardUser {
   readAllEvents = async (reqBody) => {
     console.log("> [AnonimousUser.readAll]");
@@ -57,13 +56,12 @@ class StandardUser {
   register = async (reqBody) => {
     console.log("> [StandardUser.register]");
     try {
-   
       const dataValidation = userValidations.inputsValidation(reqBody);
 
       if (dataValidation.status) {
-        let reqBodyTemporary = reqBody
-        reqBodyTemporary.role = "standard"
-        const reqBodyNew = reqBodyTemporary
+        let reqBodyTemporary = reqBody;
+        reqBodyTemporary.role = "standard";
+        const reqBodyNew = reqBodyTemporary;
 
         return await userService.register(reqBodyNew);
       } else {
@@ -94,18 +92,8 @@ class StandardUser {
     console.log("> [StandardUser.logout]");
   };
 
-  // authorization = async (reqBody) => {
-  //   console.log("> [StandardUser.authorization]");
-  //   try {
-  //   } catch (error) {
-  //     return errorHandling(error);
-  //   }
-  // };
-
   deleteMyUser = async (reqBody) => {
     return await userService.delete(reqBody);
-
-    throw new Error();
   };
 
   editPass = async (reqBody) => {
@@ -113,36 +101,36 @@ class StandardUser {
     try {
       const { cpf, pass, newPass, newPassConfirmation } = reqBody;
 
-      const checkPassMatch = userValidations.checkPassMatch(
+      const checkDataMatch = userValidations.checkDataMatch(
         newPass,
         newPassConfirmation
       );
 
-      if (checkPassMatch.status) {
+      if (checkDataMatch.status) {
         const executeLogin = await this.login(reqBody);
-        
         if (executeLogin.status) {
-          const passEncrypted = await cryptography.cryptoArgon2.encrypt(
-            newPass
-          );
-          const table = "users";
-          const nameItenToSearch = "id";
-          const valueItenToSearch = reqBody.singularUserId;
-          const nameItenToUpdate = "pass";
-          const valueItenToUpdate = [passEncrypted];
-
-          return dbMethod.update(
-            table,
-            nameItenToSearch,
-            valueItenToSearch,
-            nameItenToUpdate,
-            valueItenToUpdate
-          );
+          return updatePass(reqBody);
         }
         return executeLogin;
       }
+      return checkDataMatch;
 
-      return checkPassMatch;
+      async function updatePass(reqBody) {
+        const passEncrypted = await cryptography.cryptoArgon2.encrypt(newPass);
+        const table = "users";
+        const nameItenToSearch = "id";
+        const valueItenToSearch = reqBody.singularUserId;
+        const nameItenToUpdate = "pass";
+        const valueItenToUpdate = [passEncrypted];
+
+        return await userService.update(
+          table,
+          nameItenToSearch,
+          valueItenToSearch,
+          nameItenToUpdate,
+          valueItenToUpdate
+        );
+      }
     } catch (error) {
       return errorHandling(error);
     }
@@ -153,32 +141,36 @@ class StandardUser {
     try {
       const { cpf, pass, newEmail, newEmailConfirmation } = reqBody;
 
-      const checkPassMatch = userValidations.checkPassMatch(
+      const checkDataMatch = userValidations.checkDataMatch(
         newEmail,
         newEmailConfirmation
       );
 
-      if (checkPassMatch.status) {
+      if (checkDataMatch.status) {
         const executeLogin = await this.login(reqBody);
-        if (executeLogin.status) {
-          const table = "users";
-          const nameItenToSearch = "id";
-          const valueItenToSearch = reqBody.singularUserId;
-          const nameItenToUpdate = "email";
-          const valueItenToUpdate = [newEmail];
 
-          return dbMethod.update(
-            table,
-            nameItenToSearch,
-            valueItenToSearch,
-            nameItenToUpdate,
-            valueItenToUpdate
-          );
+        if (executeLogin.status) {
+          return updateEmail(reqBody);
         }
         return executeLogin;
       }
+      return checkDataMatch;
 
-      return checkPassMatch;
+      async function updateEmail(reqBody) {
+        const table = "users";
+        const nameItenToSearch = "id";
+        const valueItenToSearch = reqBody.singularUserId;
+        const nameItenToUpdate = "email";
+        const valueItenToUpdate = [newEmail];
+
+        return userService.update(
+          table,
+          nameItenToSearch,
+          valueItenToSearch,
+          nameItenToUpdate,
+          valueItenToUpdate
+        );
+      }
     } catch (error) {
       return errorHandling(error);
     }

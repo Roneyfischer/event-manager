@@ -32,34 +32,24 @@ const dbMethod = {
     }
   },
 
-  update: async (
-    table,
-    nameItenToSearch,
-    valueItenToSearch,
-    nameItenToUpdate,
-    valueItenToUpdate
-  ) => {
+  update: async (table, nameItenToSearch, valueItenToSearch, nameItenToUpdate, valueItenToUpdate) => {
     try {
       console.log(">[dbMethod.update]");
       const queryText = `UPDATE "${table}" SET "${nameItenToUpdate}" = ($1)  WHERE "${nameItenToSearch}" = ${valueItenToSearch}`;
       const queryValues = valueItenToUpdate;
-      console.log(
-        `Update ${nameItenToUpdate} where "${nameItenToSearch}", to "${valueItenToUpdate}", on "${table}"`
-      );
+      console.log(`Update ${nameItenToUpdate} where "${nameItenToSearch}", to "${valueItenToUpdate}", on "${table}"`);
       const client = await dbConnect();
 
-      const teste = await client.query(queryText, queryValues);
-      if (teste.teste) {
-        return {
-          status: true,
-          message: `Update ${nameItenToUpdate} where "${nameItenToSearch}", to "${valueItenToSearch}", on "${table}"`,
-          teste: teste,
-        };
-      }
-      const error = {
-        status: false,
-        message: `O dado passado (${valueItenToUpdate}) no campo "${nameItenToUpdate}", dentro da tabela "${table}", não foi encontrado.`,
+      const executeUpdate = await client.query(queryText, queryValues);
+
+      return {
+        status: true,
+        message: `Update ${nameItenToUpdate} where "${nameItenToSearch}", to "${valueItenToSearch}", on "${table}"`,
       };
+
+      // {status: false,
+      // message: `O dado passado (${valueItenToUpdate}) no campo "${nameItenToUpdate}", dentro da tabela "${table}", não foi encontrado.`,}
+
       throw error;
     } catch (error) {
       return errorHandling(error);
@@ -67,16 +57,9 @@ const dbMethod = {
   },
 
   delete: async (table, nameItenToDeleteLine, valueItenToDeleteLine) => {
-    const checkLineExists = await dbMethod.read(
-      table,
-      nameItenToDeleteLine,
-      valueItenToDeleteLine,
-      nameItenToDeleteLine
-    );
+    const checkLineExists = await dbMethod.read(table, nameItenToDeleteLine, valueItenToDeleteLine, "*");
 
-    console.log(
-      `> [dbMethod.delete] Checking if the object exists on Db table: ${checkLineExists.status} `
-    );
+    console.log(`> [dbMethod.delete] Checking if the object exists on Db table: ${checkLineExists.status} `);
 
     if (!checkLineExists.status) {
       throw { status: false, message: `Value to delete not exists` };
@@ -96,13 +79,6 @@ const dbMethod = {
   },
 
   read: async (table, nameItenToSearch, valueItenToSearch, itenToReturn) => {
-    console.log("> [dbMethod.read]  open");
-    console.log(
-      "table, nameItenToSearch, valueItenToSearch, itenToReturn: >>>> " + table,
-      nameItenToSearch,
-      valueItenToSearch,
-      itenToReturn
-    );
     let numberOfColumns = `$1`;
     for (let i = 1; i < valueItenToSearch.length; i++) {
       numberOfColumns = numberOfColumns + `, $${i + 1}`;
@@ -111,7 +87,7 @@ const dbMethod = {
     const queryText = `SELECT ${itenToReturn} from "${table}" WHERE (${nameItenToSearch}) = (${numberOfColumns}) `;
     const queryValues = valueItenToSearch;
     const client = await dbConnect();
-
+    console.log(queryText, queryValues);
     return await client.query(queryText, queryValues).then((res) => {
       const dataFinded = res.rows; //alterar
 
@@ -132,6 +108,28 @@ const dbMethod = {
 
   readAll: async (table) => {
     const queryText = `SELECT * from "${table}"`;
+    //const queryValues = valueItenToSearch; //inútil?
+    const client = await dbConnect();
+
+    return await client.query(queryText).then((res) => {
+      const dataFinded = res.rows; //alterar
+
+      if (!dataFinded[0]) {
+        console.log("> [dbMethod.readAll]  data not found!");
+        return {
+          status: false,
+          message: `Unexpected error in database search. Data not found. Please check that the fields are filled in correctly. (developerMessage)`,
+        };
+      }
+      return {
+        status: true,
+        message: `The data "${dataFinded.singularEvent}" has been searched`,
+        dataFinded: dataFinded,
+      };
+    });
+  },
+  readAllFiltred: async (table, itenToReturn) => {
+    const queryText = `SELECT ${itenToReturn} from "${table}"`;
     //const queryValues = valueItenToSearch; //inútil?
     const client = await dbConnect();
 

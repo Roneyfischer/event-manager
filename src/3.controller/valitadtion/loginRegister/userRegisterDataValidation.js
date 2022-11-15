@@ -5,10 +5,10 @@ import errorHandling from "../../../2.service/errorHandling/errorHandling.js";
 
 const inputsValidation = (reqBody) => {
   console.log("> [userRegisterDataValidation] Validating data");
-  const { type, singularUser, cpf, email, pass, passConfirmation } = reqBody;
+  const { type, completeName, cpf, email, pass, passConfirmation } = reqBody;
 
-  if (type && singularUser && cpf && email && pass && passConfirmation) {
-    return checkPassMatch(pass, passConfirmation);
+  if (type && completeName && cpf && email && pass && passConfirmation) {
+    return checkDataMatch(pass, passConfirmation);
   }
   throw {
     status: false,
@@ -16,17 +16,17 @@ const inputsValidation = (reqBody) => {
   };
 };
 
-const checkPassMatch = (pass, passConfirmation) => {
+const checkDataMatch = (pass, passConfirmation) => {
   console.log(
-    "> [checkPassMatch] Validating if match Password and Password Confirmation"
+    "> [checkDataMatch] Validating if match Data and Data Confirmation"
   );
   if (pass === passConfirmation) {
     return { status: true };
   }
   throw {
     status: false,
-    message: `Password and Password Confirmation does not match`,
+    message: `Data and Data Confirmation does not match`,
   };
 };
 
-export default { inputsValidation, checkPassMatch };
+export default { inputsValidation, checkDataMatch };

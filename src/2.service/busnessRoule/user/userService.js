@@ -8,27 +8,16 @@ import cookieParser from "cookie-parser";
 const userService = {
   register: async (reqBody) => {
     console.log("> [userService.register]");
-    const { singularUser, cpf, email, role, pass } = await reqBody;
+    const { completeName, cpf, email, role, pass } = await reqBody;
     const passEncrypted = await cryptography.cryptoArgon2.encrypt(pass);
-    const cpfEncrypted = (await cryptography.basicCript.encript(cpf))
-      .dataHashed;
+    const cpfEncrypted = (await cryptography.basicCript.encript(cpf)).dataHashed;
 
-    const secondUserId = (
-      await cryptography.basicCript.encript(singularUser + cpf)
-    ).dataHashed;
+    const secondUserId = (await cryptography.basicCript.encript(completeName + cpf)).dataHashed;
     const userGroup = "default";
 
     const table = "users";
-    const fieldName = `"singularUser", "cpf", "email", "role", "userGroup", "secondUserId", "pass"`;
-    const fieldValue = [
-      singularUser,
-      cpfEncrypted,
-      email,
-      role,
-      userGroup,
-      secondUserId,
-      passEncrypted,
-    ];
+    const fieldName = `"completeName", "cpf", "email", "role", "userGroup", "secondUserId", "pass"`;
+    const fieldValue = [completeName, cpfEncrypted, email, role, userGroup, secondUserId, passEncrypted];
     const teste = await dbMethod.add(table, fieldName, fieldValue);
     return { status: teste.status, message: teste.message };
   },
@@ -37,27 +26,16 @@ const userService = {
 
     const { cpf, pass } = reqBody;
 
-    const cpfEncrypted = (await cryptography.basicCript.encript(cpf))
-      .dataHashed;
+    const cpfEncrypted = (await cryptography.basicCript.encript(cpf)).dataHashed;
 
     const table = "users";
     const nameItenToSearch = "cpf";
     const valueItenToSearch = [cpfEncrypted];
     const itenToReturn = "*";
 
-    const dataFinded = (
-      await dbMethod.read(
-        table,
-        nameItenToSearch,
-        valueItenToSearch,
-        itenToReturn
-      )
-    ).dataFinded[0];
+    const dataFinded = (await dbMethod.read(table, nameItenToSearch, valueItenToSearch, itenToReturn)).dataFinded[0];
 
-    const verifyPassword = await cryptography.cryptoArgon2.verify(
-      pass,
-      dataFinded.pass
-    );
+    const verifyPassword = await cryptography.cryptoArgon2.verify(pass, dataFinded.pass);
 
     if (verifyPassword) {
       const token = await userService.setJWToken(
@@ -96,35 +74,37 @@ const userService = {
   },
 
   delete: async (reqBody) => {
-    //para exclusão, não uso o "singularUserId". Na controler é preciso verificar o usuário e passar de lá o user a ser excluído.
-    //utilizar singularUserId para fazer Log
+    console.log("> [userService.delete]");
 
     const { singularUserId } = await reqBody;
-    console.log(
-      "> [userService.delete] ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;" +
-        singularUserId
-    );
+
     const table = "users";
     const nameItenToDeleteLine = "id";
     const valueItenToDeleteLine = [singularUserId];
-    return await dbMethod.delete(
-      table,
-      nameItenToDeleteLine,
-      valueItenToDeleteLine
-    );
+    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" + table, nameItenToDeleteLine, valueItenToDeleteLine);
+    return await dbMethod.delete(table, nameItenToDeleteLine, valueItenToDeleteLine);
   },
 
-  edit: async (reqBody) => {},
+  update: async (table, nameItenToSearch, valueItenToSearch, nameItenToUpdate, valueItenToUpdate) => {
+    return dbMethod.update(table, nameItenToSearch, valueItenToSearch, nameItenToUpdate, valueItenToUpdate);
+  },
 
   read: async (data) => {
     const { table, nameItenToSearch, valueItenToSearch, itenToReturn } = data;
+    
+    const dataFinded = await dbMethod.read(table, nameItenToSearch, valueItenToSearch, itenToReturn);
 
-    const dataFinded = await dbMethod.read(
-      table,
-      nameItenToSearch,
-      valueItenToSearch,
-      itenToReturn
-    );
+    return dataFinded;
+  },
+
+  readAllFiltred: async (table, itenToReturn) => {
+    const dataFinded = await dbMethod.readAllFiltred(table, itenToReturn);
+
+    return dataFinded;
+  },
+
+  readAll: async (table) => {
+    const dataFinded = await dbMethod.readAll(table);
 
     return dataFinded;
   },
@@ -160,11 +140,7 @@ const userService = {
     const table = "groups";
     const nameItenToDeleteLine = `"singularGroup"`;
     const valueItenToDeleteLine = [singularData];
-    return await dbMethod.delete(
-      table,
-      nameItenToDeleteLine,
-      valueItenToDeleteLine
-    );
+    return await dbMethod.delete(table, nameItenToDeleteLine, valueItenToDeleteLine);
   },
 
   //
@@ -200,11 +176,7 @@ const userService = {
     const nameItenToDeleteLine = `"singularCategory"`;
     const valueItenToDeleteLine = [singularData];
 
-    return await dbMethod.delete(
-      table,
-      nameItenToDeleteLine,
-      valueItenToDeleteLine
-    );
+    return await dbMethod.delete(table, nameItenToDeleteLine, valueItenToDeleteLine);
   },
   readEvent: async (reqBody) => {
     return event;

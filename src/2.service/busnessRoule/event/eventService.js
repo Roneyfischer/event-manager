@@ -63,10 +63,10 @@ const eventService = {
     const dateNow = new Date().toISOString();
     console.log(dateNow);
     const table = "subscribers";
-    const fieldName = `"singularUserId", "singularUser", "singularEventId", "singularEvent", "subscriptionDate"`;
+    const fieldName = `"singularUserId", "completeName", "singularEventId", "singularEvent", "subscriptionDate"`;
     const fieldValue = [
       userToEvent.id,
-      userToEvent.singularUser,
+      userToEvent.completeName,
       eventOnScreen.id,
       eventOnScreen.singularEvent,
       dateNow,

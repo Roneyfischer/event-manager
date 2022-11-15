@@ -69,9 +69,7 @@ export default class Event {
         console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         console.log(reqBody.userGroup);
 
-        const ticketAvailability = await enrollement.ticketAvailability(
-          reqBody
-        );
+        const ticketAvailability = await enrollement.ticketAvailability(reqBody);
 
         console.log(">[ticketAvailability] " + ticketAvailability.status);
         const eventOnScreen = ticketAvailability.dataFinded;
@@ -91,10 +89,7 @@ export default class Event {
       const enrollementAdd = async (reqBody, ticketAvailabilityData) => {
         console.log(">[enrollementAdd]");
 
-        const enrollementAdd = await enrollement.add(
-          reqBody,
-          ticketAvailabilityData
-        );
+        const enrollementAdd = await enrollement.add(reqBody, ticketAvailabilityData);
 
         if (enrollementAdd.status) {
           return addInscriptionOnEvent(reqBody, ticketAvailabilityData);
@@ -106,10 +101,7 @@ export default class Event {
       const addInscriptionOnEvent = async (reqBody, ticketAvailabilityData) => {
         console.log(">[Event.addInscriptionOnEvent]");
 
-        const addInscriptionOnEvent = await enrollement.addInscriptionOnEvent(
-          reqBody,
-          ticketAvailabilityData
-        );
+        const addInscriptionOnEvent = await enrollement.addInscriptionOnEvent(reqBody, ticketAvailabilityData);
 
         if (addInscriptionOnEvent) {
           return succsses();
@@ -144,10 +136,7 @@ export default class Event {
       const reqBodyNew = reqBody;
       reqBodyNew.table = "subscribers";
       reqBodyNew.nameItenToSearch = `"singularUserId", "singularEventId"`;
-      reqBodyNew.valueItenToSearch = [
-        reqBody.singularUserId,
-        reqBody.singularEventId,
-      ];
+      reqBodyNew.valueItenToSearch = [reqBody.singularUserId, reqBody.singularEventId];
       reqBodyNew.itenToReturn = "*";
 
       const verifyUseExists = await enrollement.read(reqBodyNew);
@@ -164,8 +153,7 @@ export default class Event {
         const enrollementDelete = await enrollement.delete(subscribeOnScreen);
 
         if (enrollementDelete.status) {
-          const eventOnScreen = (await this.filterEvent(reqBodyNew))
-            .dataFinded[0];
+          const eventOnScreen = (await this.filterEvent(reqBodyNew)).dataFinded[0];
           await enrollement.deleteInscriptionOnEvent(eventOnScreen);
         }
         return enrollementDelete;
@@ -183,21 +171,34 @@ export default class Event {
     }
   };
 
-  update = async (
-    table,
-    nameItenToSearch,
-    valueItenToSearch,
-    nameItenToUpdate,
-    valueItenToUpdate
-  ) => {
+  editEvent = async (reqBody) => {
+    console.log(">[eventController.editEvent]");
+    const { nameItenToSearch, valueItenToSearch, nameItenToUpdate, valueItenToUpdate } = reqBody;
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + nameItenToUpdate);
+    if (
+      nameItenToUpdate == "createDate" ||
+      nameItenToUpdate == "company" ||
+      nameItenToUpdate == "id" ||
+      nameItenToUpdate == "subscriberNumber"
+    ) {
+      return { status: false, message: `${nameItenToUpdate} cannot be changed.` };
+    }
+    const table = "events";
+
+    const executeEditEvent = eventService.update(table, nameItenToSearch, valueItenToSearch, nameItenToUpdate, valueItenToUpdate);
+    return executeEditEvent;
+  };
+
+  cancelEvent = async (reqBody) => {};
+
+  deleteEvent = async (reqBody) => {
+    
+  };
+
+  //função que não pode ser direcionada para o user, pois permite alterar qualquer table. Deve ser utilizado somente internamente
+  update = async (table, nameItenToSearch, valueItenToSearch, nameItenToUpdate, valueItenToUpdate) => {
     try {
-      const executeUpdate = await eventService.update(
-        table,
-        nameItenToSearch,
-        valueItenToSearch,
-        nameItenToUpdate,
-        valueItenToUpdate
-      );
+      const executeUpdate = await eventService.update(table, nameItenToSearch, valueItenToSearch, nameItenToUpdate, valueItenToUpdate);
       return {
         status: true,
         message: "Inscrição realizada com sucesso.",

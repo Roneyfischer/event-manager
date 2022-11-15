@@ -31,6 +31,7 @@ const enrollement = {
       return {
         status: true,
         dataFinded: eventOnScreen,
+        eventOnScreen: eventOnScreen
       };
     }
 
