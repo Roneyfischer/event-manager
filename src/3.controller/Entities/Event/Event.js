@@ -66,17 +66,23 @@ export default class Event {
     try {
       const ticketAvailability = async (reqBody) => {
         console.log(">[ticketAvailability]");
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        console.log(reqBody.userGroup);
 
         const ticketAvailability = await enrollement.ticketAvailability(
           reqBody
         );
-        
-        console.log(">[ticketAvailability] " + ticketAvailability.status);
 
+        console.log(">[ticketAvailability] " + ticketAvailability.status);
+        const eventOnScreen = ticketAvailability.dataFinded;
         if (ticketAvailability.status) {
-          return enrollementAdd(reqBody, ticketAvailability.dataFinded);
+          console.log(eventOnScreen.singularGroup + "==" + reqBody.userGroup);
+          if (eventOnScreen.singularGroup == reqBody.userGroup) {
+            return enrollementAdd(reqBody, eventOnScreen);
+          }
+          fail();
         }
-        return ticketAvailability;
+        return false;
       };
 
       const enrollementAdd = async (reqBody, ticketAvailabilityData) => {

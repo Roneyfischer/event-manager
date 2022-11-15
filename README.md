@@ -10,15 +10,22 @@ create table eventStatus(
 "statusName" varchar(32) not null primary key
 );
 
+create table userGroups(
+"id" serial unique,
+"groupName" varchar(32) not null primary key
+);
+
 create table users (
 "id" serial unique primary key,
 "singularUser" varchar(255) not null,
-"role" varchar (32),
+"role" varchar (32) not null,
+"userGroup" varchar(32) not null,
 "cpf" varchar(512) not null unique,
 "email" varchar(512) not null unique,
 "secondUserId" varchar(512) not null unique,
 "pass" varchar(856) not null unique,
 
+FOREIGN KEY ("userGroup") REFERENCES "usergroups" ("groupName") ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY ("role") REFERENCES "userroles" ("role") ON UPDATE CASCADE
 );
 
@@ -28,7 +35,6 @@ create table groups (
 "singularGroup" varchar(255) not null,
 
 PRIMARY KEY ("singularGroup"),
-
 FOREIGN KEY ("singularUserId") REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
 

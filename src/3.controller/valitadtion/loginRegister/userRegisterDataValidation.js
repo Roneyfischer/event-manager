@@ -3,8 +3,8 @@
 
 import errorHandling from "../../../2.service/errorHandling/errorHandling.js";
 
-const userRegisterDataValidation = (reqBody) => {
-  console.log("> [userRegisterDataValidation] Validating data")
+const inputsValidation = (reqBody) => {
+  console.log("> [userRegisterDataValidation] Validating data");
   const { type, singularUser, cpf, email, pass, passConfirmation } = reqBody;
 
   if (type && singularUser && cpf && email && pass && passConfirmation) {
@@ -17,7 +17,9 @@ const userRegisterDataValidation = (reqBody) => {
 };
 
 const checkPassMatch = (pass, passConfirmation) => {
-  console.log("> [checkPassMatch] Validating if match Password and Password Confirmation")
+  console.log(
+    "> [checkPassMatch] Validating if match Password and Password Confirmation"
+  );
   if (pass === passConfirmation) {
     return { status: true };
   }
@@ -27,4 +29,4 @@ const checkPassMatch = (pass, passConfirmation) => {
   };
 };
 
-export default userRegisterDataValidation;
+export default { inputsValidation, checkPassMatch };

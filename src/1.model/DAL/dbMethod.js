@@ -39,16 +39,23 @@ const dbMethod = {
     nameItenToUpdate,
     valueItenToUpdate
   ) => {
-    const queryText = `UPDATE "${table}" SET "${nameItenToUpdate}" = ($1)  WHERE "${nameItenToSearch}" = ${valueItenToSearch}`;
-    const queryValues = valueItenToUpdate;
+    try {
+      console.log(">[dbMethod.update]");
+      const queryText = `UPDATE "${table}" SET "${nameItenToUpdate}" = ($1)  WHERE "${nameItenToSearch}" = ${valueItenToSearch}`;
+      const queryValues = valueItenToUpdate;
+      console.log(
+        `Update ${nameItenToUpdate} where "${nameItenToSearch}", to "${valueItenToUpdate}", on "${table}"`
+      );
+      const client = await dbConnect();
 
-    const client = await dbConnect();
-
-    await client.query(queryText, queryValues);
-    return {
-      status: true,
-      message: `Update ${nameItenToUpdate} where "${nameItenToSearch}", to "${valueItenToSearch}", on "${table}"`,
-    };
+      await client.query(queryText, queryValues);
+      return {
+        status: true,
+        message: `Update ${nameItenToUpdate} where "${nameItenToSearch}", to "${valueItenToSearch}", on "${table}"`,
+      };
+    } catch (error) {
+      console.log(">[dbMethod.update] ERROR: " + error);
+    }
   },
 
   delete: async (table, nameItenToDeleteLine, valueItenToDeleteLine) => {

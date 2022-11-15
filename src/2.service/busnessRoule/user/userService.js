@@ -16,14 +16,16 @@ const userService = {
     const secondUserId = (
       await cryptography.basicCript.encript(singularUser + cpf)
     ).dataHashed;
+    const userGroup = "default";
 
     const table = "users";
-    const fieldName = `"singularUser", "cpf", "email", "role", "secondUserId", "pass"`;
+    const fieldName = `"singularUser", "cpf", "email", "role", "userGroup", "secondUserId", "pass"`;
     const fieldValue = [
       singularUser,
       cpfEncrypted,
       email,
       role,
+      userGroup,
       secondUserId,
       passEncrypted,
     ];
@@ -61,8 +63,9 @@ const userService = {
       const token = await userService.setJWToken(
         dataFinded.id,
         dataFinded.cpf,
-        dataFinded.secondUserId,
-        dataFinded.role
+        dataFinded.role,
+        dataFinded.userGroup,
+        dataFinded.secondUserId
       );
       return {
         status: verifyPassword.status,
@@ -74,17 +77,19 @@ const userService = {
     return { status: verifyPassword.status, message: verifyPassword.message };
   },
 
-  setJWToken: async (id, cpf, secondUserId, role) => {
+  setJWToken: async (id, cpf, role, userGroup, secondUserId) => {
     const token = jwt.sign(
       {
         singularUserId: id,
         userCpf: cpf,
-        secondUserId: secondUserId,
         role: role,
+        userGroup: userGroup,
+        secondUserId: secondUserId,
       },
       process.env.JWT_KEY,
       {
         expiresIn: 30000,
+        algorithm: "HS512",
       }
     );
     return token;
@@ -113,7 +118,6 @@ const userService = {
 
   read: async (data) => {
     const { table, nameItenToSearch, valueItenToSearch, itenToReturn } = data;
-    
 
     const dataFinded = await dbMethod.read(
       table,

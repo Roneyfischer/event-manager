@@ -18,7 +18,7 @@ auth.post("/", async (req, res) => {
       .cookie("access_token", operation.token, {
         secure: true,
         sameSite: "none",
-        expire: 500000,
+        expire: 3000,
       })
       .status(200)
       .json({

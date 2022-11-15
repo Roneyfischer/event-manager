@@ -12,6 +12,7 @@ const verifyJWT = async (req, res, next) => {
 
     req.body.singularUserId = decoded.singularUserId;
     req.body.role = decoded.role;
+    req.body.userGroup = decoded.userGroup;
 
     if (err) {
       return res
@@ -61,6 +62,7 @@ const userDriver = {
   },
 
   adm: async (reqBody) => {
+   
     try {
       const user = new AdmUser(reqBody);
 
