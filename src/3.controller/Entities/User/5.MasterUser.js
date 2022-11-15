@@ -1,17 +1,47 @@
 import AdmUser from "./3.AdmUser.js";
-
+import dbMethod from "../../../1.model/DAL/dbMethod.js";
 class MasterUser extends AdmUser {
-  editRole = async (reqBody) => {
-    console.log("> [MasterUser.editRole]");
+  editUserRole = async (reqBody) => {
+    console.log("> [MasterUser.editUserRole]");
     try {
+      const { userId, newRoleToUser } = reqBody;
+
+      const table = "users";
+      const nameItenToSearch = "id";
+      const valueItenToSearch = userId;
+      const nameItenToUpdate = "role";
+      const valueItenToUpdate = [newRoleToUser];
+
+      return dbMethod.update(
+        table,
+        nameItenToSearch,
+        valueItenToSearch,
+        nameItenToUpdate,
+        valueItenToUpdate
+      );
     } catch (error) {
       return errorHandling(error);
     }
   };
 
-  editGroup = async (reqBody) => {
+  editUserGroup = async (reqBody) => {
     console.log("> [MasterUser.editGroup]");
     try {
+      const { userId, newGroupToUser } = reqBody;
+
+      const table = "users";
+      const nameItenToSearch = "id";
+      const valueItenToSearch = userId;
+      const nameItenToUpdate = "userGroup";
+      const valueItenToUpdate = [newGroupToUser];
+
+      return dbMethod.update(
+        table,
+        nameItenToSearch,
+        valueItenToSearch,
+        nameItenToUpdate,
+        valueItenToUpdate
+      );
     } catch (error) {
       return errorHandling(error);
     }

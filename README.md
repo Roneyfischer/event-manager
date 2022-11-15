@@ -10,9 +10,9 @@ create table eventStatus(
 "statusName" varchar(32) not null primary key
 );
 
-create table userGroups(
+create table groups (
 "id" serial unique,
-"groupName" varchar(32) not null primary key
+"singularGroup" varchar(255) not null primary key
 );
 
 create table users (
@@ -25,18 +25,11 @@ create table users (
 "secondUserId" varchar(512) not null unique,
 "pass" varchar(856) not null unique,
 
-FOREIGN KEY ("userGroup") REFERENCES "usergroups" ("groupName") ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY ("userGroup") REFERENCES "groups" ("singularGroup") ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY ("role") REFERENCES "userroles" ("role") ON UPDATE CASCADE
 );
 
-create table groups (
-"id" serial unique,
-"singularUserId" integer not null,
-"singularGroup" varchar(255) not null,
 
-PRIMARY KEY ("singularGroup"),
-FOREIGN KEY ("singularUserId") REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE
-);
 
 create table categories(
 "id" serial unique,
@@ -84,15 +77,24 @@ FOREIGN KEY ("singularEvent") REFERENCES "events" ("singularEvent") ON DELETE CA
 
 ---
 
-insert into "userroles" ("role") values('adm');
+
+
+insert into "userroles" ("role") values('anonimous');
 insert into "userroles" ("role") values('standard');
 insert into "userroles" ("role") values('guest');
+insert into "userroles" ("role") values('adm');
+insert into "userroles" ("role") values('master');
+
+insert into "groups" ("singularGroup") values('default');
+insert into "groups" ("singularGroup") values('gerentes');
+insert into "groups" ("singularGroup") values('vendedores');
+insert into "groups" ("singularGroup") values('pastores');
+insert into "groups" ("singularGroup") values('jovens');
 
 insert into "eventstatus" ("statusName") values('aguardando');
 insert into "eventstatus" ("statusName") values('aberto');
 insert into "eventstatus" ("statusName") values('encerrado');
 insert into "eventstatus" ("statusName") values('cancelado');
-
 
 INSERT INTO "groups"("singularUser", "singularGroup", "createDate") VALUES('01', 'Serviço Social', '2022/12/12');
 INSERT INTO "categories"("singularUser", "singularCategory") VALUES('01', 'Serviços Sociais');
@@ -137,20 +139,13 @@ SUBSCRIBE/UNSUBSCRIBE
 "singularEvent": "event"
 }
 
-
-
-
-
 FALTA:
 ok implementar "unsubscribe"
 ok 7.Alterar horário de criação para now
 
-
     masterUser pode: .
     implementar "edições"
-  
+
     implementar "status" do event: aguardando/em inscrição/encerrado/cancelado
     implementar "cancel event"
     implementar "delete event"
-
-

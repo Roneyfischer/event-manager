@@ -82,7 +82,10 @@ export default class Event {
           }
           fail();
         }
-        return false;
+        return {
+          status: false,
+          message: `Ops, não foi possível realizar a inscrição, pois este evento é destinado somente aos usuários do grupo "${eventOnScreen.singularGroup}", e você percente ao grupo "${reqBody.userGroup}"`,
+        };
       };
 
       const enrollementAdd = async (reqBody, ticketAvailabilityData) => {

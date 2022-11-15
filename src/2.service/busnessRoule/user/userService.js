@@ -137,8 +137,8 @@ const userService = {
     const { singularData, singularUserId } = await reqBody;
 
     const table = "groups";
-    const fieldName = `"singularUserId", "singularGroup"`;
-    const fieldValue = [singularUserId, singularData];
+    const fieldName = `"singularGroup"`;
+    const fieldValue = [singularData];
 
     return await dbMethod.add(table, fieldName, fieldValue);
   },

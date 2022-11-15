@@ -48,13 +48,21 @@ const dbMethod = {
       );
       const client = await dbConnect();
 
-      await client.query(queryText, queryValues);
-      return {
-        status: true,
-        message: `Update ${nameItenToUpdate} where "${nameItenToSearch}", to "${valueItenToSearch}", on "${table}"`,
+      const teste = await client.query(queryText, queryValues);
+      if (teste.teste) {
+        return {
+          status: true,
+          message: `Update ${nameItenToUpdate} where "${nameItenToSearch}", to "${valueItenToSearch}", on "${table}"`,
+          teste: teste,
+        };
+      }
+      const error = {
+        status: false,
+        message: `O dado passado (${valueItenToUpdate}) no campo "${nameItenToSearch}", dentro da tabela "${table}", não foi encontrado.`
       };
+      throw error;
     } catch (error) {
-      console.log(">[dbMethod.update] ERROR: " + error);
+      return errorHandling(error);
     }
   },
 

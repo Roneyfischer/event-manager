@@ -80,6 +80,12 @@ const userDriver = {
   master: async (reqBody) => {
     console.log("> [authorization.master]");
     try {
+      const user = new MasterUser(reqBody);
+
+      const executeRequisition = await user[reqBody.type](reqBody);
+
+      return executeRequisition;
+
     } catch (error) {
       return {
         status: false,
