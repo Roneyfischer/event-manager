@@ -58,7 +58,7 @@ const dbMethod = {
       }
       const error = {
         status: false,
-        message: `O dado passado (${valueItenToUpdate}) no campo "${nameItenToSearch}", dentro da tabela "${table}", não foi encontrado.`
+        message: `O dado passado (${valueItenToUpdate}) no campo "${nameItenToUpdate}", dentro da tabela "${table}", não foi encontrado.`,
       };
       throw error;
     } catch (error) {
