@@ -12,24 +12,21 @@ create table eventStatus(
 
 create table groups (
 "id" serial unique,
-"singularGroup" varchar(32)[] not null primary key
+"singularGroup" varchar(32) not null primary key
 );
 
 create table users (
 "id" serial unique primary key,
 "completeName" varchar(255) not null unique,
 "role" varchar (32) not null,
-"userGroup" varchar(32)[] not null,
+"userGroup" varchar(32) not null,
 "cpf" varchar(512) not null unique,
 "email" varchar(512) not null unique,
 "secondUserId" varchar(512) not null unique,
 "pass" varchar(856) not null unique,
 
-FOREIGN KEY ("userGroup") REFERENCES "groups" ("singularGroup") ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY ("role") REFERENCES "userroles" ("role") ON UPDATE CASCADE
 );
-
-
 
 create table categories(
 "id" serial unique,
@@ -45,7 +42,7 @@ create table events (
 "id" serial unique,
 "singularUserId" integer not null,
 "singularEvent" varchar(255) PRIMARY KEY not null,
-"singularGroup" varchar(32)[] not null,
+"singularGroup" varchar(512) not null,
 "singularCategory" varchar(255) not null,
 "description" varchar(8000) not null,
 "createDate" Date not null,
@@ -58,9 +55,11 @@ create table events (
 
 FOREIGN KEY ("eventStatus") REFERENCES "eventstatus" ("statusName") ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY ("singularUserId") REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY ("singularGroup") REFERENCES "groups" ("singularGroup") ON DELETE CASCADE ON UPDATE CASCADE,
+
 FOREIGN KEY ("singularCategory") REFERENCES "categories" ("singularCategory") ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+// FOREIGN KEY ("singularGroup") REFERENCES "groups" ("singularGroup") ON DELETE CASCADE ON UPDATE CASCADE,
 
 create table subscribers(
 "id" serial unique,
@@ -95,6 +94,8 @@ insert into "eventstatus" ("statusName") values('aguardando');
 insert into "eventstatus" ("statusName") values('aberto');
 insert into "eventstatus" ("statusName") values('encerrado');
 insert into "eventstatus" ("statusName") values('cancelado');
+
+UPDATE "users" set "role" = 'master' where "id" = '1';
 
 INSERT INTO "groups"("completeName", "singularGroup", "createDate") VALUES('01', 'Serviço Social', '2022/12/12');
 INSERT INTO "categories"("completeName", "singularCategory") VALUES('01', 'Serviços Sociais');

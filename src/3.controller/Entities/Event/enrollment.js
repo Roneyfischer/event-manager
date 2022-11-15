@@ -2,6 +2,7 @@ import Event from "./Event.js";
 import eventService from "../../../2.service/busnessRoule/event/eventService.js";
 import dbMethod from "../../../1.model/DAL/dbMethod.js";
 import StandardUser from "../User/1.StandardUser.js";
+import cookieParser from "cookie-parser";
 const enrollement = {
   read: async (data) => {
     const { table, nameItenToSearch, valueItenToSearch, itenToReturn } = data;
@@ -44,6 +45,18 @@ const enrollement = {
     };
   },
 
+  groupCompatibility: async (reqBody, eventOnScreen) => {
+    const verifyGroupCompatibility = eventOnScreen.singularGroup.indexOf(reqBody.userGroup) > -1;
+
+    if (verifyGroupCompatibility) {
+      return { status: true, message: `Compatibilidade de Grupo: OK` };
+    }
+    return {
+      status: false,
+      message: `Ops, este evento é somente para usuários do(s) grupo(s) "${eventOnScreen.singularGroup}" e você pertence ao grupo "${reqBody.userGroup}". [DEV.ERR: EGC1]`,
+    };
+  },
+
   add: async (reqBody, eventOnScreen) => {
     console.log(">[enrollement.add]");
     const userControllerClass = new StandardUser();
@@ -67,7 +80,7 @@ const enrollement = {
     const subscriberNumber = parseInt(eventOnScreen.subscriberNumber);
     const table = "events";
     const nameItenToSearch = "id";
-    const valueItenToSearch = reqBody.singularEventId;
+    const valueItenToSearch = [reqBody.singularEventId];
     const nameItenToUpdate = "subscriberNumber";
     const valueItenToUpdate = [subscriberNumber + 1];
 
@@ -82,11 +95,12 @@ const enrollement = {
   },
 
   deleteInscriptionOnEvent: async (eventOnScreen) => {
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>" + eventOnScreen.id);
     const event = new Event();
     const subscriberNumber = parseInt(eventOnScreen.subscriberNumber);
     const table = "events";
     const nameItenToSearch = "id";
-    const valueItenToSearch = eventOnScreen.id;
+    const valueItenToSearch = [eventOnScreen.id];
     const nameItenToUpdate = "subscriberNumber";
     const valueItenToUpdate = [subscriberNumber - 1];
 

@@ -6,7 +6,7 @@ import enrollement from "../Event/enrollment.js";
 import chalk from "chalk";
 
 class AnonimousUser {
-  eadAllEvents = async (reqBody) => {
+  readAllEvents = async (reqBody) => {
     console.log("> [AnonimousUser.readAll]");
 
     const eventController = new EventController();
@@ -50,9 +50,17 @@ class AnonimousUser {
     const eventOnScreen = subscribeEnvent.eventOnScreen;
 
     if (subscribeEnvent.status) {
-      if (eventOnScreen.singularGroup == "comunidade") {
+      let reqBodyTemporary = reqBody;
+      reqBodyTemporary.userGroup = "anonimo";
+      const reqBodyNew = reqBodyTemporary;
+
+      const groupCompatibility = await enrollement.groupCompatibility(reqBodyNew, eventOnScreen);
+
+      if (groupCompatibility.status) {
+        console.log(">>>>>>>>>>>>>>>>>>>>");
         return await enrollement.addInscriptionOnEvent(reqBody, eventOnScreen);
       }
+
       return {
         status: false,
         message: `Ops, este evento é exclusivo para pessoas do grupo "${eventOnScreen.singularGroup}", e você esta tentando se inscrever de modo anônimo.

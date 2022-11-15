@@ -10,7 +10,7 @@ class MasterUser extends AdmUser {
 
       const table = "users";
       const nameItenToSearch = "id";
-      const valueItenToSearch = userId;
+      const valueItenToSearch = [userId];
       const nameItenToUpdate = "role";
       const valueItenToUpdate = [newRoleToUser];
 
@@ -27,7 +27,7 @@ class MasterUser extends AdmUser {
 
       const table = "users";
       const nameItenToSearch = "id";
-      const valueItenToSearch = userId;
+      const valueItenToSearch = [userId];
       const nameItenToUpdate = "userGroup";
       const valueItenToUpdate = [newGroupToUser];
 

@@ -10,6 +10,7 @@ export default class Event {
   //alterar para EventController
   //alterar futuramente pra obj?
 
+  //alterar para vários grupos no grupo do evento: ----- #123
   add = (reqBody) => {
     try {
       const reqBodyNew = reqBody;
@@ -38,6 +39,8 @@ export default class Event {
   readAllCategories = async () => {
     return eventService.readAll("categories");
   };
+
+  //fim aqui --------  #123
 
   readAllGroups = async () => {
     return eventService.readAll("groups");
@@ -74,11 +77,13 @@ export default class Event {
         const eventOnScreen = ticketAvailability.dataFinded;
 
         if (ticketAvailability.status) {
-          console.log(eventOnScreen.singularGroup + "==" + reqBody.userGroup);
-          if (eventOnScreen.singularGroup == reqBody.userGroup) {
+          const groupCompatibility = await enrollement.groupCompatibility(reqBody, eventOnScreen);
+          console.log("::::::::::::::::::::::::::::::::::::::::" + groupCompatibility.status);
+          if (groupCompatibility.status) {
             return enrollementAdd(reqBody, eventOnScreen);
           }
-          fail();
+
+          return groupCompatibility;
         }
         return { status: ticketAvailability.status, message: ticketAvailability.message };
       };
@@ -150,6 +155,7 @@ export default class Event {
         const enrollementDelete = await enrollement.delete(subscribeOnScreen);
 
         if (enrollementDelete.status) {
+          console.log("está entrnadoooooooooo");
           const eventOnScreen = (await this.filterEvent(reqBodyNew)).dataFinded[0];
           await enrollement.deleteInscriptionOnEvent(eventOnScreen);
         }
