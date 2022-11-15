@@ -1,7 +1,7 @@
 import dbMethod from "../../../1.model/DAL/dbMethod.js";
 import cryptography from "../crypto/cryptoOperator.js";
-
 import jwt from "jsonwebtoken";
+
 import chalk from "chalk";
 import cookieParser from "cookie-parser";
 

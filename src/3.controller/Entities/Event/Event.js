@@ -1,9 +1,10 @@
 import eventService from "../../../2.service/busnessRoule/event/eventService.js";
 import errorHandling from "../../../2.service/errorHandling/errorHandling.js";
 import eventCreateDataValidation from "../../valitadtion/event/eventCreateDataValidation.js";
-import eventReadValidation from "../../valitadtion/event/eventReadValidation.js";
 import dbMethod from "../../../1.model/DAL/dbMethod.js";
 import enrollement from "./enrollment.js";
+
+import eventReadValidation from "../../valitadtion/event/eventReadValidation.js";
 
 export default class Event {
   //alterar para EventController
