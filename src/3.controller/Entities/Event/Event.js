@@ -71,10 +71,8 @@ export default class Event {
 
         const ticketAvailability = await enrollement.ticketAvailability(reqBody);
 
-        console.log(">[ticketAvailability] " + ticketAvailability.status);
-
         const eventOnScreen = ticketAvailability.dataFinded;
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + ticketAvailability.status);
+
         if (ticketAvailability.status) {
           console.log(eventOnScreen.singularGroup + "==" + reqBody.userGroup);
           if (eventOnScreen.singularGroup == reqBody.userGroup) {
@@ -82,7 +80,7 @@ export default class Event {
           }
           fail();
         }
-        return {status: ticketAvailability.status, message: ticketAvailability.message};
+        return { status: ticketAvailability.status, message: ticketAvailability.message };
       };
 
       const enrollementAdd = async (reqBody, ticketAvailabilityData) => {

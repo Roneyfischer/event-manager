@@ -12,14 +12,14 @@ create table eventStatus(
 
 create table groups (
 "id" serial unique,
-"singularGroup" varchar(255) not null primary key
+"singularGroup" varchar(32)[] not null primary key
 );
 
 create table users (
 "id" serial unique primary key,
 "completeName" varchar(255) not null unique,
 "role" varchar (32) not null,
-"userGroup" varchar(32) not null,
+"userGroup" varchar(32)[] not null,
 "cpf" varchar(512) not null unique,
 "email" varchar(512) not null unique,
 "secondUserId" varchar(512) not null unique,
@@ -45,7 +45,7 @@ create table events (
 "id" serial unique,
 "singularUserId" integer not null,
 "singularEvent" varchar(255) PRIMARY KEY not null,
-"singularGroup" varchar(255) not null,
+"singularGroup" varchar(32)[] not null,
 "singularCategory" varchar(255) not null,
 "description" varchar(8000) not null,
 "createDate" Date not null,
