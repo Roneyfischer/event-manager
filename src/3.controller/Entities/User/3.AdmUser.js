@@ -49,9 +49,8 @@ class AdmUser extends GuestUser {
   createGroup = async (reqBody) => {
     console.log("> [AdmUser.createGroup");
 
- 
-      return await userService.createGroup(reqBody);
-    
+    return await userService.createGroup(reqBody);
+
     throw dataValidation;
   };
 
@@ -76,9 +75,8 @@ class AdmUser extends GuestUser {
   deleteGroup = async (reqBody) => {
     console.log("> [AdmUser.deleteGroup]");
     try {
-    
-        return await userService.deleteGroup(reqBody);
-    
+      return await userService.deleteGroup(reqBody);
+
       throw dataValidation;
     } catch (error) {
       return errorHandling(error);
@@ -88,11 +86,8 @@ class AdmUser extends GuestUser {
   createCategory = async (reqBody, singularUserId) => {
     console.log("> [AdmUser.createCategory]");
     try {
-      const dataValidation = await groupAndCategoryValdiation(reqBody, singularUserId);
-      console.log("> [AdmUser.createCategory] Data validation: " + dataValidation.status);
-      if (dataValidation.status) {
-        return await userService.createCategory(reqBody, singularUserId);
-      }
+      return await userService.createCategory(reqBody, singularUserId);
+
       throw dataValidation;
     } catch (error) {
       return errorHandling(error);
@@ -120,9 +115,8 @@ class AdmUser extends GuestUser {
   deleteCategory = async (reqBody, singularUserId) => {
     console.log("> [AdmUser.deleteCategory]");
     try {
-    
-        return await userService.deleteCategory(reqBody, singularUserId);
-    
+      return await userService.deleteCategory(reqBody, singularUserId);
+
       throw dataValidation;
     } catch (error) {
       return errorHandling(error);
