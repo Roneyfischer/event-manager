@@ -49,6 +49,7 @@ const userService = {
         status: verifyPassword.status,
         message: verifyPassword.message,
         token: token,
+        dataFinded: dataFinded,
       };
     }
 
@@ -132,10 +133,10 @@ const userService = {
 
   deleteGroup: async (reqBody) => {
     console.log("> [userService.deleteGroup]");
-    const { singularData } = await reqBody;
+    const { groupId } = await reqBody;
     const table = "groups";
-    const nameItenToDeleteLine = `"singularGroup"`;
-    const valueItenToDeleteLine = [singularData];
+    const nameItenToDeleteLine = `"id"`;
+    const valueItenToDeleteLine = [groupId];
     return await dbMethod.delete(table, nameItenToDeleteLine, valueItenToDeleteLine);
   },
 
@@ -167,10 +168,10 @@ const userService = {
 
   deleteCategory: async (reqBody) => {
     console.log("> [userService.deleteCategory]");
-    const { singularData } = reqBody;
+    const { categoryId } = reqBody;
     const table = "categories";
-    const nameItenToDeleteLine = `"singularCategory"`;
-    const valueItenToDeleteLine = [singularData];
+    const nameItenToDeleteLine = `"id"`;
+    const valueItenToDeleteLine = [categoryId];
 
     return await dbMethod.delete(table, nameItenToDeleteLine, valueItenToDeleteLine);
   },

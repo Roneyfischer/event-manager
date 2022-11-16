@@ -49,11 +49,9 @@ class AdmUser extends GuestUser {
   createGroup = async (reqBody) => {
     console.log("> [AdmUser.createGroup");
 
-    const dataValidation = await groupAndCategoryValdiation(reqBody);
-
-    if (dataValidation.status) {
+ 
       return await userService.createGroup(reqBody);
-    }
+    
     throw dataValidation;
   };
 
@@ -78,11 +76,9 @@ class AdmUser extends GuestUser {
   deleteGroup = async (reqBody) => {
     console.log("> [AdmUser.deleteGroup]");
     try {
-      const dataValidation = await groupAndCategoryValdiation(reqBody);
-
-      if (dataValidation.status) {
+    
         return await userService.deleteGroup(reqBody);
-      }
+    
       throw dataValidation;
     } catch (error) {
       return errorHandling(error);
@@ -124,11 +120,9 @@ class AdmUser extends GuestUser {
   deleteCategory = async (reqBody, singularUserId) => {
     console.log("> [AdmUser.deleteCategory]");
     try {
-      const dataValidation = await groupAndCategoryValdiation(reqBody, singularUserId);
-
-      if (dataValidation.status) {
+    
         return await userService.deleteCategory(reqBody, singularUserId);
-      }
+    
       throw dataValidation;
     } catch (error) {
       return errorHandling(error);
@@ -138,7 +132,7 @@ class AdmUser extends GuestUser {
     console.log("> [MasterUser.readAllSubscribers]");
     try {
       const table = "subscribers";
-      const itenToReturn = `"id","completeName","singularEvent", "subscriptionDate"`;
+      const itenToReturn = `*`;
       const executeRead = userService.readAllFiltred(table, itenToReturn);
 
       return executeRead;

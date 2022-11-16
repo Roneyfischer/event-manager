@@ -101,35 +101,28 @@ class StandardUser {
     try {
       const { cpf, pass, newPass, newPassConfirmation } = reqBody;
 
-      const checkDataMatch = userValidations.checkDataMatch(
-        newPass,
-        newPassConfirmation
-      );
+      const checkDataMatch = userValidations.checkDataMatch(newPass, newPassConfirmation);
 
       if (checkDataMatch.status) {
         const executeLogin = await this.login(reqBody);
+        const userOnScreen = executeLogin.dataFinded
         if (executeLogin.status) {
-          return updatePass(reqBody);
+
+          return updatePass(userOnScreen);
         }
         return executeLogin;
       }
       return checkDataMatch;
 
-      async function updatePass(reqBody) {
+      async function updatePass(userOnScreen) {
         const passEncrypted = await cryptography.cryptoArgon2.encrypt(newPass);
         const table = "users";
         const nameItenToSearch = "id";
-        const valueItenToSearch = reqBody.singularUserId;
+        const valueItenToSearch = [userOnScreen.id];
         const nameItenToUpdate = "pass";
         const valueItenToUpdate = [passEncrypted];
 
-        return await userService.update(
-          table,
-          nameItenToSearch,
-          valueItenToSearch,
-          nameItenToUpdate,
-          valueItenToUpdate
-        );
+        return await userService.update(table, nameItenToSearch, valueItenToSearch, nameItenToUpdate, valueItenToUpdate);
       }
     } catch (error) {
       return errorHandling(error);
@@ -141,10 +134,7 @@ class StandardUser {
     try {
       const { cpf, pass, newEmail, newEmailConfirmation } = reqBody;
 
-      const checkDataMatch = userValidations.checkDataMatch(
-        newEmail,
-        newEmailConfirmation
-      );
+      const checkDataMatch = userValidations.checkDataMatch(newEmail, newEmailConfirmation);
 
       if (checkDataMatch.status) {
         const executeLogin = await this.login(reqBody);
@@ -163,13 +153,7 @@ class StandardUser {
         const nameItenToUpdate = "email";
         const valueItenToUpdate = [newEmail];
 
-        return userService.update(
-          table,
-          nameItenToSearch,
-          valueItenToSearch,
-          nameItenToUpdate,
-          valueItenToUpdate
-        );
+        return userService.update(table, nameItenToSearch, valueItenToSearch, nameItenToUpdate, valueItenToUpdate);
       }
     } catch (error) {
       return errorHandling(error);

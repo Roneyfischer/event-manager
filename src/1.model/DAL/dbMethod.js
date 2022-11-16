@@ -87,6 +87,8 @@ const dbMethod = {
   },
 
   read: async (table, nameItenToSearch, valueItenToSearch, itenToReturn) => {
+    // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+    // console.log(table, nameItenToSearch, valueItenToSearch, itenToReturn);
     let numberOfColumns = `$1`;
     for (let i = 1; i < valueItenToSearch.length; i++) {
       numberOfColumns = numberOfColumns + `, $${i + 1}`;

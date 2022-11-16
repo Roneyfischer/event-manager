@@ -1,9 +1,9 @@
 const groupAndCategoryValdiation = async (reqBody) => {
   console.log("> [groupAndCategoryValdiation] Validating data")
 
-    const {singularData} = reqBody
+    const {categoryId} = reqBody
 
-    if (singularData) {
+    if (categoryId) {
       
       console.log("> [groupAndCategoryValdiation] Data has been validated")
 
