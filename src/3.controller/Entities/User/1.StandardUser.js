@@ -105,9 +105,8 @@ class StandardUser {
 
       if (checkDataMatch.status) {
         const executeLogin = await this.login(reqBody);
-        const userOnScreen = executeLogin.dataFinded
+        const userOnScreen = executeLogin.dataFinded;
         if (executeLogin.status) {
-
           return updatePass(userOnScreen);
         }
         return executeLogin;
@@ -138,18 +137,20 @@ class StandardUser {
 
       if (checkDataMatch.status) {
         const executeLogin = await this.login(reqBody);
+        const userOnScreen = executeLogin.dataFinded;
 
         if (executeLogin.status) {
-          return updateEmail(reqBody);
+          return updateEmail(userOnScreen);
         }
         return executeLogin;
       }
       return checkDataMatch;
 
-      async function updateEmail(reqBody) {
+      async function updateEmail(userOnScreen) {
+       
         const table = "users";
         const nameItenToSearch = "id";
-        const valueItenToSearch = reqBody.singularUserId;
+        const valueItenToSearch = [userOnScreen.id];
         const nameItenToUpdate = "email";
         const valueItenToUpdate = [newEmail];
 
