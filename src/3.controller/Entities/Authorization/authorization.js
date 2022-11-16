@@ -15,9 +15,7 @@ const verifyJWT = async (req, res, next) => {
     req.body.userGroup = decoded.userGroup;
 
     if (err) {
-      return res
-        .status(401)
-        .json({ status: false, message: `Error on verifty token$: ${err}` });
+      return res.status(401).json({ status: false, message: `Error on verifty token$: ${err}` });
     }
     return next();
   });
@@ -25,6 +23,7 @@ const verifyJWT = async (req, res, next) => {
 
 const userDriver = {
   standard: async (reqBody) => {
+    
     try {
       console.log("> [authorization.standard]");
 

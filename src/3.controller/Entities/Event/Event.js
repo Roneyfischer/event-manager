@@ -50,12 +50,14 @@ export default class Event {
     console.log("[Event].filterEvent]");
     const reqBodyTemporario = reqBody;
     reqBodyTemporario.table = "events";
+    reqBodyTemporario.valueItenToSearch = [reqBody.valueItenToSearch]
     const reqBodyNew = reqBodyTemporario;
     return eventService.read(reqBodyNew);
   };
   filterGroup = async (reqBody) => {
     const reqBodyTemporario = reqBody;
     reqBodyTemporario.table = "groups";
+    reqBodyTemporario.valueItenToSearch = [reqBody.valueItenToSearch]
     const reqBodyNew = reqBodyTemporario;
     return eventService.read(reqBodyNew);
   };
@@ -63,6 +65,7 @@ export default class Event {
   filterCategory = async (reqBody) => {
     const reqBodyTemporario = reqBody;
     reqBodyTemporario.table = "categories";
+    reqBodyTemporario.valueItenToSearch = [reqBody.valueItenToSearch]
     const reqBodyNew = reqBodyTemporario;
     return eventService.read(reqBodyNew);
   };
