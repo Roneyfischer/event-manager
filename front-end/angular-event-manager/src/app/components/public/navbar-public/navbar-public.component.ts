@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RouterLink, Routes } from '@angular/router';
 
 @Component({
   selector: 'app-navbar-public',
@@ -6,5 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./navbar-public.component.css']
 })
 export class NavbarPublicComponent {
+  userLoginPage(){
 
+  }
+
+
+  userRegisterPage(){
+  
+}
 }

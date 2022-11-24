@@ -1,10 +1,22 @@
-import { NgModule } from '@angular/core';
+import { EventListComponent } from './components/public/event-list/event-list.component';
+import { RegisterComponent } from './components/public/user/register/register.component';
+import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: 'userRegister',
+    component: RegisterComponent,
+  },
+  {
+    path: 'eventList',
+    component: EventListComponent,
+  },
+];
 
 @NgModule({
+  declarations: [],
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

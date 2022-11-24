@@ -3,7 +3,7 @@
     <h2>Cadastro de Usuário</h2>
   </header>
   <form action="">
-    <label for="user">
+    <label for="userRegister">
       <div class="input-group mb-3">
         <input
           type="text"
@@ -11,27 +11,19 @@
           id="completeName"
           name="completeName"
           placeholder="Seu nome completo"
+          [(ngModel)]="user.completeName"
         />
       </div>
+
       <div class="input-group mb-3">
         <input
           type="text"
           class="form-control"
-          id="userName"
-          name="userName"
-          placeholder="Crie seu nome de usuário"
-        />
-        <!-- <span class="input-group-text" id="basic-addon1">@</span> -->
-      </div>
-      <div class="input-group mb-3">
-        <input
-          type="number"
-          class="form-control"
           id="cpf"
           name="cpf"
           maxlength="11"
-          pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
           placeholder="Seu cpf (somente números)"
+          [(ngModel)]="user.cpf"
         />
       </div>
       <div class="input-group mb-3">
@@ -41,6 +33,7 @@
           id="email"
           name="email"
           placeholder="Seu email"
+          [(ngModel)]="user.email"
         />
       </div>
       <div class="input-group mb-3">
@@ -50,6 +43,7 @@
           id="pass"
           name="pass"
           placeholder="Digite sua senha"
+          [(ngModel)]="user.pass"
         />
       </div>
       <div class="input-group mb-3">
@@ -59,8 +53,13 @@
           id="passConfirmation"
           name="passConfirmation"
           placeholder="Digite novamente a senha"
+          [(ngModel)]="user.passConfirmation"
         />
       </div>
+      <button class="btn btn-warning" (click)="userRegisterInputClean()">Limpar os campos</button>
+      <button class="btn btn-primary" (click)="submitUserRegister()">
+        Cadastrar-se
+      </button>
     </label>
   </form>
 </section>
