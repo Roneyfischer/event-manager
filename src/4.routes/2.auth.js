@@ -7,6 +7,7 @@ const auth = express.Router();
 auth.post("/", async (req, res) => {
   const user = new AdmUser();
   console.log("> [route.auth] Open");
+  console.log(req);
   const operation = await user[req.body.type](req.body, res);
 
   if (!operation.status) {
