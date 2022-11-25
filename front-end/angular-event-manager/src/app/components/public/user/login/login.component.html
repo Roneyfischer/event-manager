@@ -1,1 +1,37 @@
-<p>login works!</p>
+<section class="container userRegister ff-inter">
+  <header class="header">
+    <h2>Entrar:</h2>
+  </header>
+  <form action="">
+    <label for="userLogin">
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="cpf"
+          name="cpf"
+          maxlength="11"
+          placeholder="Seu cpf (somente números)"
+          [(ngModel)]="user.cpf"
+        />
+      </div>
+
+      <div class="input-group mb-3">
+        <input
+          type="password"
+          class="form-control"
+          id="pass"
+          name="pass"
+          placeholder="Digite sua senha"
+          [(ngModel)]="user.pass"
+        />
+      </div>
+      <button class="btn btn-warning" routerLink="/userRegister">
+        Registrar-se
+      </button>
+      <button class="btn btn-primary" (click)="submitUserLogin()">
+        Entrar
+      </button>
+    </label>
+  </form>
+</section>

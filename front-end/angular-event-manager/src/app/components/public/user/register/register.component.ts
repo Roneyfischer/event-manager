@@ -17,19 +17,19 @@ export class RegisterComponent {
 
   user = {
     type: 'register',
-    completeName: `${this.completeName}`,
-    cpf: `${this.cpf}`,
-    email: `${this.email}`,
-    pass: `${this.pass}`,
-    passConfirmation: `${this.passConfirmation}`,
+    completeName: this.completeName,
+    cpf: this.cpf,
+    email: this.email,
+    pass: this.pass,
+    passConfirmation: this.passConfirmation,
   };
 
   submitUserRegister(): void {
     this.http
-      .post('http://127.0.0.1:3333/auth', JSON.stringify(this.user))
+      .post('http://127.0.0.1:3333/auth', this.user)
       .subscribe((dados) => console.log(dados));
-    console.log('data aqui');
-    console.log(JSON.stringify(this.user));
+    console.log('data (this.user) abaixo:');
+    console.log(this.user);
   }
   userRegisterInputClean(): void {}
 }

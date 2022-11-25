@@ -11,7 +11,7 @@ auth.post("/", async (req, res) => {
   const operation = await user[req.body.type](req.body, res);
 
   if (!operation.status) {
-    return res.status(401).json({ return: operation.message });
+    return res.status(401).json({ status: operation.status, message: operation.message });
   }
 
   if (operation.status) {
@@ -23,7 +23,7 @@ auth.post("/", async (req, res) => {
       })
       .status(200)
       .json({
-        return: operation.status,
+        status: operation.status,
         message: operation.message,
         token: operation.token,
       });
