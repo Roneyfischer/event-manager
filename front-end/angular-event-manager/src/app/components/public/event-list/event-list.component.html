@@ -1,57 +1,59 @@
 <div class="list-group container-fluid">
-    <select
-      class="form-select rounded float-end"
-      aria-label="Default select example"
-    >
-      <option selected>Open this select menu</option>
-      <option value="1">One</option>
-      <option value="2">Two</option>
-      <option value="3">Three</option>
-    </select>
-  
-    <ul>
-      <li *ngFor="let event of events">
-        <a
-          href="{{url}}/{{ event.name }}"
-          class="list-group-item list-group-item-action flex-column align-items-start"
-        >
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="text-center">{{ event.name }}</h5>
-            <small> Data do evento: {{ event.date }}</small>
-          </div>
-  
-          <div class="">
-            <img
-              src="../../../assets//galeria_06m.webp"
-              class="img-thumbnail rounded float-start"
-              alt="..."
-            />
-          </div>
-  
-          <div class="">
-            <p class="mb-1 textJustify">
-              {{ event.liteDescription }}
-            </p>
-            <br />
-            <p class="smallText text-start">
-              <b>Categoria:</b> {{ event.category }}.
-            </p>
-            <p class="smallText text-start">
-              <b> Podem participar (grupo):</b> {{ event.group }}.
-            </p>
-          </div>
-        </a>
-      </li>
+  <select
+    class="form-select rounded float-end"
+    aria-label="Default select example"
+  >
+    <option selected>Open this select menu</option>
+    <option value="1">One</option>
+    <option value="2">Two</option>
+    <option value="3">Three</option>
+  </select>
+
+  <ul>
+    <h2>Lista de Eventos</h2>
+ 
+    <li *ngFor="let event of events">
+     
+      <a
+        href="{{ url }}/{{ event.id }}"
+        class="list-group-item list-group-item-action flex-column align-items-start"
+      >
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="text-center">{{ event.singularEvent }}</h5>
+          <small> Data do evento: {{ event.date }}</small>
+        </div>
+
+        <div class="img-thumbnail">
+          <img
+            src="../../../assets//galeria_06m.webp"
+            class="img-thumbnail rounded float-start"
+            alt="..."
+          />
+        </div>
+
+        <div class="eventDescription">
+          <p class="mb-1 textJustify">
+            {{ event.description }}
+          </p>
+          <br />
+          <p class="smallText text-start">
+            <b>Categoria:</b> {{ event.singularCategory }}.
+          </p>
+          <p class="smallText text-start">
+            <b> Podem participar (grupo):</b> {{ event.singularGroup }}.
+          </p>
+        </div>
+      </a>
+    </li>
+  </ul>
+
+  <nav class="pagination" aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" href="#">Anterior</a></li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item"><a class="page-link" href="#">Pŕoxima</a></li>
     </ul>
-  
-    <nav class="pagination" aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Anterior</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Pŕoxima</a></li>
-      </ul>
-    </nav>
-  </div>
-  
+  </nav>
+</div>

@@ -1,5 +1,7 @@
+
 import { Component } from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
+import { Ievent } from '../event-list/event-list-Interface';
 
 
 @Component({
@@ -9,28 +11,22 @@ import {FormBuilder, Validators} from '@angular/forms';
 })
 export class EventRegisterComponent {
 
-  users = [
-    {
-      completeName: 'Nome completo',
-      cpf: 'cpfffff0821921',
-      email: 'emailll@gmail.com',
-      group: 'group@gmail.com',
-      role: 'role@gmail.com',
-    },
-    {
-      completeName: '2 Nome completo',
-      cpf: '2 cpfffff0821921',
-      email: '2 emailll@gmail.com',
-      group: '2 group@gmail.com',
-      role: '2 role@gmail.com',
-    },
-    {
-      completeName: 'Nome completo3',
-      cpf: '3 cpfffff0821921',
-      email: '3 emailll@gmail.com',
-      group: '3 group@gmail.com',
-      role: '3 role@gmail.com',
-    },
-  ];
+  events:Ievent[] = [
+    
+   { id: 7,
+    singularUserId: 38,
+    singularEvent: "Teste com a Sátila",
+    singularGroup: "anonimo, default, pastor",
+    singularCategory: "Estudo",
+    description: "Conferindo funcionamento do sistema",
+    createDate: "2022-11-15T03:00:00.000Z",
+    date: "2022-11-15T03:00:00.000Z",
+    place: "Em casa",
+    maxCapacityPerson: 2,
+    subscriberNumber: 2,
+    company: "company",
+    eventStatus: "aberto"}
+
+   ]
 
 }

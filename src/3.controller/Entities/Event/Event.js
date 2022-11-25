@@ -43,7 +43,7 @@ export default class Event {
   //fim aqui --------  #123
 
   readAllGroups = async () => {
-    return eventService.readAll("groups");
+    return eventService.dataFindedreadAll("groups");
   };
 
   filterEvent = async (reqBody) => {

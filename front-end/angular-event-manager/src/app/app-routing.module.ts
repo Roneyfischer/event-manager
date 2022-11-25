@@ -11,7 +11,7 @@ const routes: Routes = [
   },
   { path: 'userLogin', component: LoginComponent },
   {
-    path: '',
+    path: 'eventList',
     component: EventListComponent,
   },
 ];
