@@ -138,6 +138,33 @@ const dbMethod = {
       };
     });
   },
+
+  readAllLimitedByRowNumber: async (table, rowsNumberToReturn, offsetRows){
+  
+    const queryText = `select * from "${table}" limit ${rowsNumberToReturn} offset ${offsetRows};`;
+   
+    const client = await dbConnect();
+
+    return await client.query(queryText).then((res) => {
+      const dataFinded = res.rows; //alterar
+
+      if (!dataFinded[0]) {
+        console.log("> [dbMethod.readAll]  data not found!");
+        return {
+          status: false,
+          message: `Unexpected error in database search. Data not found. Please check that the fields are filled in correctly. (developerMessage)`,
+        };
+      }
+      return {
+        status: true,
+        message: `The data "${dataFinded.singularEvent}" has been searched`,
+        dataFinded: dataFinded,
+      };
+    });
+  },
+
+
+
   readAllFiltred: async (table, itenToReturn) => {
     const queryText = `SELECT ${itenToReturn} from "${table}"`;
     //const queryValues = valueItenToSearch; //inútil?

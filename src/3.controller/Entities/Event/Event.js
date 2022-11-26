@@ -30,10 +30,15 @@ export default class Event {
     }
   };
 
-  readAllEvents = async () => {
+  readAllEvents = async (data) => {
     console.log("> [AnonimousUser.readAll]");
+    const newData = {
+      table: "events",
+      rowsNumberToReturn: data.rowsNumberToReturn,
+      offsetRows: data.offsetRows,
+    }
 
-    return eventService.readAll("events");
+    return eventService.readAllLimitedByRowNumber(newData);
   };
 
   readAllCategories = async () => {

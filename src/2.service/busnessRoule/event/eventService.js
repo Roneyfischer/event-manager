@@ -112,7 +112,13 @@ const eventService = {
   },
   
   readAll: async (data) => {
+    
     return await dbMethod.readAll(data);
+  },
+  
+  readAllLimitedByRowNumber:async(data){
+    const {table, rowsNumberToReturn, offsetRows} = data;
+    return await dbMethod.readAllLimitedByRowNumber(table, rowsNumberToReturn, offsetRows)
   },
 
   edit: async (reqBody) => {

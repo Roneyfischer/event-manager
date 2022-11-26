@@ -15,7 +15,11 @@ export class EventListComponent {
 
   readAllEvents = {
     type: 'readAllEvents',
+    initialEvent: 1,
+    finalEvent: 2
   };
+
+
 
   ngOnInit() {
     this.http
