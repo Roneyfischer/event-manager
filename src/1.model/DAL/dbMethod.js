@@ -139,10 +139,9 @@ const dbMethod = {
     });
   },
 
-  readAllLimitedByRowNumber: async (table, rowsNumberToReturn, offsetRows){
-  
+  readAllLimitedByRowNumber: async (table, rowsNumberToReturn, offsetRows) => {
     const queryText = `select * from "${table}" limit ${rowsNumberToReturn} offset ${offsetRows};`;
-   
+
     const client = await dbConnect();
 
     return await client.query(queryText).then((res) => {
@@ -162,8 +161,6 @@ const dbMethod = {
       };
     });
   },
-
-
 
   readAllFiltred: async (table, itenToReturn) => {
     const queryText = `SELECT ${itenToReturn} from "${table}"`;

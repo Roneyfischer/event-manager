@@ -11,9 +11,8 @@
 
   <ul>
     <h2>Lista de Eventos</h2>
- 
+
     <li *ngFor="let event of events">
-     
       <a
         href="{{ url }}/{{ event.id }}"
         class="list-group-item list-group-item-action flex-column align-items-start"
@@ -49,11 +48,14 @@
 
   <nav class="pagination" aria-label="Page navigation example">
     <ul class="pagination">
-      <li class="page-item"><a class="page-link" href="#">Anterior</a></li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item"><a class="page-link" href="#">Pŕoxima</a></li>
+      <li class="page-item">
+        <a class="page-link" (click)="alterOffSet(-events.length)">Anterior</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" (click)="alterOffSet(rowsNumberToReturn)"
+          >Próxima</a
+        >
+      </li>
     </ul>
   </nav>
 </div>

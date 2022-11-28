@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { json } from 'express';
+import { IuserRegister } from './IuserRegister';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -27,9 +28,12 @@ export class RegisterComponent {
   submitUserRegister(): void {
     this.http
       .post('http://127.0.0.1:3333/auth', this.user)
-      .subscribe((dados) => console.log(dados));
-    console.log('data (this.user) abaixo:');
-    console.log(this.user);
+      .subscribe((dados: any) => {
+        console.log(dados);
+        const userLoginReturn: IuserRegister = dados;
+
+        alert('Menssagem do sistema: ' + userLoginReturn.message);
+      });
   }
   userRegisterInputClean(): void {}
 }

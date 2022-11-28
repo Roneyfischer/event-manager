@@ -116,7 +116,7 @@ const eventService = {
     return await dbMethod.readAll(data);
   },
   
-  readAllLimitedByRowNumber:async(data){
+  readAllLimitedByRowNumber:async(data)=>{
     const {table, rowsNumberToReturn, offsetRows} = data;
     return await dbMethod.readAllLimitedByRowNumber(table, rowsNumberToReturn, offsetRows)
   },

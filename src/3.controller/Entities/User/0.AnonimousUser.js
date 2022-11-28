@@ -8,9 +8,10 @@ import chalk from "chalk";
 class AnonimousUser {
   readAllEvents = async (reqBody) => {
     console.log("> [AnonimousUser.readAll]");
+    console.log(reqBody);
 
     const eventController = new EventController();
-    return await eventController[reqBody.type]();
+    return await eventController[reqBody.type](reqBody);
   };
   readAllGroups = async (reqBody) => {
     console.log("> [AnonimousUser.readAll]");
