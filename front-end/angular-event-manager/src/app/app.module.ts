@@ -9,6 +9,8 @@ import { NavbarPublicComponent } from './components/public/navbar-public/navbar-
 import { RegisterComponent } from './components/public/user/register/register.component';
 import { LoginComponent } from './components/public/user/login/login.component';
 import {HttpClientModule} from '@angular/common/http'
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,9 +24,12 @@ import {HttpClientModule} from '@angular/common/http'
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
-    
+    HttpClientModule,
+    ScrollingModule,
+    DragDropModule,
   ],
+    
+  
   providers: [],
   bootstrap: [AppComponent]
 })

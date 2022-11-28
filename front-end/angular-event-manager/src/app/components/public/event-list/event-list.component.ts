@@ -10,6 +10,9 @@ import { Ievent, IeventList } from './event-list-Interface';
 })
 export class EventListComponent {
   constructor(private http: HttpClient) {}
+
+  offSet: number = 0;
+  rowsNumberToReturn = 5;
   url = 'https://localhost:4200';
 
   // events!: Ievent[];
@@ -24,13 +27,9 @@ export class EventListComponent {
 
   ngOnInit() {
     console.log('estamos em init');
-  
 
     this.loadEventList(this.offSet);
   }
-
-  offSet: number = 0;
-  rowsNumberToReturn = 1;
 
   alterOffSet(number: number) {
     const newOffsetValue = this.offSet + number;
@@ -46,8 +45,6 @@ export class EventListComponent {
   }
 
   events!: Ievent[];
-
-  
 
   loadEventList(offsetRows: number) {
     const teste = this.http.post(
