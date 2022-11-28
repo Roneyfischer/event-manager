@@ -1,4 +1,4 @@
-export interface IuserLogin {
+export interface IuserLoginReturn {
   status: boolean;
   message: string;
   token?: string;

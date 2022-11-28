@@ -2,13 +2,15 @@ import { Component } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { json } from 'express';
 import { IuserRegister } from './IuserRegister';
+import { UserRegisterService } from 'src/app/service/user/userRegister/user-register.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
-  constructor(private http: HttpClient) {}
+  constructor(private userRegisterService: UserRegisterService) {}
+  
   completeName!: string;
   cpf!: number;
   email!: string;
@@ -26,14 +28,9 @@ export class RegisterComponent {
   };
 
   submitUserRegister(): void {
-    this.http
-      .post('http://127.0.0.1:3333/auth', this.user)
-      .subscribe((dados: any) => {
-        console.log(dados);
-        const userLoginReturn: IuserRegister = dados;
-
-        alert('Menssagem do sistema: ' + userLoginReturn.message);
-      });
+    this.userRegisterService.userRegister(this.user)
   }
-  userRegisterInputClean(): void {}
+  userRegisterInputClean(): void {
+
+  }
 }
