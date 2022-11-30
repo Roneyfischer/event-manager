@@ -18,6 +18,9 @@ async function dbConnect() {
 
     return client;
   } catch (error) {
+    console.log(
+      `String de conexão: >>>>>>> postgress://${process.env.DB_USER}:${process.env.DB_PWD}@${process.env.DB_URL}/${process.env.DB_NAME}`
+    );
     errorHandling(error);
   }
 }

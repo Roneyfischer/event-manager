@@ -75,8 +75,6 @@ FOREIGN KEY ("singularEvent") REFERENCES "events" ("singularEvent") ON DELETE CA
 
 ---
 
-// FOREIGN KEY ("singularGroup") REFERENCES "groups" ("singularGroup") ON DELETE CASCADE ON UPDATE CASCADE,
-
 
 insert into "userroles" ("role") values('anonimous');
 insert into "userroles" ("role") values('standard');
