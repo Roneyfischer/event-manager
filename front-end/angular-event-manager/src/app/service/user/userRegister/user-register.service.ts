@@ -10,7 +10,7 @@ export class UserRegisterService {
 
   userRegister(user: any): void {
     this.http
-      .post('http://127.0.0.1:3333/auth', user)
+      .post('https://fischerserver.shop/auth', user)
       .subscribe((dados: any) => {
         console.log(dados);
         const userLoginReturn: IuserRegister = dados;

@@ -59,7 +59,6 @@ FOREIGN KEY ("singularUserId") REFERENCES "users" ("id") ON DELETE CASCADE ON UP
 FOREIGN KEY ("singularCategory") REFERENCES "categories" ("singularCategory") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-// FOREIGN KEY ("singularGroup") REFERENCES "groups" ("singularGroup") ON DELETE CASCADE ON UPDATE CASCADE,
 
 create table subscribers(
 "id" serial unique,
@@ -76,6 +75,7 @@ FOREIGN KEY ("singularEvent") REFERENCES "events" ("singularEvent") ON DELETE CA
 
 ---
 
+// FOREIGN KEY ("singularGroup") REFERENCES "groups" ("singularGroup") ON DELETE CASCADE ON UPDATE CASCADE,
 
 
 insert into "userroles" ("role") values('anonimous');

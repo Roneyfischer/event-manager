@@ -9,11 +9,12 @@ export class UserLoginService {
   constructor(private http: HttpClient) {}
   userLogin(user: any) {
     this.http
-      .post('http://127.0.0.1:3333/auth', user)
+      .post('https://fischerserver.shop/auth', user)
       .subscribe((dados: any) => {
         const userLoginReturn: IuserLoginReturn = dados;
+        console.log(userLoginReturn);
 
-        alert('Menssagem do sistema: ' + userLoginReturn.message);
+        return userLoginReturn;
       });
   }
 }
