@@ -7,8 +7,8 @@ const auth = express.Router();
 auth.post("/", async (req, res) => {
   const user = new AdmUser(); //ERRO CRÍTIO. ALTERAR PARA GUESTUSER OU ANONIMO!!!
   console.log("> [route.auth] Open");
-  console.log(req);
-  console.log(req.body);
+ 
+
   const operation = await user[req.body.type](req.body, res);
 
   if (!operation.status) {

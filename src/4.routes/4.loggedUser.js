@@ -11,8 +11,8 @@ import chalk from "chalk";
 const admUser = express.Router();
 
 admUser.post("/", authorization.verifyJWT, async (req, res) => {
-  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>..");
-  console.log(req.body);
+  console.log("4.loggedUser")
+ 
   const executeRequisitionReturn = await authorization.userDriver[req.body.role](req.body);
 
   return res.status(200).json({ message4: executeRequisitionReturn });
