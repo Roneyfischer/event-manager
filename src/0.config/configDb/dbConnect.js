@@ -4,7 +4,8 @@ import errorHandling from "../../2.service/errorHandling/errorHandling.js";
 
 async function dbConnect() {
   try {
-    console.log("> [dbConnect] initializing DB connection")
+    console.log("> [dbConnect] initializing DB connection");
+    console.log("Senha DB: " + process.env.DB_PWD);
     const pool = new Pool({
       connectionString: `postgress://${process.env.DB_USER}:${process.env.DB_PWD}@${process.env.DB_URL}/${process.env.DB_NAME}`,
       max: 20,
